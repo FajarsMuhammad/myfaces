@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>App</title>
+	<h:outputStylesheet library="css" name="default-2.css" />
+</h:head>
+
+<h:body>
+	<h:form>
+		<div style="margin:0 auto; width: 400px; padding: 14px;"> <p:panel
+			header="Loginnnn" toggleable="true">
+			<h:panelGrid columns="2" cellpadding="5">
+				<f:facet name="header">
+					<p:messages />			
+				</f:facet>
+				
+				<h:outputLabel value="#{msg['loginscreen.loginfield']}"
+					for="userName" />
+				<p:inputText value="#{loginBean.userName}" id="userName" />
+				<h:outputLabel value="#{msg['loginscreen.passfield']}"
+					for="password" />
+				<p:password value="#{loginBean.password}" id="password"
+					feedback="false" />
+				
+				<f:facet name="footer">
+					<p:commandButton value="Login" ajax="false"
+						action="#{loginBean.login}" />
+				</f:facet>
+			</h:panelGrid>
+		</p:panel> </div>
+	</h:form>
+</h:body>
+</html>

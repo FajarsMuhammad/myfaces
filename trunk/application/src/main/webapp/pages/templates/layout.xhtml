@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<f:view contentType="text/html">
+	<h:head>
+	<meta http-equiv="refresh" content="#{session.maxInactiveInterval};URL=login.jsf" />
+		<title>App</title>
+		<h:outputStylesheet library="css" name="default.css" />
+		<style type="text/css">
+                .ui-panel {
+					border: 0px !important;
+				}
+				
+				.ui-tree {
+					border: 0px !important;
+				}
+            </style>
+	</h:head>
+	<h:body>
+		<p:layout fullPage="true">
+			<p:layoutUnit position="north" size="100" header="Top"
+				resizable="true" closable="true" collapsible="true">
+				<h:form>
+					<div align="right" style="float: right; padding-bottom: 3px;">
+						<a href="#{request.contextPath}/j_spring_security_logout">Logout</a>
+					</div>
+				</h:form>
+			</p:layoutUnit>
+			<p:layoutUnit position="west" size="200" header="Menu"
+				resizable="true" collapsible="true" >
+				<h:form>
+					<p:tree dynamic="true" value="#{treeBean.root}" var="doc"
+						selectionMode="single">
+						<p:ajax event="select" update="mainPanel"
+							listener="#{treeBean.onNodeSelect}" />
+						<p:treeNode expandedIcon="ui-icon ui-icon-folder-open"
+							collapsedIcon="ui-icon ui-icon-folder-collapsed">
+							<h:outputText value="#{doc.name}" />
+						</p:treeNode>
+						<p:treeNode type="page" icon="ui-icon ui-icon-document">
+							<h:outputText value="#{doc.name}" />
+						</p:treeNode>
+						
+					</p:tree>
+				</h:form>
+			</p:layoutUnit>
+			<p:layoutUnit position="center" id="screen">
+				<p:panel id="mainPanel">
+					<ui:include src="#{treeBean.includePage}" />
+				</p:panel>
+			</p:layoutUnit>
+		</p:layout>
+	</h:body>
+</f:view>
+</html>
