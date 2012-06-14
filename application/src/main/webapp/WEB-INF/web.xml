@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns="http://java.sun.com/xml/ns/javaee" 
+	xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" 
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+	http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" 
+	id="WebApp_ID" version="2.5">
+	
+ <display-name>Web Application</display-name>
+  
+  <!-- Add Support for Spring  12/10/2011 -->
+  	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	
+	<listener>
+		<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+	</listener>
+	
+	<listener>
+		<listener-class>org.springframework.security.web.session.HttpSessionEventPublisher</listener-class>
+	</listener>
+	
+	<listener>
+	    <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
+	</listener>
+	
+	<!--<listener>
+	   <listener-class>org.jboss.weld.environment.servlet.Listener</listener-class>
+	</listener>-->
+	
+	<context-param>
+	   <param-name>com.sun.faces.expressionFactory</param-name>
+	   <param-value>com.sun.el.ExpressionFactoryImpl</param-value>
+	</context-param>
+	
+	<!-- Change to "Production" when you are ready to deploy -->
+	<context-param>
+	    <param-name>javax.faces.PROJECT_STAGE</param-name>
+	    <param-value>Development</param-value>
+    </context-param>
+  	<session-config>
+	    <session-timeout>
+	      1
+	    </session-timeout>
+  	</session-config> 
+	
+	<!-- Welcome Page -->
+	<welcome-file-list>
+        <!--<welcome-file>faces/pages/login/login.xhtml</welcome-file>-->
+        <welcome-file>index.html</welcome-file>
+        <!-- <welcome-file>faces/index.xhtml</welcome-file> -->
+   </welcome-file-list>
+   
+   
+  <!-- Theme -->
+  <context-param>
+       <param-name>primefaces.THEME</param-name>
+       <param-value>aristo</param-value>
+  </context-param>
+ 
+  <!-- JSF Mapping -->
+  <servlet>
+    <servlet-name>Faces Servlet</servlet-name>
+    <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet>
+        <servlet-name>Resource Servlet</servlet-name>
+        <servlet-class>org.primefaces.resource.ResourceServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Resource Servlet</servlet-name>
+        <url-pattern>/primefaces_resource/*</url-pattern>
+    </servlet-mapping>
+ 
+   <!-- Map these files with JSF -->
+  <servlet-mapping>
+    <servlet-name>Faces Servlet</servlet-name>
+    <url-pattern>/faces/*</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Faces Servlet</servlet-name>
+    <url-pattern>*.jsf</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Faces Servlet</servlet-name>
+    <url-pattern>*.faces</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Faces Servlet</servlet-name>
+    <url-pattern>*.xhtml</url-pattern>
+  </servlet-mapping>
+
+	<!-- Spring Configurations-->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
+			/WEB-INF/applicationContext.xml,
+			/WEB-INF/applicationContext*.xml
+		</param-value>
+	</context-param>	
+	<!--
+		- Publishes events for session creation and destruction through the
+		application - context. Optional unless concurrent session control is
+		being used.
+	-->	
+
+	<filter>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+<!-- end spring security -->
+</web-app>

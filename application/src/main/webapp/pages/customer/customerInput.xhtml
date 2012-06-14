@@ -1,0 +1,78 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<h:head>
+		<h:outputStylesheet library="css" name="default.css" />
+	</h:head>
+	<!-- <ui:define name="pageContent">   -->
+	<div>
+		<h:form>
+			<br />
+			<h:panelGrid columns="3">
+
+				<h:outputText value="Code " />
+				<p:inputText id="code" value="#{customer.code}" size="20"
+					required="false" label="Code" readonly="true">
+				</p:inputText>
+				<p:message for="code" style="color:red" />
+
+				<h:outputText value="#{msg['label.name']} " />
+				<p:inputText id="name" value="#{customer.name}" size="30"
+					required="false" label="Name">
+				</p:inputText>
+				<p:message for="name" style="color:red" />
+
+				<h:outputText value="Grade" />
+				<h:selectOneMenu value="#{customer.grade}">
+					<f:selectItem itemLabel="Choose One" itemValue="" />
+					<f:selectItems value="#{customer.getGradeList()}" var="g"
+						itemLabel="#{g.label}" itemValue="#{g.value}" />
+				</h:selectOneMenu>
+				<h:outputText value=" " />
+
+				<h:outputText value="#{msg['label.address']} " />
+				<p:inputTextarea id="address" value="#{customer.address}" cols="50"
+					rows="5" required="false" label="Address">
+				</p:inputTextarea>
+				<h:outputText value=" " />
+
+				<h:outputText value="Term Of Payment" />
+				<h:selectBooleanCheckbox id="termOfPayment"
+					value="#{customer.termOfPayment}"  />
+				<h:outputText value=" " />
+			</h:panelGrid>
+
+			<p:commandButton update="mainPanel" id="saveButton" value="Save"
+				action="#{customer.saveCustomer}">
+				<f:setPropertyActionListener target="#{treeBean.includePage}"
+					value="/pages/customer/customerList.xhtml" />
+			</p:commandButton>
+			<h:outputText value=" " />
+			<p:commandButton update="mainPanel" id="cancelButton" value="Cancel">
+				<f:setPropertyActionListener target="#{treeBean.includePage}"
+					value="/pages/customer/customerList.xhtml" />
+			</p:commandButton>
+		</h:form>
+	</div>
+	<!-- </ui:define> -->
+</ui:composition>
+<!-- <h:outputText value="Gender" />
+				<p:selectOneMenu value="#{autoCompleteBean.selectedPlayer1}"
+					effect="fade" converter="player">
+					<f:selectItem itemLabel="Select One" itemValue="" />
+					<f:selectItems value="#{autoCompleteBean.players}" var="player"
+						itemLabel="#{player.name}" itemValue="#{player}" />
+				</p:selectOneMenu> -->
+<!-- <p:commandLink update="mainPanel"
+				actionListener="#{customer.addCustomer}">
+				<f:setPropertyActionListener target="#{treeBean.includePage}"
+					value="/pages/customer/customerList.xhtml" />
+				<h:outputText value="Save" />
+			</p:commandLink> -->
+<!-- <p:commandLink update="mainPanel">
+				<f:setPropertyActionListener target="#{treeBean.includePage}"
+					value="/pages/customer/customerList.xhtml" />
+				<h:outputText value="Cancel" />
+			</p:commandLink> -->

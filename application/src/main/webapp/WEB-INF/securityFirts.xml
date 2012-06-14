@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:beans="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	       http://www.springframework.org/schema/aop   
+		   http://www.springframework.org/schema/aop/spring-aop-3.0.xsd                        
+           http://www.springframework.org/schema/security
+           http://www.springframework.org/schema/security/spring-security-3.0.xsd
+           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd"
+           >
+ 
+ 	<context:component-scan base-package="com.application" />
+    <global-method-security secured-annotations="enabled" jsr250-annotations="enabled">
+    </global-method-security>
+
+    <http auto-config="true" access-denied-page="/accessDenied.xhtml">
+		<form-login login-page="/login.xhtml" 
+		default-target-url="/pages/index.xhtml"
+		authentication-failure-url="/login.xhtml?login_error=1"/>
+		
+		<intercept-url pattern="/faces/**" access="ROLE_USER" />
+		<!-- <intercept-url pattern="/faces/**" access="IS_AUTHENTICATED_REMEMBERED" /> -->	
+		
+		<session-management>
+			<concurrency-control max-sessions="5" />
+		</session-management>
+
+	</http>
+ 
+    <!--
+    <authentication-manager>
+        <authentication-provider>
+            <password-encoder hash="md5"/>
+            <user-service>
+                <user name="rod" password="a564de63c2d0da68cf47586ee05984d7" authorities="ROLE_SUPERVISOR, ROLE_USER, ROLE_TELLER" />
+                <user name="dianne" password="65d15fe9156f9c4bbffd98085992a44e" authorities="ROLE_USER,ROLE_TELLER" />
+                <user name="scott" password="2b58af6dddbd072ed27ffc86725d7d3a" authorities="ROLE_USER" />
+                <user name="peter" password="22b5c9accc6e1ba628cedc63a72d57f8" authorities="ROLE_USER" />
+            </user-service>
+        </authentication-provider>
+    </authentication-manager>
+    -->
+    <!--<authentication-manager alias="authenticationManager">
+        <authentication-provider>
+            <user-service>
+                <user name="admin" password="admin" authorities="ROLE_USER, ROLE_ADMIN" />
+                <user name="user" password="user" authorities="ROLE_USER" />
+            </user-service>
+        </authentication-provider>
+    </authentication-manager>-->
+    
+    <!-- ====================================================== -->
+	<!--     We define the kind of authentification with a      -->
+	<!--           so called authentication-provider            -->
+	<!--        We use the DAO authenticationProvider.          -->
+	<!--     We coded out a custom UserDetailServiceImpl.       -->
+	<!--     So we have our users stored in a DB we use         -->
+	<!--     our own user-service class and point to her.       -->
+	<!-- ====================================================== -->
+	<authentication-manager alias="authenticationManager">
+		<authentication-provider user-service-ref="myUserDetailsService">
+		</authentication-provider>
+	</authentication-manager>
+
+	<!-- ====================================================== -->
+	<!--           The Implementation of the Interface          -->
+	<!--           UserDetailService for the logged in          -->
+	<!--                    user and his rights                 -->
+	<!-- ====================================================== -->
+	<beans:bean id="myUserDetailsService" class="com.application.policy.PolicyManager">
+		<beans:property name="userService" ref="userService" />
+	</beans:bean>
+   
+  
+
+    <!-- Automatically receives AuthenticationEvent messages -->
+    <!--<beans:bean id="loggerListener" class="org.springframework.security.authentication.event.LoggerListener"/>-->
+</beans:beans>
