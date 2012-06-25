@@ -42,7 +42,7 @@ public class CustomerDaoImpl extends HibernateDaoSupport implements CustomerDao 
 		for(int i=0; i<columnSize; i++){
 			criteria.add(Restrictions.ilike((String)columnList.get(i), (String)valueList.get(i), MatchMode.ANYWHERE));
 		}
-		criteria.addOrder(Order.asc("name"));
+		criteria.addOrder(Order.desc("code"));
 		return getHibernateTemplate().findByCriteria(criteria);
 	}
 
