@@ -14,20 +14,24 @@
            >
  
  	<context:component-scan base-package="com.application" />
-    <global-method-security secured-annotations="enabled" jsr250-annotations="enabled">
-    </global-method-security>
-
-    <http auto-config="true" access-denied-page="/accessDenied.jsf">
+    
+    <http auto-config="true" access-denied-page="/login.jsf">
+    	<intercept-url pattern="/login.jsf" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+     	<intercept-url pattern="/pages/*" access="ROLE_USER,ROLE_ADMIN" />
+     	<intercept-url pattern="/pages/super/**" access="ROLE_ADMIN" />
+    
 		<form-login login-page="/login.jsf" 
-		default-target-url="/welcome.jsf"
+		default-target-url="/login.jsf"
 		authentication-failure-url="/login.jsf?login_error=1"/>
 		
 		<logout logout-success-url="/login.jsf"/>		
-		<intercept-url pattern="/faces/pages/**" access="ROLE_ADMIN" />
-		<!-- <intercept-url pattern="/faces/**" access="IS_AUTHENTICATED_REMEMBERED" /> -->	
+		<!-- <intercept-url pattern="/faces/**" access="ROLE_USER" /> -->
+		<!-- <intercept-url pattern="/pages/*" access="ROLE_ADMIN,ROLE_USER" /> -->		
 		
-		<session-management>
-			<concurrency-control max-sessions="5" />
+		<intercept-url pattern="/pages/**" access="IS_AUTHENTICATED_REMEMBERED" />	
+		
+		<session-management invalid-session-url="/login.jsf">
+			<concurrency-control max-sessions="5" error-if-maximum-exceeded="true" />
 		</session-management>
 
 	</http>
@@ -45,14 +49,14 @@
         </authentication-provider>
     </authentication-manager>
     -->
-    <!--<authentication-manager alias="authenticationManager">
+    <!-- <authentication-manager alias="authenticationManager">
         <authentication-provider>
             <user-service>
                 <user name="admin" password="admin" authorities="ROLE_USER, ROLE_ADMIN" />
                 <user name="user" password="user" authorities="ROLE_USER" />
             </user-service>
         </authentication-provider>
-    </authentication-manager>-->
+    </authentication-manager> -->
     
     <!-- ====================================================== -->
 	<!--     We define the kind of authentification with a      -->
@@ -62,6 +66,7 @@
 	<!--     So we have our users stored in a DB we use         -->
 	<!--     our own user-service class and point to her.       -->
 	<!-- ====================================================== -->
+	
 	<authentication-manager alias="authenticationManager">
 		<authentication-provider user-service-ref="userDetailsService">
 		</authentication-provider>
@@ -72,14 +77,12 @@
 	<!--           UserDetailService for the logged in          -->
 	<!--                    user and his rights                 -->
 	<!-- ====================================================== -->
-	<!-- <beans:bean id="myUserDetailsService" class="com.application.policy.PolicyManager">
-		<beans:property name="userService" ref="userService" />
-	</beans:bean> -->
+	
    
   	<beans:bean id="userDetailsService" class="com.application.service.UserDetailsServiceImpl">
 		<beans:property name="userService" ref="userService" />
 	</beans:bean>
 
     <!-- Automatically receives AuthenticationEvent messages -->
-    <!--<beans:bean id="loggerListener" class="org.springframework.security.authentication.event.LoggerListener"/>-->
+    <beans:bean id="loggerListener" class="org.springframework.security.authentication.event.LoggerListener"/>
 </beans:beans>
