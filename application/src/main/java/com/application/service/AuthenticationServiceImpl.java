@@ -31,11 +31,11 @@ public class AuthenticationServiceImpl implements com.application.service.Authen
 		return false;
 	}
 
-	@Override
+	/*@Override
 	public void logout() {
 		SecurityContextHolder.getContext().setAuthentication(null);
 		//currentUser.unauthenticate();
 	}
-
+*/
 	
 }
