@@ -35,7 +35,24 @@ public class CustomerBean implements Serializable {
 	public String searchValue;
 	public boolean termOfPayment;
 
-	private String customerInputRedir = "/pages/customer/customerInput.xhtml";
+	private String customerInputRedir = "/pages/master/customerInput.xhtml";
+	
+	private CustomerDataModel customerDataModel;
+	private Customer[] selectedCustomers;
+
+
+	public Customer[] getSelectedCustomers() {
+		return selectedCustomers;
+	}
+
+	public void setSelectedCustomers(Customer[] selectedCustomers) {
+		this.selectedCustomers = selectedCustomers;
+	}
+	
+	public CustomerDataModel getModel(){
+		customerDataModel = new CustomerDataModel(getCustomerList());
+		return customerDataModel;
+	}
 
 	public String getCustomerInputRedir() {
 		return customerInputRedir;
@@ -145,7 +162,8 @@ public class CustomerBean implements Serializable {
 		customers = customerService.searchCustomer(columnList, valueList);
 		if (customers.isEmpty()) {
 			customers = new ArrayList<Customer>();
-		}
+		}		
+		
 		return customers;
 	}
 
@@ -153,7 +171,8 @@ public class CustomerBean implements Serializable {
 	 * Methode button search
 	 */
 	public void search() {
-		getCustomerList();
+		//getCustomerList();
+		getModel();
 	}
 
 	// Column List
@@ -184,7 +203,7 @@ public class CustomerBean implements Serializable {
 		FacesContext fc = FacesContext.getCurrentInstance();
 		NavigationHandler nav = fc.getApplication().getNavigationHandler();
 		nav.handleNavigation(fc, null,
-				"/pages/customer/customerInput?faces-redirect=true");
+				"/pages/master/customerInput?faces-redirect=true");
 		fc.renderResponse();
 	}
 
@@ -231,7 +250,7 @@ public class CustomerBean implements Serializable {
 		this.setTermOfPayment(customer.getTermOfPayment() == 1 ? true : false);
 		this.setGrade(customer.getGrade() != null ? customer.getGrade() : "");
 		this.setAddress(customer.getAddress());
-		return "/pages/customer/customerEdit.xhtml";
+		return "/pages/master/customerEdit.xhtml";
 	}
 
 	/**
@@ -245,7 +264,7 @@ public class CustomerBean implements Serializable {
 		customer.setAddress(getAddress());
 		customerService.editCustomer(customer);
 		clearForm();
-		return "/pages/customer/customerList.xhtml";
+		return "/pages/master/customerList.xhtml";
 
 	}
 
@@ -285,5 +304,6 @@ public class CustomerBean implements Serializable {
 		setName("");
 		setAddress("");
 	}
+
 
 }
