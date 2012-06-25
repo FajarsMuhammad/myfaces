@@ -47,12 +47,12 @@
 			<p:commandButton update="mainPanel" id="saveButton" value="Save"
 				action="#{customer.saveCustomer}">
 				<f:setPropertyActionListener target="#{treeBean.includePage}"
-					value="/pages/customer/customerList.xhtml" />
+					value="/pages/master/customerList.xhtml" />
 			</p:commandButton>
 			<h:outputText value=" " />
 			<p:commandButton update="mainPanel" id="cancelButton" value="Cancel">
 				<f:setPropertyActionListener target="#{treeBean.includePage}"
-					value="/pages/customer/customerList.xhtml" />
+					value="/pages/master/customerList.xhtml" />
 			</p:commandButton>
 		</h:form>
 	</div>
