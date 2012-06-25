@@ -27,7 +27,7 @@ public class TreeBean implements Serializable {
 
 		// Documents
 		TreeNode customerList = new DefaultTreeNode("page", new Document(
-				"Customer", "/pages/customer/customerList.xhtml",
+				"Customer", "/pages/master/customerList.xhtml",
 				"Word Document"), parent);
 		
 		
@@ -35,7 +35,7 @@ public class TreeBean implements Serializable {
 				"Folder"), root);
 		
 		TreeNode puchase= new DefaultTreeNode("page", new Document(
-				"Purchase Order", "/pages/customer/customerList.xhtml",
+				"Purchase Order", "/pages/master/customerList.xhtml",
 				"Word Document"), parent2);
 
 	}
