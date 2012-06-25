@@ -32,19 +32,19 @@ public class LoginBean implements Serializable {
 	}
 	
 	//for action
-	public void logout() {
-		authenticationService.logout();
-		FacesContext fc = FacesContext.getCurrentInstance();
-		NavigationHandler nav = fc.getApplication().getNavigationHandler();
-		nav.handleNavigation(fc, null,
-				"/login?faces-redirect=true");
-		fc.renderResponse();
-	}
-	
-	public String doLogout() {
-		authenticationService.logout();
-		return "success";
-	}
+//	public void logout() {
+//		authenticationService.logout();
+//		FacesContext fc = FacesContext.getCurrentInstance();
+//		NavigationHandler nav = fc.getApplication().getNavigationHandler();
+//		nav.handleNavigation(fc, null,
+//				"/login?faces-redirect=true");
+//		fc.renderResponse();
+//	}
+//	
+//	public String doLogout() {
+//		authenticationService.logout();
+//		return "success";
+//	}
 	
 	public void destroy() {
 		//grantedAuthoritySet = null;
