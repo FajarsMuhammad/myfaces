@@ -21,22 +21,19 @@ public class CustomerBean implements Serializable {
 	 */
 	private static final long serialVersionUID = 3051005476848367530L;
 
-	// via Spring
-	private CustomerService customerService;
-	private GenerateCode generateCode;
-	
-	public String custId;
-	public String code;
-	public String name;
-	public String address;
-	public String gender;
-	public String grade;
-	public String searchColumn;
-	public String searchValue;
-	public boolean termOfPayment;
+	private String custId;
+	private String code;
+	private String name;
+	private String address;
+	private String gender;
+	private String grade;
+	private String searchColumn;
+	private String searchValue;
+	private boolean termOfPayment;
 
 	private String customerInputRedir = "/pages/master/customerInput.xhtml";
-	
+	private CustomerService customerService;
+	private GenerateCode generateCode;
 	private CustomerDataModel customerDataModel;
 	private Customer[] selectedCustomers;
 
@@ -232,7 +229,10 @@ public class CustomerBean implements Serializable {
 		customer.setAddress(getAddress());
 		customer.setGrade(getGrade());
 		customer.setTermOfPayment(isTermOfPayment() ? 1 : 0);
-		customerService.addCustomer(customer);
+		//for(int i=0; i<500; i++){
+			customerService.addCustomer(customer);
+		//}
+		
 		clearForm();
 	}
 
@@ -275,7 +275,6 @@ public class CustomerBean implements Serializable {
 		String id = FacesContext.getCurrentInstance().getExternalContext()
 				.getRequestParameterMap().get("custId");
 		Customer customer = customerService.searchCustomerById(new Long(id));
-		System.out.println("CODE == "+getCode()+" "+this.code+" "+code +" "+this.getCode());
 		customer.setCode(customer.getCode());
 		customer.setName(this.getName());
 		customer.setAddress(this.getAddress());
