@@ -18,16 +18,13 @@
     <http auto-config="true" access-denied-page="/login.jsf">
     	<intercept-url pattern="/login.jsf" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
      	<intercept-url pattern="/pages/*" access="ROLE_USER,ROLE_ADMIN" />
-     	<intercept-url pattern="/pages/super/**" access="ROLE_ADMIN" />
+     	<!-- <intercept-url pattern="/pages/super/**" access="ROLE_ADMIN" /> -->
     
 		<form-login login-page="/login.jsf" 
-		default-target-url="/login.jsf"
-		authentication-failure-url="/login.jsf?login_error=1"/>
+			default-target-url="/login.jsf"
+			authentication-failure-url="/login.jsf?login_error=1"/>
 		
 		<logout logout-success-url="/login.jsf"/>		
-		<!-- <intercept-url pattern="/faces/**" access="ROLE_USER" /> -->
-		<!-- <intercept-url pattern="/pages/*" access="ROLE_ADMIN,ROLE_USER" /> -->		
-		
 		<intercept-url pattern="/pages/**" access="IS_AUTHENTICATED_REMEMBERED" />	
 		
 		<session-management invalid-session-url="/login.jsf">
