@@ -8,7 +8,7 @@ import org.apache.log4j.Logger;
 public final class ResourceHelper {
 	private static final Logger log = Logger.getLogger(ResourceHelper.class);
 	
-	private static final String MESSAGE_RESOURCE = "config/messages";
+	private static final String MESSAGE_RESOURCE = "com/application/resource/messages";
 
 	public ResourceHelper() {
 	}
