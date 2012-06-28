@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.GrantedAuthorityImpl;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,6 +17,8 @@ import com.application.model.User;
  * Spring-security requires an implementation of UserDetailService. 
  */
 public class UserDetailsServiceImpl implements UserDetailsService {
+	
+	Logger log = Logger.getLogger(UserDetailsServiceImpl.class);
 
 	private UserService userService;
 	
@@ -46,15 +49,14 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		
 		// All users are granted with ROLE_USER access
 		// Therefore this user gets a ROLE_USER by default
-		System.out.println("Grant ROLE_USER to this user");
+		log.debug("Grant ROLE_USER to this user");
 		authList.add(new GrantedAuthorityImpl("ROLE_USER"));
 		
 		// Check if this user has admin access 
 		// Integer(1) as an admin user
 		if ( access.compareTo(1) == 0) {
 			// User has admin access
-			//logger.debug("Grant ROLE_ADMIN to this user");
-			System.out.println("Grant ROLE_ADMIN to this user");
+			log.debug("Grant ROLE_ADMIN to this user");
 			authList.add(new GrantedAuthorityImpl("ROLE_ADMIN"));
 		}
 
