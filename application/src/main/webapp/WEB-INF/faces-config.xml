@@ -8,7 +8,7 @@
 	<application>
 		<el-resolver>org.springframework.web.jsf.el.SpringBeanFacesELResolver</el-resolver>
 		<resource-bundle>
-			<base-name>config.messages</base-name>
+			<base-name>com.application.resource.messages</base-name>
 			<var>msg</var>
 		</resource-bundle>
 	</application>
@@ -40,6 +40,10 @@
 		<managed-bean-name>treeBean</managed-bean-name>
 		<managed-bean-class>com.application.beans.TreeBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>menuService</property-name>
+			<value>#{menuService}</value>
+		</managed-property>
 	</managed-bean>
 
 	<navigation-rule>

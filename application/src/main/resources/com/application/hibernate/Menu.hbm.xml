@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.application.model.Menu" table="menu"> 
+        <id name="id" type="long">
+            <column name="menu_id" />
+	            <generator class="native">
+	            	<param name="sequence">menu_id_seq</param>
+	            </generator>
+        </id>
+        <property name="parent" column="parent" type="string"/>           
+        <property name="name" column="name" type="string"/>
+        <property name="url" column="url" type="string" />
+        <property name="type" column="type" type="string"/>           
+        <property name="kind" column="kind" type="string"/>           
+        
+    </class>
+</hibernate-mapping>

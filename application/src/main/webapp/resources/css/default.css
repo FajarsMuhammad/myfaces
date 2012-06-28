@@ -412,11 +412,18 @@ img.right {
 	width: 1000px;
 }
 
-/*add by fajar
+/*add by fajar*/
 .ui-panel {
-	border: none;
+	border: 0px !important;
 }
 
 .ui-tree {
-	border: none;
-}*/
+	border: 0px !important;
+	width: auto !important;
+}
+
+.ui-layout-north .ui-layout-unit-content {
+    padding: 0 0 0 0 !important;
+    margin: 0 0 0 !important;   
+    background: gray;
+}

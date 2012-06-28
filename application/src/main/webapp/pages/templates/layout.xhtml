@@ -8,21 +8,16 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 <f:view contentType="text/html">
 	<h:head>
-	<!-- <meta http-equiv="refresh" content="#{session.maxInactiveInterval};URL=login.jsf" /> -->
+		<!-- <meta http-equiv="refresh" content="#{session.maxInactiveInterval};URL=login.jsf" /> -->
 		<!-- <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
 		<meta http-equiv="Pragma" content="no-cache" />
 		<meta http-equiv="Expires" content="0" /> -->
 		<title>App</title>
 		<h:outputStylesheet library="css" name="default.css" />
 		<style type="text/css">
-                .ui-panel {
-					border: 0px !important;
-				}
-				
-				.ui-tree {
-					border: 0px !important;
-				}
-            </style>
+
+
+</style>
 	</h:head>
 	<h:body>
 		<p:layout fullPage="true">
@@ -35,20 +30,22 @@
 				</h:form>
 			</p:layoutUnit>
 			<p:layoutUnit position="west" size="200" header="Menu"
-				resizable="true" collapsible="true" >
+				resizable="true" collapsible="true">
 				<h:form>
 					<p:tree dynamic="true" value="#{treeBean.root}" var="doc"
 						selectionMode="single">
+						<f:event type="preRenderView" listener="#{treeBean.init}" />
 						<p:ajax event="select" update="mainPanel"
 							listener="#{treeBean.onNodeSelect}" />
 						<p:treeNode expandedIcon="ui-icon ui-icon-folder-open"
 							collapsedIcon="ui-icon ui-icon-folder-collapsed">
 							<h:outputText value="#{doc.name}" />
 						</p:treeNode>
-						<p:treeNode type="page" icon="ui-icon ui-icon-document">
+						<p:treeNode id="abc" type="page" icon="ui-icon ui-icon-document">
 							<h:outputText value="#{doc.name}" />
 						</p:treeNode>
-						
+
+
 					</p:tree>
 				</h:form>
 			</p:layoutUnit>
