@@ -1,14 +1,21 @@
 package com.application.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
-public class Document implements Serializable {
+import org.primefaces.model.TreeNode;
+
+public class Menu implements Serializable {
 
         /**
 	 * 
 	 */
 	private static final long serialVersionUID = 6816218359469190731L;
 
+		private long id;
+	
+		private String parent;
 		
 		private String name;
         
@@ -17,15 +24,45 @@ public class Document implements Serializable {
         private String type;
         
         private String kind;
+         
+        private List<Menu> menuFiles = new ArrayList<Menu>();
         
-        public Document(){}
+       
+		public List<Menu> getMenuFiles() {
+			return menuFiles;
+		}
+
+		public void setMenuFiles(List<Menu> menuFiles) {
+			this.menuFiles = menuFiles;
+		}
+
+		public Menu(){}
         
-        public Document(String name, String url, String type) {
+        public Menu(String name, String url, String type) {
                 this.name = name;
                 this.url = url;
                 this.type = type;
         }
         
+        
+        public long getId() {
+			return id;
+		}
+
+
+		public void setId(long id) {
+			this.id = id;
+		}
+
+
+		public String getParent() {
+			return parent;
+		}
+
+
+		public void setParent(String parent) {
+			this.parent = parent;
+		}
 
 
 		public String getName() {
@@ -82,7 +119,7 @@ public class Document implements Serializable {
                         return false;
                 if (getClass() != obj.getClass())
                         return false;
-                Document other = (Document) obj;
+                Menu other = (Menu) obj;
                 if (name == null) {
                         if (other.name != null)
                                 return false;
