@@ -3,16 +3,18 @@ package com.application.beans;
 import java.io.Serializable;
 
 import javax.faces.application.FacesMessage;
-import javax.faces.application.NavigationHandler;
 import javax.faces.context.FacesContext;
 
+import org.apache.log4j.Logger;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.application.service.AuthenticationService;
 
 public class LoginBean implements Serializable {
+	
 	private static final long serialVersionUID = 1L;
-
+	private static final Logger log = Logger.getLogger(LoginBean.class);
+	
 	private String userName;
 	private String password;
 
@@ -25,7 +27,7 @@ public class LoginBean implements Serializable {
 			return "success";
 		}
 		else{
-			System.out.println("notsucces");
+			log.debug("notsucces");
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Login or password incorrect."));
 			return "failed";
 		}

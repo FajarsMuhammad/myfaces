@@ -1,5 +1,7 @@
 package com.application.service;
 
+import java.util.List;
+
 import com.application.dao.UserDao;
 import com.application.model.User;
 
@@ -16,6 +18,11 @@ public class UserServiceImpl implements UserService {
 	public User getUserByLoginnamePassword(String userName, String password) {
 		return getUserDao().getUserByLoginnamePassword(userName, password);
 	}
+	
+	public List<User> getUsers(final String userName){
+		return getUserDao().getUsers(userName);
+	}
+	
 
 	public UserDao getUserDao() {
 		return userDao;

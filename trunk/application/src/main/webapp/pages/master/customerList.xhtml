@@ -29,12 +29,6 @@
 				<p:column selectionMode="multiple" style="width:18px" />
 				<p:column>
 					<f:facet name="header">
-    				Customer ID
-    			</f:facet>
-					<h:outputText value="#{c.customerId}" />
-				</p:column>
-				<p:column>
-					<f:facet name="header">
     				Customer Code
     			</f:facet>
 					<h:outputText value="#{c.code}" />
@@ -44,6 +38,12 @@
 						<h:outputText value="#{msg['label.name']}" />
 					</f:facet>
 					<h:outputText value="#{c.name}" />
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Grade" />
+					</f:facet>
+					<h:outputText value="#{c.grade}" />
 				</p:column>
 				<p:column>
 					<f:facet name="header">

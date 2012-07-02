@@ -2,9 +2,12 @@ package com.application.dao;
 
 import java.util.List;
 
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import com.application.model.Menu;
+import com.application.model.User;
 
 public class MenuDaoImpl extends HibernateDaoSupport implements MenuDao {
 
@@ -12,6 +15,12 @@ public class MenuDaoImpl extends HibernateDaoSupport implements MenuDao {
 	@Override
 	public List<Menu> searchMenu() {
 		return getHibernateTemplate().find("from Menu");
+	}
+	
+	public List<Menu> getMenuByParent(String parent){
+		DetachedCriteria criteria = DetachedCriteria.forClass(Menu.class);
+		criteria.add(Restrictions.eq("parent", parent));
+		return getHibernateTemplate().findByCriteria(criteria);
 	}
 
 }

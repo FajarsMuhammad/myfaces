@@ -1,5 +1,7 @@
 package com.application.dao;
 
+import java.util.List;
+
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.dao.support.DataAccessUtils;
@@ -22,6 +24,13 @@ public class UserDaoImpl extends HibernateDaoSupport implements UserDao {
 		criteria.add(Restrictions.eq("userName", userName));
 		criteria.add(Restrictions.eq("password", password));
 		return (User) DataAccessUtils.uniqueResult(getHibernateTemplate().findByCriteria(criteria));
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<User> getUsers(final String userName){
+		DetachedCriteria criteria = DetachedCriteria.forClass(User.class);
+		criteria.add(Restrictions.eq("userName", userName));
+		return getHibernateTemplate().findByCriteria(criteria);
 	}
 
 }
