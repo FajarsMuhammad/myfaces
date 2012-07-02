@@ -32,17 +32,17 @@
 			<p:layoutUnit position="west" size="200" header="Menu"
 				resizable="true" collapsible="true">
 				<h:form>
-					<p:tree dynamic="true" value="#{treeBean.root}" var="doc"
+					<p:tree dynamic="true" value="#{treeBean.root}" var="menu"
 						selectionMode="single">
 						<f:event type="preRenderView" listener="#{treeBean.init}" />
 						<p:ajax event="select" update="mainPanel"
 							listener="#{treeBean.onNodeSelect}" />
 						<p:treeNode expandedIcon="ui-icon ui-icon-folder-open"
 							collapsedIcon="ui-icon ui-icon-folder-collapsed">
-							<h:outputText value="#{doc.name}" />
+							<h:outputText value="#{menu.name}" />
 						</p:treeNode>
 						<p:treeNode id="abc" type="page" icon="ui-icon ui-icon-document">
-							<h:outputText value="#{doc.name}" />
+							<h:outputText value="#{menu.name}" />
 						</p:treeNode>
 
 

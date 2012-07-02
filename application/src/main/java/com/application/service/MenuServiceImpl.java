@@ -19,5 +19,9 @@ public class MenuServiceImpl implements MenuService, Serializable {
 	public List<Menu> searchMenu() {
 		return menuDao.searchMenu();
 	}
+	
+	public List<Menu> getMenuByParent(String parent){
+		return menuDao.getMenuByParent(parent);
+	}
 
 }

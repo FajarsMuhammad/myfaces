@@ -7,7 +7,7 @@ public class User {
 	private Long id;
 	private String userName;
 	private String password;
-	public Date createdDate;
+	private Date createdDate;
 	private String usrLastname;
 	private String usrFirstname;
 	private String usrEmail;
@@ -18,6 +18,7 @@ public class User {
 	private boolean usrAccountnonlocked = true;
 	private String usrToken;
 	private Integer access;
+	
 	
 	public User(){}
 	
@@ -132,7 +133,6 @@ public class User {
 	public void setAccess(Integer access) {
 		this.access = access;
 	}
-	
-	
+
 
 }

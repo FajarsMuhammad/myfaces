@@ -6,6 +6,8 @@ import com.application.model.Menu;
 
 public interface MenuDao {
 
-	List<Menu> searchMenu();
+	public List<Menu> searchMenu();
+	
+	public List<Menu> getMenuByParent(String parent);
 
 }

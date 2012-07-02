@@ -1,19 +1,26 @@
 package com.application.beans;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
+import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 
 import org.apache.log4j.Logger;
-import org.primefaces.event.NodeExpandEvent;
 import org.primefaces.event.NodeSelectEvent;
 import org.primefaces.model.DefaultTreeNode;
 import org.primefaces.model.TreeNode;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 
-import com.application.model.Document;
 import com.application.model.Menu;
+import com.application.model.User;
 import com.application.service.MenuService;
+import com.application.service.UserService;
 
 public class TreeBean implements Serializable {
 	
@@ -22,9 +29,13 @@ public class TreeBean implements Serializable {
 	
 	private TreeNode root;
 	
+	private TreeNode parent;
+	
 	private String includePage;
 	
 	private MenuService menuService;
+	
+	private UserService userService;
 	
 	public TreeBean() {
 		/*root = new DefaultTreeNode("root", null);		
@@ -44,54 +55,26 @@ public class TreeBean implements Serializable {
 		TreeNode puchase= new DefaultTreeNode("page", new Menu(
 				"Purchase Order", "/pages/master/customerList.xhtml",
 				"Word Document"), parent2);
-*/
-		
+*/		
 	}
+	
 	
 	public void init(){
 		root = new DefaultTreeNode("Root", null);	
-		List<Menu> menus =  menuService.searchMenu();
-		//buildMenu(menus, root);
-		// Documents
-		TreeNode parent = new DefaultTreeNode(new Menu("Master", "-",
-				"Folder"), root);
-		
-		TreeNode customerList = new DefaultTreeNode("page", new Menu(
-				"Customer", "/pages/master/customerList.xhtml",
-				"Word Document"), parent);
-		
-		
-		TreeNode parent2 = new DefaultTreeNode(new Menu("Transaksi", "-",
-				"Folder"), root);
-		
-		TreeNode puchase= new DefaultTreeNode("page", new Menu(
-				"Purchase Order", "/pages/master/customerList.xhtml",
-				"Word Document"), parent2);
-		
-
-		
+		buildMenu(root,  parent, "root");
 	}
 	
-	private void buildMenu(List<Menu> menus, TreeNode pai) {
-        for (Menu m : menus) {
-            TreeNode noFilho = new DefaultTreeNode(new Menu(m.getName(), m.getUrl(), m.getType()), null);
-            /*if (pai == null) {
-                root.addChild(noFilho);
-            } else {
-                pai.addChild(noFilho);
-            }*/
-            if(m.getKind().equals(noFilho.getType())){
-            	log.debug("masuk default "+noFilho.getType());
-            	root.addChild(noFilho);            	
-            }else{
-            	for(TreeNode tree : pai.getChildren()){
-            		log.debug(tree.getData());
-            	}
-            	
-            	 pai.addChild(noFilho);
-            }
-            buildMenu(m.getMenuFiles(), noFilho);
 
+	private void buildMenu(TreeNode root,  TreeNode node, String rightName) {
+		List<Menu> menus = menuService.getMenuByParent(rightName);
+        for (Menu m : menus) {
+            TreeNode child = new DefaultTreeNode(m.getKind(), new Menu(m.getName(), m.getUrl(), m.getType()), null);
+            if (node == null) {
+                root.addChild(child);
+            } else {
+            	node.addChild(child);
+            }
+            buildMenu(root, child, m.getRightName());
         }
     }
 
@@ -110,7 +93,6 @@ public class TreeBean implements Serializable {
 
 	public void onNodeSelect(NodeSelectEvent event) {			  
 		String type = event.getTreeNode().getType().toString();
-		log.debug("type==="+type);
 		if (type.equalsIgnoreCase("page")) {			
 			Menu menu = (Menu) event.getTreeNode().getData();
 			setIncludePage(menu.getUrl());
@@ -127,7 +109,27 @@ public class TreeBean implements Serializable {
 	public MenuService getMenuService() {
 		return menuService;
 	}
+
+	public UserService getUserService() {
+		return userService;
+	}
+
+	public void setUserService(UserService userService) {
+		this.userService = userService;
+	}
 	
+	
+	/*private void buildMenu(TreeNode root, List<Menu> menus, TreeNode pai) {
+        for (Menu m : menus) {
+            TreeNode noFilho = new DefaultTreeNode(m, null);
+            if (pai == null) {
+                root.addChild(noFilho);
+            } else {
+                pai.addChild(noFilho);
+            }
+            buildMenu(root, m.getItensFilhos(), noFilho);
+        }
+    }*/
 	
 
 }

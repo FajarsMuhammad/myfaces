@@ -13,7 +13,6 @@
         <property name="userName" column="user_name" type="string"/>           
         <property name="password" column="password" type="string"/>
         <property name="createdDate" column="created_date" type="timestamp" />
-        <property name="access" column="access" type="integer"/>           
-        
+        <property name="access" column="access" type="integer"/>            
     </class>
 </hibernate-mapping>

@@ -24,6 +24,8 @@ public class Menu implements Serializable {
         private String type;
         
         private String kind;
+        
+        private String rightName;
          
         private List<Menu> menuFiles = new ArrayList<Menu>();
         
@@ -99,6 +101,14 @@ public class Menu implements Serializable {
 			this.kind = kind;
 		}
 
+
+		public String getRightName() {
+			return rightName;
+		}
+
+		public void setRightName(String rightName) {
+			this.rightName = rightName;
+		}
 
 		//Eclipse Generated hashCode and equals
         @Override

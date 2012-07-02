@@ -425,5 +425,5 @@ img.right {
 .ui-layout-north .ui-layout-unit-content {
     padding: 0 0 0 0 !important;
     margin: 0 0 0 !important;   
-    background: gray;
+ //   background: blue;
 }
