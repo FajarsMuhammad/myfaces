@@ -1,29 +1,20 @@
 package com.application.dao;
 
-import java.util.Date;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import com.application.model.Customer;
 
-public class CustomerDaoImpl extends HibernateDaoSupport implements CustomerDao {
-
-	public void addCustomer(Customer customer) {
-		customer.setCreatedDate(new Date());
-		getHibernateTemplate().save(customer);
-	}
-
-	@SuppressWarnings("unchecked")
-	public List<Customer> findAllCustomer() {
-		return getHibernateTemplate().find("from Customer");
-	}
+public class CustomerDaoImpl extends BasisDaoImpl<Customer, Long> implements CustomerDao {
+	
+	Logger log = Logger.getLogger(CustomerDaoImpl.class);
 	
 	@SuppressWarnings("unchecked")
 	public List<Customer> searchCustomer(List<Object> columnList, List<Object> valueList){
@@ -34,10 +25,11 @@ public class CustomerDaoImpl extends HibernateDaoSupport implements CustomerDao 
 			columnSize = columnList.size();
 		if (valueList != null)
 			valueSize = valueList.size();
-
+		
 		if (columnSize != valueSize)
 			throw new HibernateException(
 					"Number of 'column' must be equals with number of 'value'");
+		
 		DetachedCriteria criteria = DetachedCriteria.forClass(Customer.class);
 		for(int i=0; i<columnSize; i++){
 			criteria.add(Restrictions.ilike((String)columnList.get(i), (String)valueList.get(i), MatchMode.ANYWHERE));
@@ -50,15 +42,6 @@ public class CustomerDaoImpl extends HibernateDaoSupport implements CustomerDao 
 		return getHibernateTemplate().get(Customer.class, id);
 	}
 
-	@Override
-	public void editCustomer(Customer customer) {
-		 getHibernateTemplate().saveOrUpdate(customer);		
-	}
-
-	@Override
-	public void deleteCustomer(Customer customer) {
-		getHibernateTemplate().delete(customer);
-	}
 	
 	@SuppressWarnings("unchecked")
 	public List<Customer> generateCode(String code) {

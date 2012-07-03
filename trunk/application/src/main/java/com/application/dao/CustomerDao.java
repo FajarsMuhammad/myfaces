@@ -4,17 +4,9 @@ import java.util.List;
 
 import com.application.model.Customer;
 
-public interface CustomerDao {
+public interface CustomerDao extends BasisDao<Customer, Long> {
 
-	void addCustomer(Customer customer);
-
-	List<Customer> findAllCustomer();
-	
 	List<Customer> searchCustomer(List<Object> columnList, List<Object> valueList);
-
-	void editCustomer(Customer customer);
-
-	void deleteCustomer(Customer customer);
 
 	Customer searchCustomerById(long id);
 	
