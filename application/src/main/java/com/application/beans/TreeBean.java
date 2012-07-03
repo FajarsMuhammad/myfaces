@@ -117,19 +117,5 @@ public class TreeBean implements Serializable {
 	public void setUserService(UserService userService) {
 		this.userService = userService;
 	}
-	
-	
-	/*private void buildMenu(TreeNode root, List<Menu> menus, TreeNode pai) {
-        for (Menu m : menus) {
-            TreeNode noFilho = new DefaultTreeNode(m, null);
-            if (pai == null) {
-                root.addChild(noFilho);
-            } else {
-                pai.addChild(noFilho);
-            }
-            buildMenu(root, m.getItensFilhos(), noFilho);
-        }
-    }*/
-	
 
 }
