@@ -13,12 +13,12 @@ public class CustomerServiceImpl implements CustomerService{
 		this.customerDao = customerDao;
 	}
  
-	public void addCustomer(Customer customer){ 
-		customerDao.addCustomer(customer); 
+	public void save(Customer customer){ 
+		customerDao.save(customer); 
 	}
  
 	public List<Customer> findAllCustomer(){ 
-		return customerDao.findAllCustomer();
+		return customerDao.findAll();
 	}
 
 	@Override
@@ -27,13 +27,13 @@ public class CustomerServiceImpl implements CustomerService{
 	}
 
 	@Override
-	public void editCustomer(Customer customer) {
-		customerDao.editCustomer(customer);
+	public void update(Customer customer) {
+		customerDao.update(customer);
 	}
 
 	@Override
-	public void deleteCustomer(Customer customer) {
-		customerDao.deleteCustomer(customer);
+	public void delete(Customer customer) {
+		customerDao.delete(customer);
 	}
 
 	@Override

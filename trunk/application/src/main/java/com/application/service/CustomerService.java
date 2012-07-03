@@ -6,7 +6,7 @@ import com.application.model.Customer;
 
 public interface CustomerService {
 
-	void addCustomer(Customer customer);
+	void save(Customer customer);
 
 	List<Customer> findAllCustomer();
 
@@ -14,9 +14,9 @@ public interface CustomerService {
 
 	Customer searchCustomerById(long id);
 
-	void editCustomer(Customer customer);
+	void update(Customer customer);
 
-	void deleteCustomer(Customer customer);
+	void delete(Customer customer);
 	
 	List<Customer> generateCode(String code);
 }
