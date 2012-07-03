@@ -59,16 +59,16 @@
 						<f:convertDateTime pattern="d-M-yyyy" />
 					</h:outputText>
 				</p:column>
-				<p:column align="center">
+				<p:column style="text-align:center">
 					<f:facet name="header">
-    				Action
-				</f:facet>
+    					<h:outputText value="#{msg['label.action']}" />
+					</f:facet>
 					<p:commandLink update="mainPanel"
 						actionListener="#{customer.initialUpdate}">
 						<f:setPropertyActionListener target="#{treeBean.includePage}"
 							value="/pages/master/customerEdit.xhtml" />
-						<f:param name="customerId" value="#{c.customerId}" />
-						<h:outputText value="Edit" />
+						<f:param name="customerIdParam" value="#{c.customerId}" />
+						<h:outputText value="#{msg['label.edit']}" />
 					</p:commandLink>
 					|					  
 					<p:commandLink update="mainPanel"
@@ -76,8 +76,8 @@
 						onclick="if(!confirm('Are you sure you want to delete this record?')) return false;">
 						<f:setPropertyActionListener target="#{treeBean.includePage}"
 							value="/pages/master/customerList.xhtml" />
-						<f:param name="customerId" value="#{c.customerId}" />
-						<h:outputText value="Delete" />
+						<f:param name="customerIdParam" value="#{c.customerId}" />
+						<h:outputText value="#{msg['label.delete']}" />
 					</p:commandLink>
 				</p:column>
 			</p:dataTable>
@@ -86,7 +86,7 @@
 					value="#{customer.customerInputRedir}" />
 				<h:outputText value="Add" />
 			</p:commandLink> -->
-			<p:commandButton update="mainPanel" id="addButton" value="Add" action="#{customer.initialAdd}">
+			<p:commandButton update="mainPanel" id="addButton" value="#{msg['label.add']}" action="#{customer.initialAdd}">
 				<f:setPropertyActionListener target="#{treeBean.includePage}"
 					value="#{customer.customerInputRedir}" />
 			</p:commandButton>

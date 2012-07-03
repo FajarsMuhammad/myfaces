@@ -12,7 +12,7 @@
 			<br />
 			<h:panelGrid columns="3">
 
-				<h:outputText value="Code " />
+				<h:outputText value="#{msg['label.code']} " />
 				<p:inputText id="code" value="#{customer.code}" size="20"
 					required="false" label="Code" readonly="true">
 				</p:inputText>
@@ -26,7 +26,7 @@
 
 				<h:outputText value="Grade" />
 				<h:selectOneMenu value="#{customer.grade}">
-					<f:selectItem itemLabel="Choose One" itemValue="" />
+					<f:selectItem itemLabel="#{msg['label.chooseOne']} " itemValue="" />
 					<f:selectItems value="#{customer.getGradeList()}" var="g"
 						itemLabel="#{g.label}" itemValue="#{g.value}" />
 				</h:selectOneMenu>
@@ -44,13 +44,13 @@
 				<h:outputText value=" " />
 			</h:panelGrid>
 
-			<p:commandButton update="mainPanel" id="saveButton" value="Save"
+			<p:commandButton update="mainPanel" id="saveButton" value="#{msg['label.save']} "
 				action="#{customer.saveCustomer}">
 				<f:setPropertyActionListener target="#{treeBean.includePage}"
 					value="/pages/master/customerList.xhtml" />
 			</p:commandButton>
 			<h:outputText value=" " />
-			<p:commandButton update="mainPanel" id="cancelButton" value="Cancel">
+			<p:commandButton update="mainPanel" id="cancelButton" value="#{msg['label.cancel']} ">
 				<f:setPropertyActionListener target="#{treeBean.includePage}"
 					value="/pages/master/customerList.xhtml" />
 			</p:commandButton>
