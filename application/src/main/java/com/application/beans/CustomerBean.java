@@ -2,6 +2,7 @@ package com.application.beans;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -157,9 +158,8 @@ public class CustomerBean implements Serializable {
 		}
 
 		customers = customerService.searchCustomer(columnList, valueList);
-		if (customers.isEmpty()) {
-			customers = new ArrayList<Customer>();
-		}		
+		if (customers.isEmpty()) 
+			customers = new ArrayList<Customer>();				
 		
 		return customers;
 	}
@@ -191,9 +191,11 @@ public class CustomerBean implements Serializable {
 	}
 
 
-	// redirect to form
+	/**
+	 * Method when click add button in list view
+	 */
 	public void initialAdd() {
-		setCode(generateCode.generateCustomerCode());
+		this.setCode(generateCode.generateCustomerCode());
 	}
 
 	public void gotoPage() {
@@ -214,7 +216,7 @@ public class CustomerBean implements Serializable {
 		customer.setAddress(getAddress());
 		customer.setGrade(getGrade());
 		// customer.setTermOfPayment(getTermOfPayment() == true ? 1 : 0);
-		customerService.addCustomer(customer);
+		customerService.save(customer);
 		clearForm();
 		return null;
 	}
@@ -229,8 +231,9 @@ public class CustomerBean implements Serializable {
 		customer.setAddress(getAddress());
 		customer.setGrade(getGrade());
 		customer.setTermOfPayment(isTermOfPayment() ? 1 : 0);
+		customer.setCreatedDate(new Date());
 		//for(int i=0; i<500; i++){
-			customerService.addCustomer(customer);
+			customerService.save(customer);
 		//}
 		
 		clearForm();
@@ -242,7 +245,7 @@ public class CustomerBean implements Serializable {
 	public String initialUpdate() {
 		Map<String, String> params = FacesContext.getCurrentInstance()
 				.getExternalContext().getRequestParameterMap();
-		String id = params.get("customerId");
+		String id = params.get("customerIdParam");
 		Customer customer = customerService.searchCustomerById(new Long(id));
 		this.setCustId("" + customer.getCustomerId());
 		this.setCode(customer.getCode());
@@ -250,7 +253,7 @@ public class CustomerBean implements Serializable {
 		this.setTermOfPayment(customer.getTermOfPayment() == 1 ? true : false);
 		this.setGrade(customer.getGrade() != null ? customer.getGrade() : "");
 		this.setAddress(customer.getAddress());
-		return "/pages/master/customerEdit.xhtml";
+		return null;
 	}
 
 	/**
@@ -262,7 +265,7 @@ public class CustomerBean implements Serializable {
 		Customer customer = customerService.searchCustomerById(new Long(id));
 		customer.setName(getName());
 		customer.setAddress(getAddress());
-		customerService.editCustomer(customer);
+		customerService.update(customer);
 		clearForm();
 		return "/pages/master/customerList.xhtml";
 
@@ -280,7 +283,7 @@ public class CustomerBean implements Serializable {
 		customer.setAddress(this.getAddress());
 		customer.setGrade(this.getGrade());
 		customer.setTermOfPayment(this.isTermOfPayment() ? 1 : 0);
-		customerService.editCustomer(customer);
+		customerService.update(customer);
 		clearForm();
 	}
 
@@ -292,7 +295,7 @@ public class CustomerBean implements Serializable {
 				.getExternalContext().getRequestParameterMap();
 		String id = params.get("customerId");
 		Customer customer = customerService.searchCustomerById(new Long(id));
-		customerService.deleteCustomer(customer);
+		customerService.delete(customer);
 		return null;
 	}
 
