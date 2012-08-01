@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.application.model.User;
 
-public interface UserDao {
+public interface UserDao extends BasisDao<User, Long> {
 	
 	public User getUserByLoginname(final String userName);
 	

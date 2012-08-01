@@ -5,11 +5,10 @@ import java.util.List;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.dao.support.DataAccessUtils;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import com.application.model.User;
 
-public class UserDaoImpl extends HibernateDaoSupport implements UserDao {
+public class UserDaoImpl extends BasisDaoImpl<User, Long> implements UserDao {
 	
 	@SuppressWarnings("unchecked")
 	public User getUserByLoginname(final String userName) {
