@@ -7,7 +7,6 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import com.application.model.Menu;
-import com.application.model.User;
 
 public class MenuDaoImpl extends HibernateDaoSupport implements MenuDao {
 
@@ -17,6 +16,7 @@ public class MenuDaoImpl extends HibernateDaoSupport implements MenuDao {
 		return getHibernateTemplate().find("from Menu");
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<Menu> getMenuByParent(String parent){
 		DetachedCriteria criteria = DetachedCriteria.forClass(Menu.class);
 		criteria.add(Restrictions.eq("parent", parent));

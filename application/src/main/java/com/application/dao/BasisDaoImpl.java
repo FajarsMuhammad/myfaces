@@ -9,7 +9,7 @@ import org.hibernate.LockMode;
 import org.hibernate.criterion.Example;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
-public abstract  class BasisDaoImpl<T, ID extends Serializable> extends HibernateDaoSupport implements BasisDao<T, ID>{
+public abstract class BasisDaoImpl<T, ID extends Serializable> extends HibernateDaoSupport implements BasisDao<T, ID>{
 
 	public Class<T> domainClass;
 	
@@ -55,14 +55,13 @@ public abstract  class BasisDaoImpl<T, ID extends Serializable> extends Hibernat
 		return 0;
 	}
 	
-	@SuppressWarnings("unchecked")
 	public T findById(ID id, boolean lock)
 	{
 		T entity;
 		if (lock)
-			entity = (T) getSession().load(domainClass, id, LockMode.UPGRADE);
+			entity = (T) getHibernateTemplate().load(domainClass, id, LockMode.UPGRADE);
 		else
-			entity = (T) getSession().load(domainClass, id);
+			entity = (T) getHibernateTemplate().load(domainClass, id);
 		
 		return entity;
 	}

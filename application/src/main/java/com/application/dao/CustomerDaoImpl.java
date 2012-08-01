@@ -35,6 +35,7 @@ public class CustomerDaoImpl extends BasisDaoImpl<Customer, Long> implements Cus
 			criteria.add(Restrictions.ilike((String)columnList.get(i), (String)valueList.get(i), MatchMode.ANYWHERE));
 		}
 		criteria.addOrder(Order.desc("code"));
+		
 		return getHibernateTemplate().findByCriteria(criteria);
 	}
 
