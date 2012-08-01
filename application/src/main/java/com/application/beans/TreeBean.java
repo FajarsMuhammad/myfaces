@@ -1,24 +1,14 @@
 package com.application.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-
-import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
 
 import org.apache.log4j.Logger;
 import org.primefaces.event.NodeSelectEvent;
 import org.primefaces.model.DefaultTreeNode;
 import org.primefaces.model.TreeNode;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.application.model.Menu;
-import com.application.model.User;
 import com.application.service.MenuService;
 import com.application.service.UserService;
 
@@ -66,6 +56,7 @@ public class TreeBean implements Serializable {
 	
 
 	private void buildMenu(TreeNode root,  TreeNode node, String rightName) {
+		log.info("Prepare Building Menu...");
 		List<Menu> menus = menuService.getMenuByParent(rightName);
         for (Menu m : menus) {
             TreeNode child = new DefaultTreeNode(m.getKind(), new Menu(m.getName(), m.getUrl(), m.getType()), null);
@@ -76,7 +67,9 @@ public class TreeBean implements Serializable {
             }
             buildMenu(root, child, m.getRightName());
         }
+        log.info("Building Menu Success...");
     }
+	
 
 	public TreeNode getRoot() {
 		return root;

@@ -9,6 +9,8 @@ import java.util.Map;
 import javax.faces.application.NavigationHandler;
 import javax.faces.context.FacesContext;
 
+import org.apache.log4j.Logger;
+
 import com.application.model.Customer;
 import com.application.service.CustomerService;
 import com.application.utility.GenerateCode;
@@ -17,11 +19,9 @@ import com.application.utility.ResourceHelper;
 
 public class CustomerBean implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 3051005476848367530L;
-
+	private static final Logger log = Logger.getLogger(CustomerBean.class);
+	
 	private String custId;
 	private String code;
 	private String name;
@@ -168,7 +168,6 @@ public class CustomerBean implements Serializable {
 	 * Methode button search
 	 */
 	public void search() {
-		//getCustomerList();
 		getModel();
 	}
 
@@ -206,43 +205,34 @@ public class CustomerBean implements Serializable {
 		fc.renderResponse();
 	}
 
-	/**
-	 * Tambah customer data into database untuk commandLink di halaman jsf
-	 */
-	public String addCustomer() {
-		Customer customer = new Customer();
-		customer.setCode(getCode());
-		customer.setName(getName());
-		customer.setAddress(getAddress());
-		customer.setGrade(getGrade());
-		// customer.setTermOfPayment(getTermOfPayment() == true ? 1 : 0);
-		customerService.save(customer);
-		clearForm();
-		return null;
-	}
+	
 
 	/**
 	 * Tambah customer data into database untuk commandbutton di halaman jsf
 	 */
 	public void saveCustomer() {
-		Customer customer = new Customer();
-		customer.setCode(generateCode.generateCustomerCode());
-		customer.setName(getName());
-		customer.setAddress(getAddress());
-		customer.setGrade(getGrade());
-		customer.setTermOfPayment(isTermOfPayment() ? 1 : 0);
-		customer.setCreatedDate(new Date());
-		//for(int i=0; i<500; i++){
-			customerService.save(customer);
-		//}
-		
-		clearForm();
+		try{
+			Customer customer = new Customer();
+			customer.setCode(generateCode.generateCustomerCode());
+			customer.setAddress(getAddress());
+			customer.setGrade(getGrade());
+			customer.setTermOfPayment(isTermOfPayment() ? 1 : 0);
+			customer.setCreatedDate(new Date());
+			for(int i=0; i<10000; i++){
+				customer.setName(getName()+i);
+				customerService.save(customer);
+			}		
+			clearForm();
+		}catch (Exception e) {
+			log.warn(e.toString(), e);
+		}
 	}
 
 	/**
 	 * Method pada saat update screen
 	 */
 	public String initialUpdate() {
+		log.info("prepare for update customer...");
 		Map<String, String> params = FacesContext.getCurrentInstance()
 				.getExternalContext().getRequestParameterMap();
 		String id = params.get("customerIdParam");
@@ -253,28 +243,17 @@ public class CustomerBean implements Serializable {
 		this.setTermOfPayment(customer.getTermOfPayment() == 1 ? true : false);
 		this.setGrade(customer.getGrade() != null ? customer.getGrade() : "");
 		this.setAddress(customer.getAddress());
-		return null;
+		log.info("prepare for update customer end...");
+		return null;		
 	}
 
-	/**
-	 * Edit customer data into database untuk commandLink di halaman jsf
-	 */
-	public String editCustomer() {
-		String id = FacesContext.getCurrentInstance().getExternalContext()
-				.getRequestParameterMap().get("custId");
-		Customer customer = customerService.searchCustomerById(new Long(id));
-		customer.setName(getName());
-		customer.setAddress(getAddress());
-		customerService.update(customer);
-		clearForm();
-		return "/pages/master/customerList.xhtml";
-
-	}
-
+	
 	/**
 	 * Edit customer data ke database untuk commandButton di halaman jsf
 	 */
 	public void updateCustomer() {
+		log.info("Update Customer Begin");
+		
 		String id = FacesContext.getCurrentInstance().getExternalContext()
 				.getRequestParameterMap().get("custId");
 		Customer customer = customerService.searchCustomerById(new Long(id));
@@ -285,6 +264,8 @@ public class CustomerBean implements Serializable {
 		customer.setTermOfPayment(this.isTermOfPayment() ? 1 : 0);
 		customerService.update(customer);
 		clearForm();
+		log.info("Update Customer End");
+		
 	}
 
 	/**
@@ -293,7 +274,7 @@ public class CustomerBean implements Serializable {
 	public String deleteCustomer() {
 		Map<String, String> params = FacesContext.getCurrentInstance()
 				.getExternalContext().getRequestParameterMap();
-		String id = params.get("customerId");
+		String id = params.get("customerIdParam");
 		Customer customer = customerService.searchCustomerById(new Long(id));
 		customerService.delete(customer);
 		return null;
