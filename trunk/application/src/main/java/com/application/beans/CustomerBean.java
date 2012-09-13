@@ -7,6 +7,10 @@ import java.util.List;
 import java.util.Map;
 
 import javax.faces.application.NavigationHandler;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import org.apache.log4j.Logger;
@@ -17,11 +21,13 @@ import com.application.utility.GenerateCode;
 import com.application.utility.LabelValueBean;
 import com.application.utility.ResourceHelper;
 
+@ManagedBean(name = "customer")
+@RequestScoped
 public class CustomerBean implements Serializable {
 
 	private static final long serialVersionUID = 3051005476848367530L;
 	private static final Logger log = Logger.getLogger(CustomerBean.class);
-	
+
 	private String custId;
 	private String code;
 	private String name;
@@ -33,11 +39,15 @@ public class CustomerBean implements Serializable {
 	private boolean termOfPayment;
 
 	private String customerInputRedir = "/pages/master/customerInput.xhtml";
+
+	@ManagedProperty(value = "#{customerService}")
 	private CustomerService customerService;
+
+	@ManagedProperty(value = "#{generateCode}")
 	private GenerateCode generateCode;
+
 	private CustomerDataModel customerDataModel;
 	private Customer[] selectedCustomers;
-
 
 	public Customer[] getSelectedCustomers() {
 		return selectedCustomers;
@@ -46,8 +56,8 @@ public class CustomerBean implements Serializable {
 	public void setSelectedCustomers(Customer[] selectedCustomers) {
 		this.selectedCustomers = selectedCustomers;
 	}
-	
-	public CustomerDataModel getModel(){
+
+	public CustomerDataModel getModel() {
 		customerDataModel = new CustomerDataModel(getCustomerList());
 		return customerDataModel;
 	}
@@ -83,7 +93,6 @@ public class CustomerBean implements Serializable {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-
 
 	public String getGender() {
 		return gender;
@@ -133,7 +142,6 @@ public class CustomerBean implements Serializable {
 		this.termOfPayment = termOfPayment;
 	}
 
-
 	public void setCustomerService(CustomerService customerService) {
 		this.customerService = customerService;
 	}
@@ -158,9 +166,9 @@ public class CustomerBean implements Serializable {
 		}
 
 		customers = customerService.searchCustomer(columnList, valueList);
-		if (customers.isEmpty()) 
-			customers = new ArrayList<Customer>();				
-		
+		if (customers.isEmpty())
+			customers = new ArrayList<Customer>();
+
 		return customers;
 	}
 
@@ -174,21 +182,26 @@ public class CustomerBean implements Serializable {
 	// Column List
 	public List<LabelValueBean> getColumnList() {
 		List<LabelValueBean> columnList = new ArrayList<LabelValueBean>();
-		columnList.add(new LabelValueBean(ResourceHelper.getResources("label.customerCode"), "code"));
-		columnList.add(new LabelValueBean(ResourceHelper.getResources("label.customerName"), "name"));
+		columnList.add(new LabelValueBean(ResourceHelper
+				.getResources("label.customerCode"), "code"));
+		columnList.add(new LabelValueBean(ResourceHelper
+				.getResources("label.customerName"), "name"));
 		return columnList;
 	}
 
 	// Grade List
 	public List<LabelValueBean> getGradeList() {
 		List<LabelValueBean> gradeList = new ArrayList<LabelValueBean>();
-		gradeList.add(new LabelValueBean(ResourceHelper.getResources("label.gradeA"), "A"));
-		gradeList.add(new LabelValueBean(ResourceHelper.getResources("label.gradeB"), "B"));
-		gradeList.add(new LabelValueBean(ResourceHelper.getResources("label.gradeC"), "C"));
-		gradeList.add(new LabelValueBean(ResourceHelper.getResources("label.gradeD"), "D"));
+		gradeList.add(new LabelValueBean(ResourceHelper
+				.getResources("label.gradeA"), "A"));
+		gradeList.add(new LabelValueBean(ResourceHelper
+				.getResources("label.gradeB"), "B"));
+		gradeList.add(new LabelValueBean(ResourceHelper
+				.getResources("label.gradeC"), "C"));
+		gradeList.add(new LabelValueBean(ResourceHelper
+				.getResources("label.gradeD"), "D"));
 		return gradeList;
 	}
-
 
 	/**
 	 * Method when click add button in list view
@@ -197,33 +210,35 @@ public class CustomerBean implements Serializable {
 		this.setCode(generateCode.generateCustomerCode());
 	}
 
-	public void gotoPage() {
-		FacesContext fc = FacesContext.getCurrentInstance();
-		NavigationHandler nav = fc.getApplication().getNavigationHandler();
-		nav.handleNavigation(fc, null,
-				"/pages/master/customerInput?faces-redirect=true");
-		fc.renderResponse();
+	public String goInputPage() {
+		return "/pages/master/customerInput";
 	}
-
 	
+	public String goListPage(){
+		return "/pages/master/customerList";
+	}
 
 	/**
 	 * Tambah customer data into database untuk commandbutton di halaman jsf
 	 */
 	public void saveCustomer() {
-		try{
+		try {
 			Customer customer = new Customer();
 			customer.setCode(generateCode.generateCustomerCode());
 			customer.setAddress(getAddress());
 			customer.setGrade(getGrade());
 			customer.setTermOfPayment(isTermOfPayment() ? 1 : 0);
 			customer.setCreatedDate(new Date());
-			for(int i=0; i<10000; i++){
-				customer.setName(getName()+i);
-				customerService.save(customer);
-			}		
+			// for(int i=0; i<10000; i++){
+			customer.setName(getName());
+			customerService.save(customer);
+			// }
 			clearForm();
-		}catch (Exception e) {
+			FacesContext fc = FacesContext.getCurrentInstance();
+			NavigationHandler nav = fc.getApplication().getNavigationHandler();
+			nav.handleNavigation(fc, null, "/pages/master/customerList");
+			fc.renderResponse();
+		} catch (Exception e) {
 			log.warn(e.toString(), e);
 		}
 	}
@@ -236,7 +251,9 @@ public class CustomerBean implements Serializable {
 		Map<String, String> params = FacesContext.getCurrentInstance()
 				.getExternalContext().getRequestParameterMap();
 		String id = params.get("customerIdParam");
+		log.info("ID=="+id);
 		Customer customer = customerService.searchCustomerById(new Long(id));
+		log.info("CUST ID=="+customer.getCustomerId());
 		this.setCustId("" + customer.getCustomerId());
 		this.setCode(customer.getCode());
 		this.setName(customer.getName());
@@ -244,16 +261,15 @@ public class CustomerBean implements Serializable {
 		this.setGrade(customer.getGrade() != null ? customer.getGrade() : "");
 		this.setAddress(customer.getAddress());
 		log.info("prepare for update customer end...");
-		return null;		
+		return null;
 	}
 
-	
 	/**
 	 * Edit customer data ke database untuk commandButton di halaman jsf
 	 */
 	public void updateCustomer() {
 		log.info("Update Customer Begin");
-		
+
 		String id = FacesContext.getCurrentInstance().getExternalContext()
 				.getRequestParameterMap().get("custId");
 		Customer customer = customerService.searchCustomerById(new Long(id));
@@ -265,7 +281,7 @@ public class CustomerBean implements Serializable {
 		customerService.update(customer);
 		clearForm();
 		log.info("Update Customer End");
-		
+
 	}
 
 	/**
@@ -287,6 +303,5 @@ public class CustomerBean implements Serializable {
 		setName("");
 		setAddress("");
 	}
-
 
 }

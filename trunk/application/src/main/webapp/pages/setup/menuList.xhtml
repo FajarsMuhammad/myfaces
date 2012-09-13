@@ -1,0 +1,101 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<!-- <ui:define name="pageContent"> -->
+	<h:head>
+		<h:outputStylesheet library="css" name="default.css" />
+		<h:outputScript library="script" name="check.js"></h:outputScript>
+	</h:head>
+	<div>
+		<h:form>
+			<h:outputText value="Search" />
+			<h:selectOneMenu id="searchColumn" value="#{menuBean.searchColumn}">
+				<f:selectItem itemLabel="#{msg['label.chooseOne']}" itemValue="" />
+				<f:selectItems value="#{menuBean.getColumnList()}" var="c"
+					itemLabel="#{c.label}" itemValue="#{c.value}" />
+			</h:selectOneMenu>
+			<h:outputText value=" " />
+			<p:inputText id="searchValue" value="#{menuBean.searchValue}"
+				size="30" />
+			<p:commandButton id="searchButton" value="Search"
+				action="#{menuBean.search}">
+			</p:commandButton>
+			<br />
+			<br />
+			<p:commandButton update=":panelContent"
+				value="#{msg['label.add']}" action="#{menuBean.initialAdd}">
+				<f:setPropertyActionListener target="#{treeBean.includePage}"
+					value="#{menuBean.menuBeanInputRedir}" />
+			</p:commandButton>
+			<p:dataTable var="c" value="#{menuBean.lazyModel}" paginator="true"
+				rows="10"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="10,20,50">
+
+				<p:column selectionMode="multiple" />
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="#{msg['label.code']}" />
+					</f:facet>
+					<h:outputText value="#{c.code}" />
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="#{msg['label.name']}" />
+					</f:facet>
+					<h:outputText value="#{c.name}" />
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Grade" />
+					</f:facet>
+					<h:outputText value="#{c.grade}" />
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="#{msg['label.address']}" />
+					</f:facet>
+					<h:outputText value="#{c.address}" />
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+    				Created Date
+				</f:facet>
+					<h:outputText value="#{c.createdDate}">
+						<f:convertDateTime pattern="d-M-yyyy" />
+					</h:outputText>
+				</p:column>
+				<p:column style="text-align:center">
+					<f:facet name="header">
+						<h:outputText value="#{msg['label.action']}" />
+					</f:facet>
+					<p:commandLink 
+						actionListener="#{menuBean.initialUpdate}">
+						<f:setPropertyActionListener target="#{treeBean.includePage}"
+							value="/pages/master/menuBeanEdit.xhtml" />
+						<f:param name="menuBeanIdParam" value="#{c.menuBeanId}" />
+						<h:outputText value="#{msg['label.edit']}" />
+					</p:commandLink>
+					|					  
+					<p:commandLink 
+						actionListener="#{menuBean.deleteCustomer}"
+						onclick="if(!confirm('Are you sure you want to delete this record?')) return false;">
+						<f:setPropertyActionListener target="#{treeBean.includePage}"
+							value="/pages/setup/menuList.xhtml" />
+						<f:param name="menuBeanIdParam" value="#{c.menuBeanId}" />
+						<h:outputText value="#{msg['label.delete']}" />
+					</p:commandLink>
+				</p:column>
+			</p:dataTable>
+			
+			<p:commandButton id="addButton" update=":panelContent"
+				value="#{msg['label.add']}" action="#{menuBean.initialAdd}">
+				<f:setPropertyActionListener target="#{treeBean.includePage}"
+					value="/pages/setup/menuInput.xhtml" />
+			</p:commandButton>
+		</h:form>
+	</div>
+	<!-- </ui:define> -->
+</ui:composition>

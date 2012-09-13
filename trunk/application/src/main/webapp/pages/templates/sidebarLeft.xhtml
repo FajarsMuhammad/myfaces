@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:body>
+	<ui:composition>
+		<h:form>
+			<p:tree dynamic="true" value="#{treeBean.root}" var="menu"
+				selectionMode="single">
+				<f:event type="preRenderView" listener="#{treeBean.init}" />
+				<p:ajax event="select" update=":content" process="@this"
+					listener="#{treeBean.onNodeSelect}" />
+				<p:treeNode expandedIcon="ui-icon ui-icon-folder-open"
+					collapsedIcon="ui-icon ui-icon-folder-collapsed">
+					<h:outputText value="#{menu.name}" />
+				</p:treeNode>
+				<p:treeNode id="abc" type="page" icon="ui-icon ui-icon-document">
+					<h:outputText value="#{menu.name}" />
+				</p:treeNode>
+			</p:tree>
+			<h:commandLink action="/pages/master/customerList"
+				value="Show All Customer" />
+		</h:form>
+	</ui:composition>
+</h:body>
+</html>
+
+<!-- <p:tree value="#{treeBean.root}" var="menu"
+						selectionMode="single" nodeSelectListener="#{treeBean.onNodeSelect}">
+						<f:event type="preRenderView" listener="#{treeBean.init}" />
+						<p:treeNode expandedIcon="ui-icon ui-icon-folder-open"
+							collapsedIcon="ui-icon ui-icon-folder-collapsed">
+							<h:outputText value="#{menu.name}" />
+						</p:treeNode>
+						<p:treeNode id="abc" type="page" icon="ui-icon ui-icon-document">
+							<h:outputText value="#{menu.name}" />
+						</p:treeNode>
+
+
+					</p:tree> -->
