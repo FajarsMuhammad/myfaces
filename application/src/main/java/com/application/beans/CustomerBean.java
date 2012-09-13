@@ -225,21 +225,18 @@ public class CustomerBean implements Serializable {
 		try {
 			Customer customer = new Customer();
 			customer.setCode(generateCode.generateCustomerCode());
-			customer.setAddress(getAddress());
-			customer.setGrade(getGrade());
-			customer.setTermOfPayment(isTermOfPayment() ? 1 : 0);
+			customer.setAddress(this.getAddress());
+			customer.setGrade(this.getGrade());
+			customer.setTermOfPayment(this.isTermOfPayment() ? 1 : 0);
 			customer.setCreatedDate(new Date());
 			// for(int i=0; i<10000; i++){
-			customer.setName(getName());
+			customer.setName(this.getName());
 			customerService.save(customer);
 			// }
 			clearForm();
-			FacesContext fc = FacesContext.getCurrentInstance();
-			NavigationHandler nav = fc.getApplication().getNavigationHandler();
-			nav.handleNavigation(fc, null, "/pages/master/customerList");
-			fc.renderResponse();
 		} catch (Exception e) {
 			log.warn(e.toString(), e);
+			e.printStackTrace();
 		}
 	}
 
