@@ -1,7 +1,14 @@
 package com.application.beans;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
+
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 import org.apache.log4j.Logger;
 import org.primefaces.event.NodeSelectEvent;
@@ -12,6 +19,8 @@ import com.application.model.Menu;
 import com.application.service.MenuService;
 import com.application.service.UserService;
 
+@ManagedBean(name ="treeBean")
+@RequestScoped
 public class TreeBean implements Serializable {
 	
 	private static final long serialVersionUID = -8570149161349805862L;
@@ -23,8 +32,10 @@ public class TreeBean implements Serializable {
 	
 	private String includePage;
 	
+	@ManagedProperty(value ="#{menuService}")
 	private MenuService menuService;
 	
+	@ManagedProperty(value ="#{userService}")
 	private UserService userService;
 	
 	public TreeBean() {
@@ -56,7 +67,7 @@ public class TreeBean implements Serializable {
 	
 
 	private void buildMenu(TreeNode root,  TreeNode node, String rightName) {
-		log.info("Prepare Building Menu...");
+		
 		List<Menu> menus = menuService.getMenuByParent(rightName);
         for (Menu m : menus) {
             TreeNode child = new DefaultTreeNode(m.getKind(), new Menu(m.getName(), m.getUrl(), m.getType()), null);
@@ -67,7 +78,7 @@ public class TreeBean implements Serializable {
             }
             buildMenu(root, child, m.getRightName());
         }
-        log.info("Building Menu Success...");
+     
     }
 	
 
@@ -86,11 +97,19 @@ public class TreeBean implements Serializable {
 
 	public void onNodeSelect(NodeSelectEvent event) {			  
 		String type = event.getTreeNode().getType().toString();
+		try{
 		if (type.equalsIgnoreCase("page")) {			
 			Menu menu = (Menu) event.getTreeNode().getData();
+			System.out.println("Page == "+ menu.getUrl());
 			setIncludePage(menu.getUrl());
+			 FacesContext.getCurrentInstance().getExternalContext().redirect(menu.getUrl());
 		} else {
 			setIncludePage("");
+		}
+		System.out.println("include page=="+includePage);
+		}catch (IOException e) {
+			e.printStackTrace();
+			// TODO: handle exception
 		}
 	}
 	

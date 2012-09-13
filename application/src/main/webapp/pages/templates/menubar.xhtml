@@ -1,37 +1,29 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.prime.com.tr/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
-<f:view contentType="text/html">
-	<h:head>
-		<h:outputStylesheet library="css" name="default.css" />
-	</h:head>
-	<h:body>
-		<h:form>
-			<p:growl id="messages" />
+<h:body>
+	<ui:composition>
+		<h:form autodisplay="false">
 			<p:menubar>
-				<p:submenu label="Actions" icon="ui-icon-gear">
-					<p:submenu label="Ajax" icon="ui-icon-refresh">
-						<p:menuitem value="Save" actionListener="#{menuBean.save}"
-							icon="ui-icon-disk" update="messages" />
-						<p:menuitem value="Update" actionListener="#{menuBean.update}"
-							icon="ui-icon-arrowrefresh-1-w" update="messages" />
+				<p:submenu label="File" icon="ui-icon-document">
+					<p:submenu label="New" icon="ui-icon-contact">
+						<p:menuitem value="Project" url="#" />
+						<p:menuitem value="Other" url="#" />
 					</p:submenu>
-					<p:submenu label="Non-Ajax" icon="ui-icon-newwin">
-						<p:menuitem value="Delete" actionListener="#{menuBean.delete}"
-							icon="ui-icon-close" update="messages" ajax="false" />
-					</p:submenu>
+					<p:menuitem value="Customer" url="/pages/master/customerList.xhtml" />
+					<p:separator />
+					<p:menuitem value="Quit" url="#" />
 				</p:submenu>
 
-				<p:menuitem value="Quit" url="http://www.primefaces.org"
+				<p:menuitem value="Quit"
+					url="#{request.contextPath}/j_spring_security_logout"
 					icon="ui-icon-close" />
 			</p:menubar>
-
 		</h:form>
-		</h:body>
-		</f:view>
+	</ui:composition>
+</h:body>
 </html>

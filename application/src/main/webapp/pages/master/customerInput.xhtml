@@ -1,15 +1,23 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.prime.com.tr/ui"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
-	<h:head>
-		<h:outputStylesheet library="css" name="default.css" />
-	</h:head>
-	<!-- <ui:define name="pageContent">   -->
-	<div>
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.prime.com.tr/ui">
+<h:head>
+
+</h:head>
+<h:body>
+    <ui:composition template="../templates/template.xhtml">
+        <ui:define name="heading">
+            My Heading
+        </ui:define>
+        
+        
+        <ui:define name="body">
 		<h:form>
-			
+			<p:panel header="Customer">
 			<br />
 			<h:panelGrid columns="3">
 
@@ -45,35 +53,19 @@
 				<h:outputText value=" " />
 			</h:panelGrid>
 
-			<p:commandButton update="mainPanel" id="saveButton" value="#{msg['label.save']} "
-				action="#{customer.saveCustomer}">
-				<f:setPropertyActionListener target="#{treeBean.includePage}"
-					value="/pages/master/customerList.xhtml" />
+			<p:commandButton id="saveButton" value="#{msg['label.save']} "
+				action="#{customer.saveCustomer}" ajax="false">
+				<!--f:setPropertyActionListener target="#{treeBean.includePage}"
+					value="/pages/master/customerList.xhtml" /-->
 			</p:commandButton>
 			<h:outputText value=" " />
-			<p:commandButton update="mainPanel" id="cancelButton" value="#{msg['label.cancel']} ">
-				<f:setPropertyActionListener target="#{treeBean.includePage}"
-					value="/pages/master/customerList.xhtml" />
+			<p:commandButton id="cancelButton" value="#{msg['label.cancel']}" action="/pages/master/customerList.xhtml" ajax="false">
+				<!--f:setPropertyActionListener target="#{treeBean.includePage}"
+					value="/pages/master/customerList.xhtml" /-->
 			</p:commandButton>
+			</p:panel>
 		</h:form>
-	</div>
-	<!-- </ui:define> -->
+</ui:define>
 </ui:composition>
-<!-- <h:outputText value="Gender" />
-				<p:selectOneMenu value="#{autoCompleteBean.selectedPlayer1}"
-					effect="fade" converter="player">
-					<f:selectItem itemLabel="Select One" itemValue="" />
-					<f:selectItems value="#{autoCompleteBean.players}" var="player"
-						itemLabel="#{player.name}" itemValue="#{player}" />
-				</p:selectOneMenu> -->
-<!-- <p:commandLink update="mainPanel"
-				actionListener="#{customer.addCustomer}">
-				<f:setPropertyActionListener target="#{treeBean.includePage}"
-					value="/pages/customer/customerList.xhtml" />
-				<h:outputText value="Save" />
-			</p:commandLink> -->
-<!-- <p:commandLink update="mainPanel">
-				<f:setPropertyActionListener target="#{treeBean.includePage}"
-					value="/pages/customer/customerList.xhtml" />
-				<h:outputText value="Cancel" />
-			</p:commandLink> -->
+</h:body>
+</html>
