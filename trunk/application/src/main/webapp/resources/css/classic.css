@@ -1,15 +1,13 @@
 body {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 11px;
-	
 }
 
-#heading {
-	//padding: 20px;
-    //height: 30px;
-    //margin-bottom: 10px;
-   // background: #dddddd;
-   // border: 1px solid darkGray;
+#heading { /*padding: 20px;
+    height: 30px;
+    margin-bottom: 10px;
+    background: #dddddd;
+    border: 1px solid darkGray;*/	
 }
 
 #footer {
@@ -35,17 +33,15 @@ body {
 	display: block;
 	font-family: Arial, sans-serif;
 	font-size: 11px;
-	
 }
 
-/* #content { //
+/* #content { 
 	border: thin solid lightGray;
 	background-color: white;
 	float: right;
 	width: 81%;
 	margin-bottom: 10px;
 } */
-
 .header {
 	font-size: 1.4em;
 	font-style: italic;
@@ -82,11 +78,10 @@ a:hover {
 	border: 0px !important;
 }
 
-.ui-layout-north .ui-layout-unit-content {
-	//padding: 20px;
-    overflow: visible !important;
-    //margin: 10px;
-   top: 55px;
+.ui-layout-north .ui-layout-unit-content { /*padding: 20px;*/
+	overflow: visible !important;
+	/*margin: 10px;*/
+	top: 55px;
 }
 
 .ui-layout-north {
@@ -99,16 +94,15 @@ a:hover {
 	margin: 10px;
 }
 
-.ui-layout-center{
+.ui-layout-center {
 	border: 0px !important;
 	padding: 0 5px 0 5px !important;
 	-moz-box-shadow: 5px 5px 5px #888888; /* Firefox 3.6 and earlier */
 	box-shadow: 5px 5px 5px #888888;
 }
 
-.ui-layout-west{
+.ui-layout-west {
 	border: 0px !important;
 	-moz-box-shadow: 5px 5px 5px #888888; /* Firefox 3.6 and earlier */
 	box-shadow: 5px 5px 5px #888888;
 }
-
