@@ -5,12 +5,11 @@ body {
 }
 
 #heading {
-	padding: 20px;
-    height: 30px;
-    margin-bottom: 10px;
+	//padding: 20px;
+    //height: 30px;
+    //margin-bottom: 10px;
    // background: #dddddd;
    // border: 1px solid darkGray;
-	
 }
 
 #footer {
@@ -84,9 +83,10 @@ a:hover {
 }
 
 .ui-layout-north .ui-layout-unit-content {
-	padding: 20px;
+	//padding: 20px;
     overflow: visible !important;
-    margin: 10px;
+    //margin: 10px;
+   top: 55px;
 }
 
 .ui-layout-north {
