@@ -13,16 +13,12 @@
 
 <h:body>
 	<p:layout fullPage="true">
-		<p:layoutUnit position="north" size="100" header="Top"
-			resizable="true" closable="true" collapsible="true">
+		<p:layoutUnit position="north" size="100" resizable="true"
+			closable="true" collapsible="true">
 			<div id="heading">
-				<h:form>
-					<div style="float: bottom;">
-						<ui:insert name="menubarTop">
-							<ui:include src="menubar.xhtml" />
-						</ui:insert>
-					</div>
-				</h:form>
+				<ui:insert name="menubarTop">
+					<ui:include src="menubar.xhtml" />
+				</ui:insert>
 			</div>
 		</p:layoutUnit>
 		<!-- <p:layoutUnit position="west" size="200" header="Menu"
