@@ -78,6 +78,11 @@ a:hover {
 	border: 0px !important;
 }
 
+.ui-panel .ui-panel-titlebar {
+    padding: 20px;
+}
+
+
 .ui-layout-north .ui-layout-unit-content { /*padding: 20px;*/
 	overflow: visible !important;
 	/*margin: 10px;*/
