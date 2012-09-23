@@ -37,6 +37,8 @@ public class CustomerBean implements Serializable {
 	private String searchColumn;
 	private String searchValue;
 	private boolean termOfPayment;
+	
+	private String nameFajar;
 
 	private String customerInputRedir = "/pages/master/customerInput.xhtml";
 
