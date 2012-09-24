@@ -8,7 +8,9 @@
 <h:body>
 	<ui:composition>
 		<h:form autodisplay="false">
-			<p:menubar model="#{menubarBean.simpleMenuModel}"/>
+			<p:menubar model="#{menubarBean.simpleMenuModel}">
+				<f:event type="preRenderView" listener="#{menubarBean.init}" />
+			</p:menubar>
 		</h:form>
 	</ui:composition>
 </h:body>
