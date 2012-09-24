@@ -7,14 +7,14 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<title><ui:insert name="title">Default Title</ui:insert></title>
+	<title><ui:insert name="title">Application</ui:insert></title>
 	<h:outputStylesheet library="css" name="classic.css" />
 </h:head>
 
 <h:body>
 	<p:layout fullPage="true">
-		<p:layoutUnit position="north" size="100" resizable="true"
-			closable="true" collapsible="true">
+		<p:layoutUnit position="north" size="100" resizable="false"
+			closable="false" spacing="0" rendered="true">
 			<div id="heading">
 				<ui:insert name="menubarTop">
 					<ui:include src="menubar.xhtml" />
@@ -36,7 +36,7 @@
 		</p:layoutUnit>
 		<p:layoutUnit position="south">
 			<div id="footer">
-				<ui:insert name="footer">Copy Right </ui:insert>
+				<ui:insert name="footer">Copy Left Jarot</ui:insert>
 			</div>
 		</p:layoutUnit>
 	</p:layout>
