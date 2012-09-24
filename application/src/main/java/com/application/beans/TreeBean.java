@@ -26,9 +26,9 @@ public class TreeBean implements Serializable {
 	private static final long serialVersionUID = -8570149161349805862L;
 	private static final Logger log = Logger.getLogger(TreeBean.class);
 	
-	private TreeNode root;
-	
 	private TreeNode parent;
+	
+	private TreeNode ch;
 	
 	private String includePage;
 	
@@ -61,29 +61,29 @@ public class TreeBean implements Serializable {
 	
 	
 	public void init(){
-		root = new DefaultTreeNode("Root", null);	
-		buildMenu(root,  parent, "root");
+		parent = new DefaultTreeNode("Root", null);	
+		buildMenu(parent,  ch, "root");
 	}
 	
 
-	private void buildMenu(TreeNode root,  TreeNode node, String rightName) {
+	private void buildMenu(TreeNode parent,  TreeNode child, String rightName) {
 		
 		List<Menu> menus = menuService.getMenuByParent(rightName);
         for (Menu m : menus) {
-            TreeNode child = new DefaultTreeNode(m.getKind(), new Menu(m.getName(), m.getUrl(), m.getType()), null);
-            if (node == null) {
-                root.addChild(child);
+            TreeNode node = new DefaultTreeNode(m.getKind(), new Menu(m.getName(), m.getUrl(), m.getType()), null);
+            if (child == null) {
+            	parent.addChild(node);
             } else {
-            	node.addChild(child);
+            	child.addChild(node);
             }
-            buildMenu(root, child, m.getRightName());
+            buildMenu(parent, node, m.getRightName());
         }
      
     }
 	
 
 	public TreeNode getRoot() {
-		return root;
+		return parent;
 	}
 	
 	
