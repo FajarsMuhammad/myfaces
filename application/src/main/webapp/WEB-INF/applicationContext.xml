@@ -22,7 +22,7 @@ http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 	<import resource="classpath:com/application/springsource/HibernateSessionFactory.xml"/>
  
 	<!-- Beans Declaration -->
-	<import resource="classes/com/application/spring/CustomerBean.xml"/>
- 	<import resource="classes/com/application/spring/UserBean.xml"/>
- 	<import resource="classes/com/application/spring/MenuBean.xml"/>
+	<import resource="classpath:com/application/spring/CustomerBean.xml"/>
+ 	<import resource="classpath:com/application/spring/UserBean.xml"/>
+ 	<import resource="classpath:com/application/spring/MenuBean.xml"/>
 </beans>
