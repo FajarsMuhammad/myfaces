@@ -7,7 +7,8 @@ body {
     height: 30px;
     margin-bottom: 10px;
     background: #dddddd;
-    border: 1px solid darkGray;*/	
+    border: 1px solid darkGray;*/
+	background: #dddddd;
 }
 
 #footer {
@@ -78,15 +79,12 @@ a:hover {
 	border: 0px !important;
 }
 
-.ui-panel .ui-panel-titlebar {
-    padding: 20px;
-}
-
 
 .ui-layout-north .ui-layout-unit-content { /*padding: 20px;*/
 	overflow: visible !important;
 	/*margin: 10px;*/
 	top: 55px;
+	background: #dddddd;
 }
 
 .ui-layout-north {
@@ -95,8 +93,7 @@ a:hover {
 	overflow: visible !important;;
 	-moz-box-shadow: 5px 5px 5px #888888; /* Firefox 3.6 and earlier */
 	box-shadow: 5px 5px 5px #888888;
-	width: 98%;
-	margin: 10px;
+	background: #dddddd;
 }
 
 .ui-layout-center {
@@ -110,4 +107,14 @@ a:hover {
 	border: 0px !important;
 	-moz-box-shadow: 5px 5px 5px #888888; /* Firefox 3.6 and earlier */
 	box-shadow: 5px 5px 5px #888888;
+}
+
+.ui-menubar  {
+    border: 1px solid #aed0ea !important;
+    background: #74b2e2 url(../images/myImage.png) 50% 50% repeat-x !important;
+    color: #ffffff !important;
+    font-weight: bolder !important;
+}
+.ui-menuitem-link {
+	font-size: 15px !important;
 }
