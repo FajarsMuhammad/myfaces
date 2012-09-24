@@ -37,7 +37,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 				true,
 				getAuthorities(dbUser.getAccess()));
 		} catch (Exception e) {
-			throw new UsernameNotFoundException("Error in retrieving user, UserName not found");
+			throw new UsernameNotFoundException("Error in retrieving user, UserName or password not found");
 		}
 		
 		return user;
