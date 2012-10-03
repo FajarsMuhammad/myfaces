@@ -109,3 +109,50 @@ WITH (
   OIDS=FALSE
 );
 
+
+CREATE TABLE "role"
+(
+  role_id bigint NOT NULL,
+  role_shortdescription character varying(30) NOT NULL,
+  role_longdescription character varying(1000),
+  "version" integer NOT NULL DEFAULT 0,
+  CONSTRAINT pk_role PRIMARY KEY (role_id)
+)
+WITH (
+  OIDS=FALSE
+);
+
+
+
+CREATE TABLE role_menu
+(
+  role_menu_id bigint NOT NULL,
+  role_id bigint NOT NULL,
+  menu_id bigint NOT NULL,
+  created_date timestamp without time zone,
+  created_by character varying(24),
+  CONSTRAINT pk_role_menu PRIMARY KEY (role_menu_id)
+)
+WITH (
+  OIDS=TRUE
+);
+
+
+CREATE TABLE user_role
+(
+  user_role_id bigint NOT NULL,
+  user_id bigint NOT NULL,
+  role_id bigint NOT NULL,
+  "version" integer NOT NULL DEFAULT 0,
+  CONSTRAINT pk_user_role PRIMARY KEY (user_role_id),
+  CONSTRAINT ref_to_role FOREIGN KEY (role_id)
+      REFERENCES "role" (role_id) MATCH SIMPLE
+      ON UPDATE RESTRICT ON DELETE RESTRICT,
+  CONSTRAINT ref_to_usr FOREIGN KEY (user_id)
+      REFERENCES users (user_id) MATCH SIMPLE
+      ON UPDATE RESTRICT ON DELETE RESTRICT
+)
+WITH (
+  OIDS=FALSE
+);
+
