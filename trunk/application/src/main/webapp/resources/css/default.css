@@ -267,6 +267,7 @@ img.right {
 
 .sidebar a.ui-menuitem-link:hover {
 	text-decoration: none;
+	color: #dddddd;
 }
 
 /* Search */
@@ -427,3 +428,4 @@ img.right {
     margin: 0 0 0 !important;   
  //   background: blue;
 }
+
