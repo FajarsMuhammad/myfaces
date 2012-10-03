@@ -195,50 +195,82 @@
             <!-- <version>3.3.1</version> -->  
             <version>3.0.M3</version>
         </dependency>
+	    
+	    <!-- Themes -->
 	    <dependency>  
-	    <groupId>org.primefaces.themes</groupId>  
-	    <artifactId>aristo</artifactId>  
-	    <version>1.0.1</version>  
+		    <groupId>org.primefaces.themes</groupId>  
+		    <artifactId>aristo</artifactId>  
+		    <version>1.0.1</version>  
 		</dependency> 
 		<dependency>  
-	    <groupId>org.primefaces.themes</groupId>  
-	    <artifactId>eggplant</artifactId>  
-	    <version>1.0.1</version>  
+		    <groupId>org.primefaces.themes</groupId>  
+		    <artifactId>eggplant</artifactId>  
+		    <version>1.0.1</version>  
 		</dependency> 
 		<dependency>  
-	    <groupId>org.primefaces.themes</groupId>  
-	    <artifactId>humanity</artifactId>  
-	    <version>1.0.1</version>  
+		    <groupId>org.primefaces.themes</groupId>  
+		    <artifactId>humanity</artifactId>  
+		    <version>1.0.8</version>  
 		</dependency> 
 		<dependency>  
-	    <groupId>org.primefaces.themes</groupId>  
-	    <artifactId>glass-x</artifactId>  
-	    <version>1.0.1</version>  
+		    <groupId>org.primefaces.themes</groupId>  
+		    <artifactId>glass-x</artifactId>  
+		    <version>1.0.1</version>  
 		</dependency> 
 		<dependency>  
-	    <groupId>org.primefaces.themes</groupId>  
-	    <artifactId>overcast</artifactId>  
-	    <version>1.0.1</version>  
+		    <groupId>org.primefaces.themes</groupId>  
+		    <artifactId>overcast</artifactId>  
+		    <version>1.0.1</version>  
 		</dependency> 
 		<dependency>  
-	    <groupId>org.primefaces.themes</groupId>  
-	    <artifactId>smoothness</artifactId>  
-	    <version>1.0.1</version>  
+		    <groupId>org.primefaces.themes</groupId>  
+		    <artifactId>smoothness</artifactId>  
+		    <version>1.0.1</version>  
 		</dependency> 
 		<dependency>  
-	    <groupId>org.primefaces.themes</groupId>  
-	    <artifactId>pepper-grinder</artifactId>  
-	    <version>1.0.1</version>  
+		    <groupId>org.primefaces.themes</groupId>  
+		    <artifactId>pepper-grinder</artifactId>  
+		    <version>1.0.1</version>  
 		</dependency>
 		<dependency>  
-	    <groupId>org.primefaces.themes</groupId>  
-	    <artifactId>mint-choc</artifactId>  
-	    <version>1.0.1</version>  
+		    <groupId>org.primefaces.themes</groupId>  
+		    <artifactId>mint-choc</artifactId>  
+		    <version>1.0.1</version>  
 		</dependency>
 		<dependency>  
-	    <groupId>org.primefaces.themes</groupId>  
-	    <artifactId>sunny</artifactId>  
-	    <version>1.0.1</version>  
+		    <groupId>org.primefaces.themes</groupId>  
+		    <artifactId>sunny</artifactId>  
+		    <version>1.0.1</version>  
+		</dependency>
+		<dependency>  
+		    <groupId>org.primefaces.themes</groupId>  
+		    <artifactId>afterwork</artifactId>  
+		    <version>1.0.8</version>  
+		</dependency>
+		<dependency>  
+		    <groupId>org.primefaces.themes</groupId>  
+		    <artifactId>blitzer</artifactId>  
+		    <version>1.0.8</version>  
+		</dependency>
+		<dependency>  
+		    <groupId>org.primefaces.themes</groupId>  
+		    <artifactId>home</artifactId>  
+		    <version>1.0.8</version>  
+		</dependency>
+		<dependency>  
+		    <groupId>org.primefaces.themes</groupId>  
+		    <artifactId>le-frog</artifactId>  
+		    <version>1.0.8</version>  
+		</dependency>
+		<dependency>  
+		    <groupId>org.primefaces.themes</groupId>  
+		    <artifactId>swanky-purse</artifactId>  
+		    <version>1.0.8</version>  
+		</dependency>
+		<dependency>  
+		    <groupId>org.primefaces.themes</groupId>  
+		    <artifactId>ui-lightness</artifactId>  
+		    <version>1.0.8</version>  
 		</dependency>
 		 
 		<!-- el feature of EL 2.2 for tomcat-->

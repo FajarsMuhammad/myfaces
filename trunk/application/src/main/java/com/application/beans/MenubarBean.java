@@ -22,7 +22,8 @@ import com.application.service.Menu2Service;
 @SessionScoped
 public class MenubarBean implements Serializable {
 
-	private static final long serialVersionUID = -6096920035544826739L;
+
+	private static final long serialVersionUID = 3568928318014489011L;
 
 	private MenuModel simpleMenuModel;// = new DefaultMenuModel();
 
@@ -55,7 +56,7 @@ public class MenubarBean implements Serializable {
 		String user = userDetails.getUsername();
 
 		simpleMenuModel = new DefaultMenuModel();
-		buildMenu("0000ROOT", user);
+		buildMenu(user);
 
 		FacesContext ctx = FacesContext.getCurrentInstance();
 		String path = ctx.getExternalContext().getRequestContextPath();
@@ -67,11 +68,8 @@ public class MenubarBean implements Serializable {
 		simpleMenuModel.addMenuItem(menuItemQuit);
 	}
 
-	private void buildMenu(String menuCode, String user) {
-		List<Menu2> menuList = menu2Service.getMenuByParentAndUser(menuCode,
-				user);
-
-		// List<Menu2> menus = menu2Service.getMenuByParent(menuCode);
+	private void buildMenu(String user) {
+		List<Menu2> menuList = menu2Service.getMenuByUser(user);
 		for (Menu2 m : menuList) {
 			if (m.getMenuLevel() == 1) {
 				Submenu parent = new Submenu();
@@ -85,8 +83,7 @@ public class MenubarBean implements Serializable {
 	}
 
 	public void buildChildMenu(Submenu submenu, String menuCode, String user) {
-		List<Menu2> menuList = menu2Service.getMenuByParentAndUser(menuCode,
-				user);
+		List<Menu2> menuList = menu2Service.getMenuByUser(user);
 		List<Menu2> menus = menu2Service.getMenuByParent(menuCode);
 		for (Menu2 menu2 : menuList) {
 			for (Menu2 m : menus) {
@@ -114,8 +111,7 @@ public class MenubarBean implements Serializable {
 
 	public void buildChildChildMenu(Submenu submenu, Submenu sub,
 			String menuCode, String user) {
-		List<Menu2> menuList = menu2Service.getMenuByParentAndUser(menuCode,
-				user);
+		List<Menu2> menuList = menu2Service.getMenuByUser(user);
 		List<Menu2> menus = menu2Service.getMenuByParent(menuCode);
 		for (Menu2 menu2 : menuList) {
 			for (Menu2 m : menus) {

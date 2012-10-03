@@ -12,6 +12,6 @@ public interface Menu2Service {
 	
 	public List<Menu2> getMenuByMenuCode(String menuCode);
 	
-	public List<Menu2> getMenuByParentAndUser(String parentCode, String user);
+	public List<Menu2> getMenuByUser(String user);
 
 }

@@ -17,5 +17,6 @@
         <property name="menuType" column="menu_type" type="integer"/>           
         <property name="systemMenu" column="system_menu" type="integer"/>           
         <property name="menuLevel" column="menu_level" type="integer"/>
+        <property name="sequence" column="sequence" type="integer"/>
     </class>
 </hibernate-mapping>
