@@ -11,12 +11,12 @@ import javax.faces.context.FacesContext;
 import org.primefaces.component.menuitem.MenuItem;
 import org.primefaces.component.submenu.Submenu;
 import org.primefaces.model.DefaultMenuModel;
-import org.primefaces.model.DefaultTreeNode;
 import org.primefaces.model.MenuModel;
-import org.primefaces.model.TreeNode;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 
-import com.application.model.Menu;
-import com.application.service.MenuService;
+import com.application.model.Menu2;
+import com.application.service.Menu2Service;
 
 @ManagedBean(name = "menubarBean")
 @SessionScoped
@@ -24,21 +24,19 @@ public class MenubarBean implements Serializable {
 
 	private static final long serialVersionUID = -6096920035544826739L;
 
-	private MenuModel simpleMenuModel = new DefaultMenuModel();
+	private MenuModel simpleMenuModel;// = new DefaultMenuModel();
 	
-	//private Submenu parent;
+	@ManagedProperty(value = "#{menu2Service}")
+	private Menu2Service menu2Service;
+
 	
-	private Submenu submenu;
 
-	@ManagedProperty(value = "#{menuService}")
-	private MenuService menuService;
-
-	public MenuService getMenuService() {
-		return menuService;
+	public Menu2Service getMenu2Service() {
+		return menu2Service;
 	}
 
-	public void setMenuService(MenuService menuService) {
-		this.menuService = menuService;
+	public void setMenu2Service(Menu2Service menu2Service) {
+		this.menu2Service = menu2Service;
 	}
 
 	public MenuModel getSimpleMenuModel() {
@@ -46,61 +44,21 @@ public class MenubarBean implements Serializable {
 	}
 
 	public MenubarBean() {
-		/*
-		// setup
-		Submenu submenuSetup = new Submenu();
-		submenuSetup.setLabel("Setup");
-		submenuSetup.setIcon("ui-icon ui-icon-home");
-
-		MenuItem menuItemSetup = new MenuItem();
-		menuItemSetup.setValue("Menu");
-		menuItemSetup.setUrl("#");
-		submenuSetup.getChildren().add(menuItemSetup);
-		simpleMenuModel.addSubmenu(submenuSetup);
-		// end setup
-
-		// master
-		Submenu submenuMaster = new Submenu();
-		submenuMaster.setLabel("Master");
-		submenuMaster.setIcon("ui-icon ui-icon-document");
-
-		MenuItem menuItemMaster = new MenuItem();
-		menuItemMaster.setValue("Customer");
-		menuItemMaster.setUrl("/pages/master/customerList.jsf");// /pages/master/customerList.xhtml
-		submenuMaster.getChildren().add(menuItemMaster);
-		simpleMenuModel.addSubmenu(submenuMaster);
-		// end master
-
-		// transaction
-		Submenu submenuTransaction = new Submenu();
-		submenuTransaction.setLabel("Transaction");
-		submenuTransaction.setIcon("ui-icon ui-icon-document");
-
-		MenuItem menuItemTransaction = new MenuItem();
-		menuItemTransaction.setValue("Purchase Order");
-		menuItemTransaction.setUrl("/pages/master/customerList.jsf");// /pages/master/customerList.xhtml
-		submenuTransaction.getChildren().add(submenuTransaction);
-
-		simpleMenuModel.addSubmenu(submenuTransaction);
-		// end transaction
-
-		// quit
-		FacesContext ctx = FacesContext.getCurrentInstance();
-		String path = ctx.getExternalContext().getRequestContextPath();
-
-		MenuItem menuItemQuit = new MenuItem();
-		menuItemQuit.setValue("Quit");
-		menuItemQuit.setIcon("ui-icon ui-icon-close");
-		menuItemQuit.setUrl(path + "/j_spring_security_logout");
-		simpleMenuModel.addMenuItem(menuItemQuit);
-		// end quit
-		
-		*/
 	}
 	
 	public void init(){
 		
-		buildMenu(submenu, "root");
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		UserDetails userDetails = null;
+		if (principal instanceof UserDetails) {
+		  userDetails = (UserDetails) principal;
+		}
+		String user = userDetails.getUsername();
+		
+
+		simpleMenuModel = new DefaultMenuModel();
+		buildMenu("0000ROOT", user);
+		
 		FacesContext ctx = FacesContext.getCurrentInstance();
 		String path = ctx.getExternalContext().getRequestContextPath();
 
@@ -111,25 +69,49 @@ public class MenubarBean implements Serializable {
 		simpleMenuModel.addMenuItem(menuItemQuit);
 	}
 
-	private void buildMenu(Submenu submenu, String rightName) {
-		//simpleMenuModel.addSubmenu(null);
-		List<Menu> menus = menuService.getMenuByParent(rightName);
-		for (Menu m : menus) {			
-			//simpleMenuModel.addSubmenu(submenu);
+	private void buildMenu(String menuCode, String user) {
+		
+		List<Menu2> menus = menu2Service.getMenuByParent(menuCode);
+		for (Menu2 m : menus) {			
 			Submenu parent = new Submenu();
-			parent.setLabel(m.getName());
-			MenuItem menuItem = new MenuItem();
-			if(submenu == null){					
-				simpleMenuModel.addSubmenu(parent);
-			}else{				
-				menuItem.setValue(m.getName());
-				menuItem.setUrl(m.getUrl());
+			parent.setLabel(m.getMenuName());
+			parent.setIcon("ui-icon ui-icon-document");			
+			simpleMenuModel.addSubmenu(parent);
+			buildChildMenu(parent, m.getMenuCode());
+		}		
+	}
+	
+	public void buildChildMenu(Submenu submenu, String menuCode){
+		List<Menu2> menus = menu2Service.getMenuByParent(menuCode);
+		for (Menu2 m : menus) {				
+			if(m.getMenuUrl().equals("#") && m.getMenuLevel()==2){
+				Submenu subsub = new Submenu();
+				subsub.setLabel(m.getMenuName());
+				subsub.setIcon("ui-icon ui-icon-document");
+				submenu.getChildren().add(subsub);
+				simpleMenuModel.addSubmenu(submenu);
+				buildChildChildMenu(submenu, subsub, m.getMenuCode());
+			}else{			
+				MenuItem menuItem = new MenuItem();
+				menuItem.setValue(m.getMenuName());
+				menuItem.setUrl(m.getMenuUrl());			
 				submenu.getChildren().add(menuItem);
 				simpleMenuModel.addSubmenu(submenu);
 			}
-			buildMenu(parent, m.getRightName());
+			
 		}
-		
+	}
+	
+	public void buildChildChildMenu(Submenu submenu, Submenu sub, String menuCode){
+		List<Menu2> menus = menu2Service.getMenuByParent(menuCode);
+		for (Menu2 m : menus) {	
+			MenuItem menuItem = new MenuItem();
+			menuItem.setValue(m.getMenuName());
+			menuItem.setUrl(m.getMenuUrl());
+			sub.getChildren().add(menuItem);
+			submenu.getChildren().add(sub);
+			simpleMenuModel.addSubmenu(submenu);
+		}
 	}
 
 }
