@@ -6,11 +6,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import javax.faces.application.NavigationHandler;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import org.apache.log4j.Logger;
@@ -21,7 +19,7 @@ import com.application.utility.GenerateCode;
 import com.application.utility.LabelValueBean;
 import com.application.utility.ResourceHelper;
 
-@ManagedBean(name = "customer")
+@ManagedBean(name = "customerBean")
 @RequestScoped
 public class CustomerBean implements Serializable {
 
@@ -37,8 +35,6 @@ public class CustomerBean implements Serializable {
 	private String searchColumn;
 	private String searchValue;
 	private boolean termOfPayment;
-	
-	private String nameFajar;
 
 	private String customerInputRedir = "/pages/master/customerInput.xhtml";
 
