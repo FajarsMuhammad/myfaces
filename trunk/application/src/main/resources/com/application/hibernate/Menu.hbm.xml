@@ -15,6 +15,7 @@
         <property name="url" column="url" type="string" />
         <property name="type" column="type" type="string"/>           
         <property name="kind" column="kind" type="string"/>           
-         <property name="rightName" column="right_name" type="string"/>
+        <property name="rightName" column="right_name" type="string"/>
+        <property name="level" column="level" type="integer"/>
     </class>
 </hibernate-mapping>
