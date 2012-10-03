@@ -1,3 +1,6 @@
+/**
+ * Postgres database
+ */
 create database samz;
 
 
@@ -86,4 +89,23 @@ CREATE SEQUENCE menu_id_seq
   START 1
   CACHE 1;
 ALTER TABLE menu_id_seq OWNER TO postgres;
+
+-- ===================================================
+-- Menu for menubar
+-- ==================================================
+CREATE TABLE menu2
+(
+  menu_id bigint NOT NULL,
+  menu_code character varying(20),
+  parent_code character varying(30),
+  menu_name character varying(30),
+  menu_url character varying(124),
+  menu_type smallint,
+  system_menu smallint,
+  menu_level smallint,
+  CONSTRAINT menu2_pkey PRIMARY KEY (menu_id)
+)
+WITH (
+  OIDS=FALSE
+);
 
