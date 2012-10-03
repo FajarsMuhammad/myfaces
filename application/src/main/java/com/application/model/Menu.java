@@ -26,6 +26,8 @@ public class Menu implements Serializable {
         private String kind;
         
         private String rightName;
+        
+        private Integer level;
          
         private List<Menu> menuFiles = new ArrayList<Menu>();
         
@@ -108,6 +110,14 @@ public class Menu implements Serializable {
 
 		public void setRightName(String rightName) {
 			this.rightName = rightName;
+		}
+
+		public Integer getLevel() {
+			return level;
+		}
+
+		public void setLevel(Integer level) {
+			this.level = level;
 		}
 
 		//Eclipse Generated hashCode and equals
