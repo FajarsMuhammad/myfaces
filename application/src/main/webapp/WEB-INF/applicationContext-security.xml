@@ -28,7 +28,7 @@
 		<intercept-url pattern="/pages/**" access="IS_AUTHENTICATED_REMEMBERED" />	
 		
 		<session-management invalid-session-url="/login.jsf">
-			<concurrency-control max-sessions="5" error-if-maximum-exceeded="true" />
+			<concurrency-control max-sessions="1" error-if-maximum-exceeded="true" />
 		</session-management>
 
 	</http>

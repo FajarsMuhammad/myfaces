@@ -20,25 +20,25 @@
 					<br />
 
 					<h:outputText value="Search" />
-					<h:selectOneMenu id="searchColumn" value="#{customer.searchColumn}">
+					<h:selectOneMenu id="searchColumn" value="#{customerBean.searchColumn}">
 						<f:selectItem itemLabel="Please Choose" itemValue="" />
-						<f:selectItems value="#{customer.getColumnList()}" var="c"
+						<f:selectItems value="#{customerBean.getColumnList()}" var="c"
 							itemLabel="#{c.label}" itemValue="#{c.value}" />
 					</h:selectOneMenu>
 					<h:outputText value=" " />
-					<p:inputText id="searchValue" value="#{customer.searchValue}"
+					<p:inputText id="searchValue" value="#{customerBean.searchValue}"
 						size="30" />
 					<p:commandButton id="searchButton" value="Search" action="/pages/master/customerList"
-						actionListener="#{customer.search}"  ajax="false">
+						actionListener="#{customerBean.search}"  ajax="false">
 					</p:commandButton>
 					<br />
 					<br />
 
-					<p:dataTable var="c" value="#{customer.getModel()}"
+					<p:dataTable var="c" value="#{customerBean.getModel()}"
 						paginator="true" rows="10"
 						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 						rowsPerPageTemplate="10,20,50"
-						selection="#{customer.selectedCustomers}">
+						selection="#{customerBean.selectedCustomers}">
 
 						<p:column selectionMode="multiple" />
 						<p:column>
@@ -78,20 +78,16 @@
 								<h:outputText value="#{msg['label.action']}" />
 							</f:facet>
 							<p:commandLink action="/pages/master/customerEdit"
-								actionListener="#{customer.initialUpdate}" process="@this"
+								actionListener="#{customerBean.initialUpdate}" process="@this"
 								ajax="false" immediate="true">
-								<!--f:setPropertyActionListener target="#{treeBean.includePage}"
-									value="/pages/master/customerEdit" /-->
 								<f:param name="customerIdParam" value="#{c.customerId}" />
 								<h:outputText value="#{msg['label.edit']}" />
 							</p:commandLink>
 							|					  
 							<p:commandLink action="/pages/master/customerList"
-								actionListener="#{customer.deleteCustomer}"
+								actionListener="#{customerBean.deleteCustomer}"
 								onclick="if(!confirm('Are you sure you want to delete this record?')) return false;"
 								immediate="true" process="@this" ajax="false">
-								<!--f:setPropertyActionListener target="#{treeBean.includePage}"
-									value="/pages/master/customerList.xhtml" /-->
 								<f:param name="customerIdParam" value="#{c.customerId}" />
 								<h:outputText value="#{msg['label.delete']}" />
 							</p:commandLink>
@@ -99,8 +95,8 @@
 					</p:dataTable>
 
 					<p:commandButton id="addButton" value="#{msg['label.add']}"
-						action="#{customer.goInputPage}"
-						actionListener="#{customer.initialAdd}" process="@this"
+						action="#{customerBean.goInputPage}"
+						actionListener="#{customerBean.initialAdd}" process="@this"
 						ajax="false" immediate="true">
 					</p:commandButton>
 				</p:panel>

@@ -6,7 +6,7 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 	<ui:composition template="pages/templates/template.xhtml">
 		<ui:define name="body">
-			<h1>Welcome!</h1>
+			<h1>Welcome <h:outputText value="#{loginBean.userName}" /></h1>
 		</ui:define>
 	</ui:composition>
 </html>

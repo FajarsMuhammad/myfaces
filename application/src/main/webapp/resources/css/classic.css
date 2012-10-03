@@ -17,6 +17,7 @@ body {
 	height: 15px;
 	background: #dddddd;
 	border: 1px solid darkGray;
+	text-align: center;
 }
 
 /* #sidebarLeft {
@@ -111,10 +112,13 @@ a:hover {
 
 .ui-menubar  {
     border: 1px solid #aed0ea !important;
-    background: #74b2e2 url(../images/myImage.png) 50% 50% repeat-x !important;
-    color: #ffffff !important;
+    background-color: #74b2e2 !important;
+    color: #dddddd !important;
     font-weight: bolder !important;
 }
-.ui-menuitem-link {
-	font-size: 15px !important;
+
+/* menu bar */
+.wijmo-wijmenu-link .ui-corner-all{
+	background-color: #dddddd !important;
+	color : #dddddd !important;
 }
