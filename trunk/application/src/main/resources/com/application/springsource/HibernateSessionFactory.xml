@@ -26,6 +26,9 @@ http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
           <value>com/application/hibernate/User.hbm.xml</value>
           <value>com/application/hibernate/Menu.hbm.xml</value>
           <value>com/application/hibernate/Menu2.hbm.xml</value>
+          <value>com/application/hibernate/Role.hbm.xml</value>
+          <value>com/application/hibernate/RoleMenu.hbm.xml</value>
+          <value>com/application/hibernate/UserRole.hbm.xml</value>        
 	</list>
      </property>	
  
