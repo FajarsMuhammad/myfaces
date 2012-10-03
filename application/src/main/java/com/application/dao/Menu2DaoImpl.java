@@ -2,6 +2,7 @@ package com.application.dao;
 
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
@@ -22,5 +23,26 @@ public class Menu2DaoImpl extends HibernateDaoSupport implements Menu2Dao {
 		criteria.add(Restrictions.eq("parentCode", parent));
 		return getHibernateTemplate().findByCriteria(criteria);
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Menu2> getMenuByMenuCode(String menuCode){
+		DetachedCriteria criteria = DetachedCriteria.forClass(Menu2.class);
+		criteria.add(Restrictions.eq("menuCode", menuCode));
+		return getHibernateTemplate().findByCriteria(criteria);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Menu2> getMenuByParentAndUser(String parentCode, String user){
+		Query query = getSession().createQuery(
+				"from Menu2 m where m.id in (select distinct m.id " +
+				"from UserRole ur, RoleMenu rm, Menu2 m " +
+				"where ur.user.userName = :userName and ur.role.id = rm.role.id and rm.menu.id = m.id)");
+		query.setString("userName", user);
+		//query.setString("parent", parentCode);
+		
+		return query.list();
+	}
+	
+	
 
 }

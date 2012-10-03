@@ -25,11 +25,9 @@ public class MenubarBean implements Serializable {
 	private static final long serialVersionUID = -6096920035544826739L;
 
 	private MenuModel simpleMenuModel;// = new DefaultMenuModel();
-	
+
 	@ManagedProperty(value = "#{menu2Service}")
 	private Menu2Service menu2Service;
-
-	
 
 	public Menu2Service getMenu2Service() {
 		return menu2Service;
@@ -45,20 +43,20 @@ public class MenubarBean implements Serializable {
 
 	public MenubarBean() {
 	}
-	
-	public void init(){
-		
-		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+	public void init() {
+
+		Object principal = SecurityContextHolder.getContext()
+				.getAuthentication().getPrincipal();
 		UserDetails userDetails = null;
 		if (principal instanceof UserDetails) {
-		  userDetails = (UserDetails) principal;
+			userDetails = (UserDetails) principal;
 		}
 		String user = userDetails.getUsername();
-		
 
 		simpleMenuModel = new DefaultMenuModel();
 		buildMenu("0000ROOT", user);
-		
+
 		FacesContext ctx = FacesContext.getCurrentInstance();
 		String path = ctx.getExternalContext().getRequestContextPath();
 
@@ -70,47 +68,66 @@ public class MenubarBean implements Serializable {
 	}
 
 	private void buildMenu(String menuCode, String user) {
-		
-		List<Menu2> menus = menu2Service.getMenuByParent(menuCode);
-		for (Menu2 m : menus) {			
-			Submenu parent = new Submenu();
-			parent.setLabel(m.getMenuName());
-			parent.setIcon("ui-icon ui-icon-document");			
-			simpleMenuModel.addSubmenu(parent);
-			buildChildMenu(parent, m.getMenuCode());
-		}		
-	}
-	
-	public void buildChildMenu(Submenu submenu, String menuCode){
-		List<Menu2> menus = menu2Service.getMenuByParent(menuCode);
-		for (Menu2 m : menus) {				
-			if(m.getMenuUrl().equals("#") && m.getMenuLevel()==2){
-				Submenu subsub = new Submenu();
-				subsub.setLabel(m.getMenuName());
-				subsub.setIcon("ui-icon ui-icon-document");
-				submenu.getChildren().add(subsub);
-				simpleMenuModel.addSubmenu(submenu);
-				buildChildChildMenu(submenu, subsub, m.getMenuCode());
-			}else{			
-				MenuItem menuItem = new MenuItem();
-				menuItem.setValue(m.getMenuName());
-				menuItem.setUrl(m.getMenuUrl());			
-				submenu.getChildren().add(menuItem);
-				simpleMenuModel.addSubmenu(submenu);
+		List<Menu2> menuList = menu2Service.getMenuByParentAndUser(menuCode,
+				user);
+
+		// List<Menu2> menus = menu2Service.getMenuByParent(menuCode);
+		for (Menu2 m : menuList) {
+			if (m.getMenuLevel() == 1) {
+				Submenu parent = new Submenu();
+				parent.setLabel(m.getMenuName());
+				parent.setIcon("ui-icon ui-icon-document");
+				simpleMenuModel.addSubmenu(parent);
+				buildChildMenu(parent, m.getMenuCode(), user);
 			}
-			
+
 		}
 	}
-	
-	public void buildChildChildMenu(Submenu submenu, Submenu sub, String menuCode){
+
+	public void buildChildMenu(Submenu submenu, String menuCode, String user) {
+		List<Menu2> menuList = menu2Service.getMenuByParentAndUser(menuCode,
+				user);
 		List<Menu2> menus = menu2Service.getMenuByParent(menuCode);
-		for (Menu2 m : menus) {	
-			MenuItem menuItem = new MenuItem();
-			menuItem.setValue(m.getMenuName());
-			menuItem.setUrl(m.getMenuUrl());
-			sub.getChildren().add(menuItem);
-			submenu.getChildren().add(sub);
-			simpleMenuModel.addSubmenu(submenu);
+		for (Menu2 menu2 : menuList) {
+			for (Menu2 m : menus) {
+				if (menu2.getMenuCode().equals(m.getMenuCode())) {
+					if (m.getMenuUrl().equals("#") && m.getMenuLevel() == 2) {
+						Submenu subsub = new Submenu();
+						subsub.setLabel(m.getMenuName());
+						subsub.setIcon("ui-icon ui-icon-document");
+						submenu.getChildren().add(subsub);
+						simpleMenuModel.addSubmenu(submenu);
+						buildChildChildMenu(submenu, subsub, m.getMenuCode(),
+								user);
+					} else {
+						MenuItem menuItem = new MenuItem();
+						menuItem.setValue(m.getMenuName());
+						menuItem.setUrl(m.getMenuUrl());
+						submenu.getChildren().add(menuItem);
+						simpleMenuModel.addSubmenu(submenu);
+					}
+				}
+			}
+
+		}
+	}
+
+	public void buildChildChildMenu(Submenu submenu, Submenu sub,
+			String menuCode, String user) {
+		List<Menu2> menuList = menu2Service.getMenuByParentAndUser(menuCode,
+				user);
+		List<Menu2> menus = menu2Service.getMenuByParent(menuCode);
+		for (Menu2 menu2 : menuList) {
+			for (Menu2 m : menus) {
+				if (menu2.getMenuCode().equals(m.getMenuCode())) {
+					MenuItem menuItem = new MenuItem();
+					menuItem.setValue(m.getMenuName());
+					menuItem.setUrl(m.getMenuUrl());
+					sub.getChildren().add(menuItem);
+					submenu.getChildren().add(sub);
+					simpleMenuModel.addSubmenu(submenu);
+				}
+			}
 		}
 	}
 
