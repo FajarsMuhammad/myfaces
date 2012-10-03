@@ -1,0 +1,13 @@
+package com.application.dao;
+
+import java.util.List;
+
+import com.application.model.Menu2;
+
+public interface Menu2Dao {
+
+	public List<Menu2> searchMenu();
+	
+	public List<Menu2> getMenuByParent(String parent);
+
+}
