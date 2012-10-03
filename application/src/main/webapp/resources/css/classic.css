@@ -3,11 +3,7 @@ body {
 	font-size: 11px;
 }
 
-#heading { /*padding: 20px;
-    height: 30px;
-    margin-bottom: 10px;
-    background: #dddddd;
-    border: 1px solid darkGray;*/
+#heading { 
 	background: #dddddd;
 }
 
@@ -81,7 +77,7 @@ a:hover {
 }
 
 
-.ui-layout-north .ui-layout-unit-content { /*padding: 20px;*/
+.ui-layout-north .ui-layout-unit-content { 
 	overflow: visible !important;
 	/*margin: 10px;*/
 	top: 55px;
@@ -110,15 +106,3 @@ a:hover {
 	box-shadow: 5px 5px 5px #888888;
 }
 
-.ui-menubar  {
-    border: 1px solid #aed0ea !important;
-    background-color: #74b2e2 !important;
-    color: #dddddd !important;
-    font-weight: bolder !important;
-}
-
-/* menu bar */
-.wijmo-wijmenu-link .ui-corner-all{
-	background-color: #dddddd !important;
-	color : #dddddd !important;
-}

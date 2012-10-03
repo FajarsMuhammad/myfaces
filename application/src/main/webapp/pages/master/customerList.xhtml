@@ -78,8 +78,8 @@
 								<h:outputText value="#{msg['label.action']}" />
 							</f:facet>
 							<p:commandLink action="/pages/master/customerEdit"
-								actionListener="#{customerBean.initialUpdate}" process="@this"
-								ajax="false" immediate="true">
+								actionListener="#{customerBean.initialUpdate}"
+								ajax="false">
 								<f:param name="customerIdParam" value="#{c.customerId}" />
 								<h:outputText value="#{msg['label.edit']}" />
 							</p:commandLink>
@@ -87,7 +87,7 @@
 							<p:commandLink action="/pages/master/customerList"
 								actionListener="#{customerBean.deleteCustomer}"
 								onclick="if(!confirm('Are you sure you want to delete this record?')) return false;"
-								immediate="true" process="@this" ajax="false">
+								ajax="false">
 								<f:param name="customerIdParam" value="#{c.customerId}" />
 								<h:outputText value="#{msg['label.delete']}" />
 							</p:commandLink>

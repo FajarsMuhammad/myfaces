@@ -61,8 +61,6 @@
 					<h:outputText value=" " />
 					<p:commandButton id="cancelButton" value="#{msg['label.cancel']}"
 						action="/pages/master/customerList.xhtml" ajax="false">
-						<!--f:setPropertyActionListener target="#{treeBean.includePage}"
-					value="/pages/master/customerList.xhtml" /-->
 					</p:commandButton>
 				</p:panel>
 			</h:form>
@@ -70,15 +68,4 @@
 	</ui:composition>
 </h:body>
 </html>
-<!-- <p:commandLink update="mainPanel"
-	actionListener="#{customer.editCustomer}">
-	<f:setPropertyActionListener target="#{treeBean.includePage}"
-		value="/pages/customer/customerList.xhtml" />
-	<h:outputText value="Save" />
-</p:commandLink>
-<h:outputText value=" " />
-<p:commandLink update="mainPanel">
-	<f:setPropertyActionListener target="#{treeBean.includePage}"
-		value="/pages/customer/customerList.xhtml" />
-	<h:outputText value="Cancel" />
-</p:commandLink> -->
+

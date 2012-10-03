@@ -33,8 +33,8 @@ public class Menu2ServiceImpl implements Menu2Service, Serializable {
 		return menu2Dao.getMenuByMenuCode(menuCode);
 	}
 	
-	public List<Menu2> getMenuByParentAndUser(String parentCode, String user){
-		return menu2Dao.getMenuByParentAndUser(parentCode, user);
+	public List<Menu2> getMenuByUser(String user){
+		return menu2Dao.getMenuByUser(user);
 	}
 
 }

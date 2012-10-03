@@ -20,7 +20,8 @@ public class Menu2 implements Serializable {
         private String menuUrl;
         private Integer menuType;
         private Integer systemMenu;
-        private Integer menuLevel;         
+        private Integer menuLevel;    
+        private Integer sequence;
 
 		public Menu2(){}
 
@@ -86,6 +87,14 @@ public class Menu2 implements Serializable {
 
 		public void setMenuLevel(Integer menuLevel) {
 			this.menuLevel = menuLevel;
+		}
+
+		public Integer getSequence() {
+			return sequence;
+		}
+
+		public void setSequence(Integer sequence) {
+			this.sequence = sequence;
 		}
         
        
