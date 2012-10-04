@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui">
+<h:head>
+
+</h:head>
+<h:body>
+	<ui:composition template="../templates/template.xhtml">
+		<ui:define name="body">
+			<h:form>
+				<p:panel header="Menu" toggleable="true">
+					<br />
+
+					<p:treeTable value="#{treeTableMenuBean.parent}" var="menu">
+						<f:event type="preRenderView" listener="#{treeTableMenuBean.init}" />
+						<f:facet name="header">  
+				            Menu Viewer  
+				        </f:facet>
+
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="#{msg['label.name']}" />
+							</f:facet>
+							<!-- <h:outputText value="#{menu.menuName}" /> -->
+							<p:inplace editor="true">
+							<p:ajax event="save" listener="#{treeTableMenuBean.editTest}" />                                
+								<p:inputText value="#{menu.menuName}" required="true" />
+							</p:inplace>
+						</p:column>
+
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="#{msg['label.url']}" />
+							</f:facet>
+							<!-- <h:outputText value="#{menu.menuUrl}" /> -->
+							<p:inplace id="ajaxInplace" editor="true">
+								<p:inputText value="#{menu.menuUrl}" required="true"
+									label="text" />
+							</p:inplace>
+						</p:column>
+
+						<p:column style="text-align:center">
+							<f:facet name="header">
+								<h:outputText value="#{msg['label.action']}" />
+							</f:facet>
+
+							<p:commandLink action="/pages/setup/menuInput"
+								actionListener="#{treeTableMenuBean.initialUpdate}"
+								ajax="false" >
+								<f:param name="menuIdParam" value="#{menu.id}" />
+								<h:outputText value="#{msg['label.edit']}" />
+							</p:commandLink>
+							
+							|					  
+							<p:commandLink action="#{treeTableMenuBean.goListPage}"
+								actionListener="#{treeTableMenuBean.delete}"
+								onclick="if(!confirm('Are you sure you want to delete this record?')) return false;"
+								ajax="false">
+								<f:param name="menuIdParam" value="#{menu.id}" />
+								<h:outputText value="#{msg['label.delete']}" />
+							</p:commandLink>
+						</p:column>
+					</p:treeTable>
+					<br/>
+					<p:commandButton id="addButton" value="#{msg['label.add']}"
+						action="#{treeTableMenuBean.goInputPage}"
+						actionListener="#{treeTableMenuBean.initialAdd}" process="@this"
+						ajax="false" immediate="true">
+					</p:commandButton>
+				</p:panel>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

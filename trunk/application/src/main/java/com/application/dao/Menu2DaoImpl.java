@@ -2,12 +2,15 @@ package com.application.dao;
 
 import java.util.List;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
+import com.application.model.Customer;
 import com.application.model.Menu2;
 
 public class Menu2DaoImpl extends HibernateDaoSupport implements Menu2Dao {
@@ -16,6 +19,29 @@ public class Menu2DaoImpl extends HibernateDaoSupport implements Menu2Dao {
 	@Override
 	public List<Menu2> searchMenu() {
 		return getHibernateTemplate().find("from Menu2");
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Menu2> searchMenu(List<Object> columnList, List<Object> valueList){
+		int columnSize = 0;
+		int valueSize = 0;
+
+		if (columnList != null)
+			columnSize = columnList.size();
+		if (valueList != null)
+			valueSize = valueList.size();
+		
+		if (columnSize != valueSize)
+			throw new HibernateException(
+					"Number of 'column' must be equals with number of 'value'");
+		
+		DetachedCriteria criteria = DetachedCriteria.forClass(Menu2.class);
+		for(int i=0; i<columnSize; i++){
+			criteria.add(Restrictions.ilike((String)columnList.get(i), (String)valueList.get(i), MatchMode.ANYWHERE));
+		}
+		//criteria.addOrder(Order.asc("menuCode"));
+		
+		return getHibernateTemplate().findByCriteria(criteria);
 	}
 	
 	@SuppressWarnings("unchecked")

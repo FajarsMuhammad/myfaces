@@ -25,6 +25,10 @@ public class Menu2ServiceImpl implements Menu2Service, Serializable {
 		return menu2Dao.searchMenu();
 	}
 	
+	public List<Menu2> searchMenu(List<Object> columnList, List<Object> valueList){
+		return menu2Dao.searchMenu(columnList, valueList);
+	}
+	
 	public List<Menu2> getMenuByParent(String parent){
 		return menu2Dao.getMenuByParent(parent);
 	}

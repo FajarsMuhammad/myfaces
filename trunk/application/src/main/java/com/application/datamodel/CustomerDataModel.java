@@ -1,4 +1,4 @@
-package com.application.beans;
+package com.application.datamodel;
 
 import java.util.List;
 

@@ -22,8 +22,37 @@ public class Menu2 implements Serializable {
         private Integer systemMenu;
         private Integer menuLevel;    
         private Integer sequence;
+        
+        private Menu2 parent;
 
 		public Menu2(){}
+		
+		
+
+		public Menu2(String menuName, String menuUrl, Integer menuType) {
+			super();
+			this.menuName = menuName;
+			this.menuUrl = menuUrl;
+			this.menuType = menuType;
+		}
+
+
+
+		public Menu2(long id, String menuCode, String parentCode,
+				String menuName, String menuUrl, Integer menuType,
+				Integer systemMenu, Integer menuLevel) {
+			super();
+			this.id = id;
+			this.menuCode = menuCode;
+			this.parentCode = parentCode;
+			this.menuName = menuName;
+			this.menuUrl = menuUrl;
+			this.menuType = menuType;
+			this.systemMenu = systemMenu;
+			this.menuLevel = menuLevel;
+		}
+
+
 
 		public long getId() {
 			return id;
@@ -95,6 +124,14 @@ public class Menu2 implements Serializable {
 
 		public void setSequence(Integer sequence) {
 			this.sequence = sequence;
+		}
+
+		public Menu2 getParent() {
+			return parent;
+		}
+
+		public void setParent(Menu2 parent) {
+			this.parent = parent;
 		}
         
        

@@ -10,7 +10,7 @@
 	            	<param name="sequence">menu_id_seq</param>
 	            </generator>
         </id>
-        <property name="parentCode" column="parent_code" type="string"/>           
+        <property name="parentCode" column="parent_code" type="string"/>
         <property name="menuCode" column="menu_code" type="string"/>
         <property name="menuName" column="menu_name" type="string"/>
         <property name="menuUrl" column="menu_url" type="string" />
