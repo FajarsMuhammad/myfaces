@@ -1,43 +1,66 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.prime.com.tr/ui"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
-	<h:head>
-		<h:outputStylesheet library="css" name="default.css" />
-	</h:head>
-	<!-- <ui:define name="pageContent">   -->
-	<div>
-		<h:form>
-			
-			<br />
-			<h:panelGrid columns="3">
+	xmlns:p="http://primefaces.prime.com.tr/ui">
+<h:head>
 
-				<h:outputText value="parent " />
-				<p:inputText id="code" value="#{menuBean.parent}" size="20"
-					required="false" label="Code" readonly="true">
-				</p:inputText>
-				<p:message for="code" style="color:red" />
+</h:head>
+<h:body>
+	<ui:composition template="../templates/template.xhtml">
+		<ui:define name="body">
+			<h:form>
+				<p:panel header="Menu">
+					<br />
+					<h:panelGrid columns="3">					
+						<h:outputText value="#{msg['label.parent']} " />
+						<h:selectOneMenu id="parentCode" value="#{treeTableMenuBean.current.parentCode}">
+							<f:selectItem itemLabel="#{msg['label.chooseOne']} " itemValue="" />
+							<f:selectItems value="#{treeTableMenuBean.getParentList()}" var="g"
+								itemLabel="#{g.label}" itemValue="#{g.value}" />
+						</h:selectOneMenu>
+						<p:message for="parentCode" style="color:red" />
 
-				<h:outputText value="#{msg['label.name']} " />
-				<p:inputText id="name" value="#{menuBean.name}" size="30"
-					required="false" label="Name">
-				</p:inputText>
-				<p:message for="name" style="color:red" />
-				
-			</h:panelGrid>
+						<h:outputText value="#{msg['label.code']} " />
+						<p:inputText id="menuCode" value="#{treeTableMenuBean.current.menuCode}" size="20"
+							required="false" label="Code" readonly="true">
+						</p:inputText>
+						<p:message for="menuCode" style="color:red" />						
 
-			<p:commandButton update="panelContent" id="saveButton" value="#{msg['label.save']} "
-				action="#{customer.saveCustomer}">
-				<f:setPropertyActionListener target="#{treeBean.includePage}"
-					value="/pages/setup/menuList.xhtml" />
-			</p:commandButton>
-			<h:outputText value=" " />
-			<p:commandButton update="panelContent" id="cancelButton" value="#{msg['label.cancel']} ">
-				<f:setPropertyActionListener target="#{treeBean.includePage}"
-					value="/pages/setup/menuList.xhtml" />
-			</p:commandButton>
-		</h:form>
-	</div>
-	<!-- </ui:define> -->
-</ui:composition>
+						<h:outputText value="#{msg['label.name']} " />
+						<p:inputText id="menuName" value="#{treeTableMenuBean.current.menuName}" size="30"
+							required="false" label="Name">
+						</p:inputText>
+						<p:message for="menuName" style="color:red" />
+
+						<h:outputText value="Type" />
+						<h:selectOneMenu value="#{treeTableMenuBean.current.menuType}">
+							<f:selectItem itemLabel="#{msg['label.chooseOne']} " itemValue="" />
+							<f:selectItems value="#{treeTableMenuBean.getMenuTypeList()}" var="g"
+								itemLabel="#{g.label}" itemValue="#{g.value}" />
+						</h:selectOneMenu>
+						<h:outputText value=" " />
+						
+						<h:outputText value="#{msg['label.url']} " />
+						<p:inputText id="menuUrl" value="#{treeTableMenuBean.current.menuUrl}" size="30"
+							required="false" label="#{msg['label.url']}">
+						</p:inputText>
+						<h:outputText value=" " />
+					</h:panelGrid>
+
+					<p:commandButton id="saveButton" value="#{msg['label.save']} "
+						actionListener="#{treeTableMenuBean.saveMenu}"
+						action="#{treeTableMenuBean.goListPage}" ajax="false">
+					</p:commandButton>
+					<h:outputText value=" " />
+					<p:commandButton id="cancelButton" value="#{msg['label.cancel']}"
+						action="#{treeTableMenuBean.goListPage}" ajax="false">
+					</p:commandButton>
+				</p:panel>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

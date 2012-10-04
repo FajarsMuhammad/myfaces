@@ -16,19 +16,9 @@
 		<p:layoutUnit position="north" size="100" resizable="false"
 			closable="false" spacing="0" rendered="true">
 			<div id="heading">
-				<ui:insert name="menubarTop">
-					<ui:include src="menubar.xhtml" />
-				</ui:insert>
+				<ui:include src="menubar.xhtml" />
 			</div>
 		</p:layoutUnit>
-		<!-- <p:layoutUnit position="west" size="200" header="Menu"
-			resizable="true" collapsible="true">
-			<div id="sidebarLeft">
-				<ui:insert name="sidebarLeft">
-					<ui:include src="sidebarLeft.xhtml" />
-				</ui:insert>
-			</div>
-		</p:layoutUnit> -->
 		<p:layoutUnit position="center">
 			<div id="content">
 				<ui:insert name="body" />

@@ -13,6 +13,7 @@ import javax.faces.context.FacesContext;
 
 import org.apache.log4j.Logger;
 
+import com.application.datamodel.CustomerDataModel;
 import com.application.model.Customer;
 import com.application.service.CustomerService;
 import com.application.utility.GenerateCode;
@@ -36,8 +37,6 @@ public class CustomerBean implements Serializable {
 	private String searchValue;
 	private boolean termOfPayment;
 
-	private String customerInputRedir = "/pages/master/customerInput.xhtml";
-
 	@ManagedProperty(value = "#{customerService}")
 	private CustomerService customerService;
 
@@ -47,106 +46,7 @@ public class CustomerBean implements Serializable {
 	private CustomerDataModel customerDataModel;
 	private Customer[] selectedCustomers;
 
-	public Customer[] getSelectedCustomers() {
-		return selectedCustomers;
-	}
-
-	public void setSelectedCustomers(Customer[] selectedCustomers) {
-		this.selectedCustomers = selectedCustomers;
-	}
-
-	public CustomerDataModel getModel() {
-		customerDataModel = new CustomerDataModel(getCustomerList());
-		return customerDataModel;
-	}
-
-	public String getCustomerInputRedir() {
-		return customerInputRedir;
-	}
-
-	public void setCustomerInputRedir(String customerInputRedir) {
-		this.customerInputRedir = customerInputRedir;
-	}
-
-	public String getCustId() {
-		return custId;
-	}
-
-	public void setCustId(String custId) {
-		this.custId = custId;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
-	public String getGender() {
-		return gender;
-	}
-
-	public void setGender(String gender) {
-		this.gender = gender;
-	}
-
-	public String getGrade() {
-		return grade;
-	}
-
-	public void setGrade(String grade) {
-		this.grade = grade;
-	}
-
-	public String getSearchColumn() {
-		return searchColumn;
-	}
-
-	public void setSearchColumn(String searchColumn) {
-		this.searchColumn = searchColumn;
-	}
-
-	public String getSearchValue() {
-		return searchValue;
-	}
-
-	public void setSearchValue(String searchValue) {
-		this.searchValue = searchValue;
-	}
-
-	public String getCode() {
-		return code;
-	}
-
-	public void setCode(String code) {
-		this.code = code;
-	}
-
-	public boolean isTermOfPayment() {
-		return termOfPayment;
-	}
-
-	public void setTermOfPayment(boolean termOfPayment) {
-		this.termOfPayment = termOfPayment;
-	}
-
-	public void setCustomerService(CustomerService customerService) {
-		this.customerService = customerService;
-	}
-
-	public void setGenerateCode(GenerateCode generateCode) {
-		this.generateCode = generateCode;
-	}
+	
 
 	/**
 	 * get all customer data from database
@@ -297,6 +197,100 @@ public class CustomerBean implements Serializable {
 	private void clearForm() {
 		setName("");
 		setAddress("");
+	}
+	
+	
+	public Customer[] getSelectedCustomers() {
+		return selectedCustomers;
+	}
+
+	public void setSelectedCustomers(Customer[] selectedCustomers) {
+		this.selectedCustomers = selectedCustomers;
+	}
+
+	public CustomerDataModel getModel() {
+		customerDataModel = new CustomerDataModel(getCustomerList());
+		return customerDataModel;
+	}
+
+	public String getCustId() {
+		return custId;
+	}
+
+	public void setCustId(String custId) {
+		this.custId = custId;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+	public String getGrade() {
+		return grade;
+	}
+
+	public void setGrade(String grade) {
+		this.grade = grade;
+	}
+
+	public String getSearchColumn() {
+		return searchColumn;
+	}
+
+	public void setSearchColumn(String searchColumn) {
+		this.searchColumn = searchColumn;
+	}
+
+	public String getSearchValue() {
+		return searchValue;
+	}
+
+	public void setSearchValue(String searchValue) {
+		this.searchValue = searchValue;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	public boolean isTermOfPayment() {
+		return termOfPayment;
+	}
+
+	public void setTermOfPayment(boolean termOfPayment) {
+		this.termOfPayment = termOfPayment;
+	}
+
+	public void setCustomerService(CustomerService customerService) {
+		this.customerService = customerService;
+	}
+
+	public void setGenerateCode(GenerateCode generateCode) {
+		this.generateCode = generateCode;
 	}
 
 }

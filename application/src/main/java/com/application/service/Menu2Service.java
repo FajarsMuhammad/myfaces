@@ -8,6 +8,8 @@ public interface Menu2Service {
 
 	List<Menu2> searchMenu();
 	
+	public List<Menu2> searchMenu(List<Object> columnList, List<Object> valueList);
+	
 	public List<Menu2> getMenuByParent(String parent);
 	
 	public List<Menu2> getMenuByMenuCode(String menuCode);
