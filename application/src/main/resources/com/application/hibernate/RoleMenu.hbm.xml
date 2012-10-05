@@ -12,7 +12,7 @@
         </id>
         
         <many-to-one name="role" column="role_id" class="com.application.model.Role" fetch="join"/>
-        <many-to-one name="menu" column="menu_id" class="com.application.model.Menu2" fetch="join"/>
+        <many-to-one name="menu" column="menu_id" class="com.application.model.Menu" fetch="join"/>
               
     </class>
 </hibernate-mapping>

@@ -1,10 +1,6 @@
 package com.application.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.primefaces.model.TreeNode;
 
 public class Menu implements Serializable {
 
@@ -14,152 +10,108 @@ public class Menu implements Serializable {
 	private static final long serialVersionUID = 6816218359469190731L;
 
 		private long id;
-	
-		private String parent;
-		
-		private String name;
+		private String menuCode;
+		private String parentCode;
+		private String menuName;
+        private String menuUrl;
+        private Integer menuType;
+        private Integer systemMenu;
+        private Integer menuLevel;    
+        private Integer sequence;
         
-        private String url;
-        
-        private String type;
-        
-        private String kind;
-        
-        private String rightName;
-        
-        private Integer level;
-         
-        private List<Menu> menuFiles = new ArrayList<Menu>();
-        
-       
-		public List<Menu> getMenuFiles() {
-			return menuFiles;
-		}
-
-		public void setMenuFiles(List<Menu> menuFiles) {
-			this.menuFiles = menuFiles;
-		}
+        private Menu parent;
 
 		public Menu(){}
-        
-        public Menu(String name, String url, String type) {
-                this.name = name;
-                this.url = url;
-                this.type = type;
-        }
-        
-        
-        public long getId() {
-			return id;
+		
+		
+
+		public Menu(String menuName, String menuUrl, Integer menuType) {
+			super();
+			this.menuName = menuName;
+			this.menuUrl = menuUrl;
+			this.menuType = menuType;
 		}
 
+
+		public long getId() {
+			return id;
+		}
 
 		public void setId(long id) {
 			this.id = id;
 		}
 
+		public String getMenuCode() {
+			return menuCode;
+		}
 
-		public String getParent() {
+		public void setMenuCode(String menuCode) {
+			this.menuCode = menuCode;
+		}
+
+		public String getParentCode() {
+			return parentCode;
+		}
+
+		public void setParentCode(String parentCode) {
+			this.parentCode = parentCode;
+		}
+
+		public String getMenuName() {
+			return menuName;
+		}
+
+		public void setMenuName(String menuName) {
+			this.menuName = menuName;
+		}
+
+		public String getMenuUrl() {
+			return menuUrl;
+		}
+
+		public void setMenuUrl(String menuUrl) {
+			this.menuUrl = menuUrl;
+		}
+
+		public Integer getMenuType() {
+			return menuType;
+		}
+
+		public void setMenuType(Integer menuType) {
+			this.menuType = menuType;
+		}
+
+		public Integer getSystemMenu() {
+			return systemMenu;
+		}
+
+		public void setSystemMenu(Integer systemMenu) {
+			this.systemMenu = systemMenu;
+		}
+
+		public Integer getMenuLevel() {
+			return menuLevel;
+		}
+
+		public void setMenuLevel(Integer menuLevel) {
+			this.menuLevel = menuLevel;
+		}
+
+		public Integer getSequence() {
+			return sequence;
+		}
+
+		public void setSequence(Integer sequence) {
+			this.sequence = sequence;
+		}
+
+		public Menu getParent() {
 			return parent;
 		}
 
-
-		public void setParent(String parent) {
+		public void setParent(Menu parent) {
 			this.parent = parent;
 		}
-
-
-		public String getName() {
-                return name;
-        }
-
-        public void setName(String name) {
-                this.name = name;
-        }
-
-        public String getUrl() {
-                return url;
-        }
-
-        public void setUrl(String url) {
-                this.url = url;
-        }
-
-        public String getType() {
-                return type;
-        }
-
-        public void setType(String type) {
-                this.type = type;
-        }
-     
-
-        public String getKind() {
-			return kind;
-		}
-
-
-		public void setKind(String kind) {
-			this.kind = kind;
-		}
-
-
-		public String getRightName() {
-			return rightName;
-		}
-
-		public void setRightName(String rightName) {
-			this.rightName = rightName;
-		}
-
-		public Integer getLevel() {
-			return level;
-		}
-
-		public void setLevel(Integer level) {
-			this.level = level;
-		}
-
-		//Eclipse Generated hashCode and equals
-        @Override
-        public int hashCode() {
-                final int prime = 31;
-                int result = 1;
-                result = prime * result + ((name == null) ? 0 : name.hashCode());
-                result = prime * result + ((url == null) ? 0 : url.hashCode());
-                result = prime * result + ((type == null) ? 0 : type.hashCode());
-                return result;
-        }
-
-        @Override
-        public boolean equals(Object obj) {
-                if (this == obj)
-                        return true;
-                if (obj == null)
-                        return false;
-                if (getClass() != obj.getClass())
-                        return false;
-                Menu other = (Menu) obj;
-                if (name == null) {
-                        if (other.name != null)
-                                return false;
-                } else if (!name.equals(other.name))
-                        return false;
-                if (url == null) {
-                        if (other.url != null)
-                                return false;
-                } else if (!url.equals(other.url))
-                        return false;
-                if (type == null) {
-                        if (other.type != null)
-                                return false;
-                } else if (!type.equals(other.type))
-                        return false;
-                return true;
-        }
-
-        @Override
-        public String toString() {
-                return name;
-        }
+        
+       
 }

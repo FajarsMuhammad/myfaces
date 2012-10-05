@@ -6,25 +6,25 @@ import javax.faces.model.ListDataModel;
 
 import org.primefaces.model.SelectableDataModel;
 
-import com.application.model.Menu2;
+import com.application.model.Menu;
 
-public class MenuDataModel extends ListDataModel<Menu2> implements SelectableDataModel<Menu2> {
+public class MenuDataModel extends ListDataModel<Menu> implements SelectableDataModel<Menu> {
 
 	public MenuDataModel() {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public MenuDataModel(List<Menu2> data) {  
+	public MenuDataModel(List<Menu> data) {  
         super(data);  
     } 
 
 	@Override
-	public Menu2 getRowData(String rowKey) {
+	public Menu getRowData(String rowKey) {
 		//In a real app, a more efficient way like a query by rowKey should be implemented to deal with huge data  
         
-        List<Menu2> menus = (List<Menu2>) getWrappedData();  
+        List<Menu> menus = (List<Menu>) getWrappedData();  
           
-        for(Menu2 menu : menus) {  
+        for(Menu menu : menus) {  
             if(menu.getMenuCode().equals(rowKey))  
                 return menu;  
         }  
@@ -33,7 +33,7 @@ public class MenuDataModel extends ListDataModel<Menu2> implements SelectableDat
 	}
 
 	@Override
-	public Object getRowKey(Menu2 menu) {
+	public Object getRowKey(Menu menu) {
 		// TODO Auto-generated method stub
 		return menu.getMenuCode();
 	}

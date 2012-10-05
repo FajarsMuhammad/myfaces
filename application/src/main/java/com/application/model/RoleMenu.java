@@ -6,7 +6,7 @@ public class RoleMenu {
 	
 	private Role role;
 	
-	private Menu2 menu;
+	private Menu menu;
 
 	public long getId() {
 		return id;
@@ -24,11 +24,11 @@ public class RoleMenu {
 		this.role = role;
 	}
 
-	public Menu2 getMenu() {
+	public Menu getMenu() {
 		return menu;
 	}
 
-	public void setMenu(Menu2 menu) {
+	public void setMenu(Menu menu) {
 		this.menu = menu;
 	}
 	

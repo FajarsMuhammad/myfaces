@@ -7,6 +7,7 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.LockMode;
 import org.hibernate.criterion.Example;
+import org.springframework.dao.DataAccessException;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 public abstract class BasisDaoImpl<T, ID extends Serializable> extends HibernateDaoSupport implements BasisDao<T, ID>{
@@ -64,6 +65,10 @@ public abstract class BasisDaoImpl<T, ID extends Serializable> extends Hibernate
 			entity = (T) getHibernateTemplate().load(domainClass, id);
 		
 		return entity;
+	}
+	
+	protected void initialize(final Object proxy) throws DataAccessException {
+		getHibernateTemplate().initialize(proxy);
 	}
 	
 
