@@ -14,7 +14,9 @@
 			<h:form>
 				<p:panel header="Menu">
 					<br />
-					<h:panelGrid columns="3">					
+					<h:panelGrid columns="3">				
+						<input type="hidden" name="id" value="#{treeTableMenuBean.current.id}" />
+							
 						<h:outputText value="#{msg['label.parent']} " />
 						<h:selectOneMenu id="parentCode" value="#{treeTableMenuBean.current.parentCode}">
 							<f:selectItem itemLabel="#{msg['label.chooseOne']} " itemValue="" />
@@ -25,7 +27,7 @@
 
 						<h:outputText value="#{msg['label.code']} " />
 						<p:inputText id="menuCode" value="#{treeTableMenuBean.current.menuCode}" size="20"
-							required="false" label="Code" readonly="true">
+							required="false" label="Code">
 						</p:inputText>
 						<p:message for="menuCode" style="color:red" />						
 
@@ -51,7 +53,7 @@
 					</h:panelGrid>
 
 					<p:commandButton id="saveButton" value="#{msg['label.save']} "
-						actionListener="#{treeTableMenuBean.saveMenu}"
+						actionListener="#{treeTableMenuBean.saveOrUpdate}"
 						action="#{treeTableMenuBean.goListPage}" ajax="false">
 					</p:commandButton>
 					<h:outputText value=" " />
