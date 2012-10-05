@@ -17,8 +17,8 @@ import org.primefaces.model.SortOrder;
 
 import com.application.datamodel.MenuDataModel;
 import com.application.datamodel.MenuDataModel;
-import com.application.model.Menu2;
-import com.application.service.Menu2Service;
+import com.application.model.Menu;
+import com.application.service.MenuService;
 import com.application.utility.LabelValueBean;
 import com.application.utility.ResourceHelper;
 
@@ -30,8 +30,8 @@ public class MenuBean implements Serializable {
 
 	private static final Logger log = Logger.getLogger(MenuBean.class);
 
-	@ManagedProperty(value = "#{menu2Service}")
-	private Menu2Service menu2Service;
+	@ManagedProperty(value = "#{menuService}")
+	private MenuService menuService;
 
 	private String id;
 	private String menuCode;
@@ -44,17 +44,17 @@ public class MenuBean implements Serializable {
 	private String searchColumn;
 	private String searchValue;
 
-	private LazyDataModel<Menu2> lazyModel;
+	private LazyDataModel<Menu> lazyModel;
 	private MenuDataModel menuDataModel;
-	private Menu2[] selectedMenus;
+	private Menu[] selectedMenus;
 
 	/**
 	 * get all menu data from database
 	 */
-	public List<Menu2> getMenu2List() {
+	public List<Menu> getMenuList() {
 		List<Object> columnList = null;
 		List<Object> valueList = null;
-		List<Menu2> menu2s = new ArrayList<Menu2>();
+		List<Menu> menus = new ArrayList<Menu>();
 
 		if (searchValue != null && !searchValue.trim().equals("")) {
 			columnList = new ArrayList<Object>();
@@ -63,11 +63,11 @@ public class MenuBean implements Serializable {
 			valueList.add(searchValue);
 		}
 
-		menu2s = menu2Service.searchMenu(columnList, valueList);
-		if (menu2s.isEmpty())
-			menu2s = new ArrayList<Menu2>();
+		menus = menuService.searchMenu(columnList, valueList);
+		if (menus.isEmpty())
+			menus = new ArrayList<Menu>();
 
-		return menu2s;
+		return menus;
 	}
 
 	// Column List
@@ -93,10 +93,10 @@ public class MenuBean implements Serializable {
 	// parent List
 	public List<LabelValueBean> getParentList() {
 		List<LabelValueBean> parentList = new ArrayList<LabelValueBean>();
-		List<Menu2> menu2s = menu2Service.searchMenu();
-		for (Menu2 menu2 : menu2s) {
-			parentList.add(new LabelValueBean(menu2.getMenuCode() + " - "
-					+ menu2.getMenuName(), menu2.getMenuCode()));
+		List<Menu> menus = menuService.searchMenu();
+		for (Menu menu : menus) {
+			parentList.add(new LabelValueBean(menu.getMenuCode() + " - "
+					+ menu.getMenuName(), menu.getMenuCode()));
 		}
 		return parentList;
 	}
@@ -168,16 +168,16 @@ public class MenuBean implements Serializable {
 	 * @return
 	 */
 	public MenuDataModel getModel() {
-		menuDataModel = new MenuDataModel(getMenu2List());
+		menuDataModel = new MenuDataModel(getMenuList());
 		return menuDataModel;
 	}
 
-	public Menu2Service getMenu2Service() {
-		return menu2Service;
+	public MenuService getMenuService() {
+		return menuService;
 	}
 
-	public void setMenu2Service(Menu2Service menu2Service) {
-		this.menu2Service = menu2Service;
+	public void setMenuService(MenuService menuService) {
+		this.menuService = menuService;
 	}
 
 	public String getId() {
@@ -260,11 +260,11 @@ public class MenuBean implements Serializable {
 		this.searchValue = searchValue;
 	}
 
-	public Menu2[] getSelectedMenus() {
+	public Menu[] getSelectedMenus() {
 		return selectedMenus;
 	}
 
-	public void setSelectedMenus(Menu2[] selectedMenus) {
+	public void setSelectedMenus(Menu[] selectedMenus) {
 		this.selectedMenus = selectedMenus;
 	}
 
