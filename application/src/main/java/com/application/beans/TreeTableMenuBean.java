@@ -7,7 +7,6 @@ import java.util.Map;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
@@ -15,8 +14,8 @@ import org.apache.log4j.Logger;
 import org.primefaces.model.DefaultTreeNode;
 import org.primefaces.model.TreeNode;
 
-import com.application.model.Menu2;
-import com.application.service.Menu2Service;
+import com.application.model.Menu;
+import com.application.service.MenuService;
 import com.application.utility.LabelValueBean;
 import com.application.utility.ResourceHelper;
 
@@ -28,18 +27,15 @@ public class TreeTableMenuBean implements Serializable {
 
 	private static final Logger log = Logger.getLogger(TreeTableMenuBean.class);
 
-	@ManagedProperty(value = "#{menu2Service}")
-	private Menu2Service menu2Service;
+	@ManagedProperty(value = "#{menuService}")
+	private MenuService menuService;
 
-	/*private String id;
-	private String menuCode;
-	private String parentCode;
-	private String menuName;
-	private String menuUrl;
-	private String menuType;
-	private String systemMenu;
-	private String menuLevel;*/
-	private Menu2 current = new Menu2();;
+	/*
+	 * private String id; private String menuCode; private String parentCode;
+	 * private String menuName; private String menuUrl; private String menuType;
+	 * private String systemMenu; private String menuLevel;
+	 */
+	private Menu current = new Menu();
 	private String searchColumn;
 	private String searchValue;
 
@@ -47,7 +43,7 @@ public class TreeTableMenuBean implements Serializable {
 
 	private TreeNode ch;
 
-	private Menu2 selectedMenu;
+	private Menu selectedMenu;
 
 	public void init() {
 		parent = new DefaultTreeNode("parent", null);
@@ -56,8 +52,8 @@ public class TreeTableMenuBean implements Serializable {
 
 	private void buildMenu(TreeNode parent, TreeNode child, String rightName) {
 
-		List<Menu2> menus = menu2Service.getMenuByParent(rightName);
-		for (Menu2 m : menus) {
+		List<Menu> menus = menuService.getMenuByParent(rightName);
+		for (Menu m : menus) {
 			TreeNode node = new DefaultTreeNode(m, null);
 			if (child == null) {
 				parent.addChild(node);
@@ -69,7 +65,6 @@ public class TreeTableMenuBean implements Serializable {
 
 	}
 
-	// MenuType List
 	public List<LabelValueBean> getMenuTypeList() {
 		List<LabelValueBean> menuTypeList = new ArrayList<LabelValueBean>();
 		menuTypeList.add(new LabelValueBean(ResourceHelper
@@ -79,13 +74,13 @@ public class TreeTableMenuBean implements Serializable {
 		return menuTypeList;
 	}
 
-	// parent List
+	
 	public List<LabelValueBean> getParentList() {
 		List<LabelValueBean> parentList = new ArrayList<LabelValueBean>();
-		List<Menu2> menu2s = menu2Service.searchMenu();
-		for (Menu2 menu2 : menu2s) {
-			parentList.add(new LabelValueBean(menu2.getMenuCode() + " - "
-					+ menu2.getMenuName(), menu2.getMenuCode()));
+		List<Menu> menus = menuService.searchMenu();
+		for (Menu menu : menus) {
+			parentList.add(new LabelValueBean(menu.getMenuCode() + " - "
+					+ menu.getMenuName(), menu.getMenuCode()));
 		}
 		return parentList;
 	}
@@ -99,9 +94,9 @@ public class TreeTableMenuBean implements Serializable {
 	}
 
 	public void initialAdd() {
-		// this.setCode(generateCode.generateMenuCode());
+		
 	}
-	
+
 	public void editTest() {
 		System.out.println("Inpace work");
 		log.info("Inplaceee wooorrkkk");
@@ -110,40 +105,51 @@ public class TreeTableMenuBean implements Serializable {
 	/**
 	 * Method save
 	 */
-	public void save() {
+	public void saveOrUpdate() {
 		try {
-			// clearForm();
+			if (current.getId() == 0) {
+				log.info("Save");
+				Menu parentMenu = menuService
+						.getByCode(current.getParentCode());
+				current.setMenuLevel(parentMenu.getMenuLevel() + 1);
+				menuService.save(current);
+			} else {
+				Menu parentMenu = menuService
+						.getByCode(current.getParentCode());
+				current.setMenuLevel(parentMenu.getMenuLevel() + 1);
+				menuService.update(current);
+				log.info("Update");
+			}
+			current = new Menu();
 		} catch (Exception e) {
-			log.warn(e.toString(), e);
+			current = new Menu();
+			log.error(e.toString(), e);
 		}
 	}
+	
 
 	/**
 	 * Method pada saat update screen
 	 */
 	public void initialUpdate() {
 		log.info("prepare for update menu...");
+
 		Map<String, String> params = FacesContext.getCurrentInstance()
 				.getExternalContext().getRequestParameterMap();
 		String id = params.get("menuIdParam");
-		log.info("ID==" + id);
+		Menu menu = menuService.getById(new Long(id));
+
+		current.setId(menu.getId());
+		current.setParentCode(menu.getParentCode() != null ? menu
+				.getParentCode() : "");
+		current.setMenuCode(menu.getMenuCode());
+		current.setMenuName(menu.getMenuName());
+		current.setMenuUrl(menu.getMenuUrl());
+		current.setMenuType(menu.getMenuType());
 
 		log.info("prepare for update menu end...");
-		//return null;
 	}
-
-	/**
-	 * Edit menu data ke database untuk commandButton di halaman jsf
-	 */
-	public void update() {
-		log.info("Update Menu Begin");
-
-		String id = FacesContext.getCurrentInstance().getExternalContext()
-				.getRequestParameterMap().get("custId");
-
-		log.info("Update Menu End");
-
-	}
+	
 
 	/**
 	 * Delete
@@ -152,19 +158,20 @@ public class TreeTableMenuBean implements Serializable {
 		Map<String, String> params = FacesContext.getCurrentInstance()
 				.getExternalContext().getRequestParameterMap();
 		String id = params.get("menuIdParam");
-
+		Menu menu = menuService.getById(new Long(id));
+		menuService.delete(menu);
 		return null;
 	}
-
-	public Menu2Service getMenu2Service() {
-		return menu2Service;
-	}
-
-	public void setMenu2Service(Menu2Service menu2Service) {
-		this.menu2Service = menu2Service;
-	}
-
 	
+	//generate getter setter
+
+	public MenuService getMenuService() {
+		return menuService;
+	}
+
+	public void setMenuService(MenuService menuService) {
+		this.menuService = menuService;
+	}
 
 	public String getSearchColumn() {
 		return searchColumn;
@@ -182,11 +189,11 @@ public class TreeTableMenuBean implements Serializable {
 		this.searchValue = searchValue;
 	}
 
-	public Menu2 getSelectedMenu() {
+	public Menu getSelectedMenu() {
 		return selectedMenu;
 	}
 
-	public void setSelectedMenu(Menu2 selectedMenu) {
+	public void setSelectedMenu(Menu selectedMenu) {
 		this.selectedMenu = selectedMenu;
 	}
 
@@ -194,14 +201,12 @@ public class TreeTableMenuBean implements Serializable {
 		return parent;
 	}
 
-	public Menu2 getCurrent() {
+	public Menu getCurrent() {
 		return current;
 	}
 
-	public void setCurrent(Menu2 current) {
+	public void setCurrent(Menu current) {
 		this.current = current;
 	}
-
-	
 
 }

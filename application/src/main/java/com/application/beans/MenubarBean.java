@@ -15,8 +15,8 @@ import org.primefaces.model.MenuModel;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.application.model.Menu2;
-import com.application.service.Menu2Service;
+import com.application.model.Menu;
+import com.application.service.MenuService;
 
 @ManagedBean(name = "menubarBean")
 @SessionScoped
@@ -26,15 +26,15 @@ public class MenubarBean implements Serializable {
 
 	private MenuModel simpleMenuModel;
 
-	@ManagedProperty(value = "#{menu2Service}")
-	private Menu2Service menu2Service;
+	@ManagedProperty(value = "#{menuService}")
+	private MenuService menuService;
 
-	public Menu2Service getMenu2Service() {
-		return menu2Service;
+	public MenuService getMenuService() {
+		return menuService;
 	}
 
-	public void setMenu2Service(Menu2Service menu2Service) {
-		this.menu2Service = menu2Service;
+	public void setMenuService(MenuService menuService) {
+		this.menuService = menuService;
 	}
 
 	public MenuModel getSimpleMenuModel() {
@@ -68,8 +68,8 @@ public class MenubarBean implements Serializable {
 	}
 
 	private void buildMenu(String user) {
-		List<Menu2> menuList = menu2Service.getMenuByUser(user);
-		for (Menu2 m : menuList) {
+		List<Menu> menuList = menuService.getMenuByUser(user);
+		for (Menu m : menuList) {
 			if (m.getMenuLevel() == 1) {
 				Submenu parent = new Submenu();
 				parent.setLabel(m.getMenuName());
@@ -81,11 +81,11 @@ public class MenubarBean implements Serializable {
 	}
 
 	private void buildChildMenu(Submenu submenu, String menuCode, String user) {
-		List<Menu2> menuList = menu2Service.getMenuByUser(user);
-		List<Menu2> menus = menu2Service.getMenuByParent(menuCode);
-		for (Menu2 menu2 : menuList) {
-			for (Menu2 m : menus) {
-				if (menu2.getId() == m.getId()) {
+		List<Menu> menuList = menuService.getMenuByUser(user);
+		List<Menu> menus = menuService.getMenuByParent(menuCode);
+		for (Menu menu : menuList) {
+			for (Menu m : menus) {
+				if (menu.getId() == m.getId()) {
 					if (m.getMenuUrl().equals("#") && m.getMenuLevel() == 2) {
 						Submenu subsub = new Submenu();
 						subsub.setLabel(m.getMenuName());
@@ -108,11 +108,11 @@ public class MenubarBean implements Serializable {
 
 	private void buildChildChildMenu(Submenu submenu, Submenu sub,
 			String menuCode, String user) {
-		List<Menu2> menuList = menu2Service.getMenuByUser(user);
-		List<Menu2> menus = menu2Service.getMenuByParent(menuCode);
-		for (Menu2 menu2 : menuList) {
-			for (Menu2 m : menus) {
-				if (menu2.getId() == m.getId()) {
+		List<Menu> menuList = menuService.getMenuByUser(user);
+		List<Menu> menus = menuService.getMenuByParent(menuCode);
+		for (Menu menu : menuList) {
+			for (Menu m : menus) {
+				if (menu.getId() == m.getId()) {
 					MenuItem menuItem = new MenuItem();
 					menuItem.setValue(m.getMenuName());
 					menuItem.setUrl(m.getMenuUrl());

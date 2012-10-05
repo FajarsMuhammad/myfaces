@@ -70,13 +70,13 @@ public class TreeBean implements Serializable {
 		
 		List<Menu> menus = menuService.getMenuByParent(rightName);
         for (Menu m : menus) {
-            TreeNode node = new DefaultTreeNode(m.getKind(), new Menu(m.getName(), m.getUrl(), m.getType()), null);
+            TreeNode node = new DefaultTreeNode(m, null);
             if (child == null) {
             	parent.addChild(node);
             } else {
             	child.addChild(node);
             }
-            buildMenu(parent, node, m.getRightName());
+            buildMenu(parent, node, m.getMenuCode());
         }
      
     }
@@ -100,9 +100,9 @@ public class TreeBean implements Serializable {
 		try{
 		if (type.equalsIgnoreCase("page")) {			
 			Menu menu = (Menu) event.getTreeNode().getData();
-			System.out.println("Page == "+ menu.getUrl());
-			setIncludePage(menu.getUrl());
-			 FacesContext.getCurrentInstance().getExternalContext().redirect(menu.getUrl());
+			System.out.println("Page == "+ menu.getMenuUrl());
+			setIncludePage(menu.getMenuUrl());
+			 FacesContext.getCurrentInstance().getExternalContext().redirect(menu.getMenuUrl());
 		} else {
 			setIncludePage("");
 		}
