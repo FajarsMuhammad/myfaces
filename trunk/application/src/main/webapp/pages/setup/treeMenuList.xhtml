@@ -49,7 +49,7 @@
 							</f:facet>
 
 							<p:commandLink action="/pages/setup/menuInput"
-								actionListener="#{treeTableMenuBean.initialUpdate}"
+								actionListener="#{treeTableMenuBean.prepareUpdate}"
 								ajax="false" >
 								<f:param name="menuIdParam" value="#{menu.id}" />
 								<h:outputText value="#{msg['label.edit']}" />
@@ -68,7 +68,7 @@
 					<br/>
 					<p:commandButton id="addButton" value="#{msg['label.add']}"
 						action="#{treeTableMenuBean.goInputPage}"
-						actionListener="#{treeTableMenuBean.initialAdd}" process="@this"
+						actionListener="#{treeTableMenuBean.prepareAdd}" process="@this"
 						ajax="false" immediate="true">
 					</p:commandButton>
 				</p:panel>

@@ -1,6 +1,10 @@
 package com.application.model;
 
-public class Role {
+import java.io.Serializable;
+
+public class Role implements Serializable {
+
+	private static final long serialVersionUID = -179692308943087373L;
 
 	private long id;
 

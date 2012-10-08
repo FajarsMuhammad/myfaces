@@ -16,7 +16,8 @@
 					<br />
 
 					<h:outputText value="Search" />
-					<h:selectOneMenu id="searchColumn" value="#{customerBean.searchColumn}">
+					<h:selectOneMenu id="searchColumn"
+						value="#{customerBean.searchColumn}">
 						<f:selectItem itemLabel="Please Choose" itemValue="" />
 						<f:selectItems value="#{customerBean.getColumnList()}" var="c"
 							itemLabel="#{c.label}" itemValue="#{c.value}" />
@@ -24,58 +25,45 @@
 					<h:outputText value=" " />
 					<p:inputText id="searchValue" value="#{customerBean.searchValue}"
 						size="30" />
-					<p:commandButton id="searchButton" value="Search" action="/pages/master/customerList"
-						actionListener="#{customerBean.search}"  ajax="false">
+					<p:commandButton id="searchButton" value="Search"
+						action="/pages/master/customerList"
+						actionListener="#{customerBean.search}" ajax="false">
 					</p:commandButton>
 					<br />
 					<br />
 
-					<p:dataTable var="c" value="#{customerBean.getModel()}"
-						paginator="true" rows="10"
+					<p:dataTable id="customerDataTable" var="c"
+						value="#{customerBean.lazyDataModel}" paginator="true" rows="10"
+						rowKey="#{c.customerId}"
+						filteredValue="#{customerBean.filteredCustomers}"
 						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-						rowsPerPageTemplate="10,20,50"
+						rowsPerPageTemplate="10,20,50" lazy="true"
 						selection="#{customerBean.selectedCustomers}">
 
 						<p:column selectionMode="multiple" />
-						<p:column>
-							<f:facet name="header">
-								<h:outputText value="#{msg['label.customerCode']}" />
-							</f:facet>
+						<p:column id="code" headerText="#{msg['label.customerCode']}"
+							filterBy="#{c.code}" filterMatchMode="contains">
 							<h:outputText value="#{c.code}" />
 						</p:column>
-						<p:column>
-							<f:facet name="header">
-								<h:outputText value="#{msg['label.name']}" />
-							</f:facet>
+						<p:column id="name" headerText="#{msg['label.name']}"
+							filterBy="#{c.name}">
 							<h:outputText value="#{c.name}" />
 						</p:column>
-						<p:column>
-							<f:facet name="header">
-								<h:outputText value="Grade" />
-							</f:facet>
+						<p:column id="grade" headerText="#{msg['label.grade']}">
 							<h:outputText value="#{c.grade}" />
 						</p:column>
-						<p:column>
-							<f:facet name="header">
-								<h:outputText value="#{msg['label.address']}" />
-							</f:facet>
+						<p:column id="address" headerText="#{msg['label.address']}">
 							<h:outputText value="#{c.address}" />
 						</p:column>
-						<p:column>
-							<f:facet name="header">
-    				Created Date
-				</f:facet>
+						<p:column headerText="#{msg['label.createdDate']}">
 							<h:outputText value="#{c.createdDate}">
 								<f:convertDateTime pattern="d-M-yyyy" />
 							</h:outputText>
 						</p:column>
-						<p:column style="text-align:center">
-							<f:facet name="header">
-								<h:outputText value="#{msg['label.action']}" />
-							</f:facet>
+						<p:column headerText="#{msg['label.action']}"
+							style="text-align:center">
 							<p:commandLink action="/pages/master/customerEdit"
-								actionListener="#{customerBean.initialUpdate}"
-								ajax="false">
+								actionListener="#{customerBean.prepareUpdate}" ajax="false">
 								<f:param name="customerIdParam" value="#{c.customerId}" />
 								<h:outputText value="#{msg['label.edit']}" />
 							</p:commandLink>
@@ -92,7 +80,7 @@
 
 					<p:commandButton id="addButton" value="#{msg['label.add']}"
 						action="#{customerBean.goInputPage}"
-						actionListener="#{customerBean.initialAdd}" process="@this"
+						actionListener="#{customerBean.prepareAdd}" process="@this"
 						ajax="false" immediate="true">
 					</p:commandButton>
 				</p:panel>
