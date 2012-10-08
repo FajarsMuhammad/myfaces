@@ -93,7 +93,7 @@ public class TreeTableMenuBean implements Serializable {
 		return "/pages/setup/treeMenuList";
 	}
 
-	public void initialAdd() {
+	public void prepareAdd() {
 		
 	}
 
@@ -131,7 +131,7 @@ public class TreeTableMenuBean implements Serializable {
 	/**
 	 * Method pada saat update screen
 	 */
-	public void initialUpdate() {
+	public void prepareUpdate() {
 		log.info("prepare for update menu...");
 
 		Map<String, String> params = FacesContext.getCurrentInstance()
