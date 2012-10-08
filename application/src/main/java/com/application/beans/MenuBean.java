@@ -109,7 +109,7 @@ public class MenuBean implements Serializable {
 		return "/pages/setup/menuList";
 	}
 
-	public void initialAdd() {
+	public void prepareAdd() {
 		// this.setCode(generateCode.generateMenuCode());
 	}
 
@@ -127,7 +127,7 @@ public class MenuBean implements Serializable {
 	/**
 	 * Method pada saat update screen
 	 */
-	public String initialUpdate() {
+	public String prepareUpdate() {
 		log.info("prepare for update menu...");
 		Map<String, String> params = FacesContext.getCurrentInstance()
 				.getExternalContext().getRequestParameterMap();

@@ -3,6 +3,7 @@ package com.application.beans;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -12,8 +13,11 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
 import org.apache.log4j.Logger;
+import org.primefaces.model.LazyDataModel;
+import org.primefaces.model.SortOrder;
 
 import com.application.datamodel.CustomerDataModel;
+import com.application.datamodel.CustomerLazyDataModel;
 import com.application.model.Customer;
 import com.application.service.CustomerService;
 import com.application.utility.GenerateCode;
@@ -46,7 +50,102 @@ public class CustomerBean implements Serializable {
 	private CustomerDataModel customerDataModel;
 	private Customer[] selectedCustomers;
 
+	@ManagedProperty(value = "#{lazyDataModel}")
+	private LazyDataModel<Customer> lazyDataModel;
+
+	private List<Customer> filteredCustomers;
+
+	 public void setLazyDataModel(LazyDataModel<Customer> lazyDataModel) {
+	 this.lazyDataModel = lazyDataModel;
+	 }
 	
+	 public LazyDataModel<Customer> getLazyDataModel() {
+	 if (lazyDataModel == null) {
+	 lazyDataModel = new CustomerLazyDataModel();
+	 }
+	 return lazyDataModel;
+	 }
+
+	// public LazyDataModel<Customer> getLazyDataModel() {
+	// if (lazyDataModel == null) {
+	// lazyDataModel = new LazyDataModel<Customer>() {
+	// List<Customer> customers;
+	// @Override
+	// public List<Customer> load(int first, int pageSize,
+	// String sortField, SortOrder sortOrder,
+	// Map<String, String> filters) {
+	// log.info("first=" + first + ", pagesize=" + pageSize
+	// + ", sortfield=" + sortField + " sortorder="
+	// + sortOrder + " filter:" + filters);
+	// int start = first;
+	// int end = first + pageSize;
+	//
+	// List<Customer> data = new ArrayList<Customer>();
+	// customers = customerService.searchCustomer(
+	// start, end);
+	// // filter
+	// for (Customer customer : customers) {
+	// boolean match = true;
+	//
+	// for (Iterator<String> it = filters.keySet().iterator(); it
+	// .hasNext();) {
+	// try {
+	// String filterProperty = it.next();
+	// String filterValue = filters
+	// .get(filterProperty);
+	// String fieldValue = String.valueOf(customer
+	// .getClass().getField(filterProperty)
+	// .get(customer));
+	// log.info("filter==" + filterValue);
+	// if (filterValue == null
+	// || fieldValue.startsWith(filterValue)) {
+	// match = true;
+	// } else {
+	// match = false;
+	// break;
+	// }
+	// } catch (Exception e) {
+	// match = false;
+	// }
+	// }
+	//
+	// if (match) {
+	// data.add(customer);
+	// }
+	// }
+	//
+	// // rowCount
+	// int dataSize = data.size();
+	// this.setRowCount(customerService.getCountAllCustomer());
+	//
+	// // paginate
+	// if (dataSize > pageSize) {
+	// try {
+	// return data.subList(first, first + pageSize);
+	// } catch (IndexOutOfBoundsException e) {
+	// return data.subList(first, first
+	// + (dataSize % pageSize));
+	// }
+	// } else {
+	// return data;
+	// }
+	//
+	// }
+	//
+	// @Override
+	// public void setRowIndex(final int rowIndex) {
+	// if (rowIndex == -1 || getPageSize() == 0) {
+	// super.setRowIndex(-1);
+	// } else {
+	// super.setRowIndex(rowIndex % getPageSize());
+	// }
+	// }
+	//
+	// };
+	// }
+	//
+	// return lazyDataModel;
+	// }
 
 	/**
 	 * get all customer data from database
@@ -104,15 +203,15 @@ public class CustomerBean implements Serializable {
 	/**
 	 * Method when click add button in list view
 	 */
-	public void initialAdd() {
+	public void prepareAdd() {
 		this.setCode(generateCode.generateCustomerCode());
 	}
 
 	public String goInputPage() {
 		return "/pages/master/customerInput";
 	}
-	
-	public String goListPage(){
+
+	public String goListPage() {
 		return "/pages/master/customerList";
 	}
 
@@ -141,14 +240,14 @@ public class CustomerBean implements Serializable {
 	/**
 	 * Method pada saat update screen
 	 */
-	public String initialUpdate() {
+	public String prepareUpdate() {
 		log.info("prepare for update customer...");
 		Map<String, String> params = FacesContext.getCurrentInstance()
 				.getExternalContext().getRequestParameterMap();
 		String id = params.get("customerIdParam");
-		log.info("ID=="+id);
+		log.info("ID==" + id);
 		Customer customer = customerService.searchCustomerById(new Long(id));
-		log.info("CUST ID=="+customer.getCustomerId());
+		log.info("CUST ID==" + customer.getCustomerId());
 		this.setCustId("" + customer.getCustomerId());
 		this.setCode(customer.getCode());
 		this.setName(customer.getName());
@@ -198,8 +297,7 @@ public class CustomerBean implements Serializable {
 		setName("");
 		setAddress("");
 	}
-	
-	
+
 	public Customer[] getSelectedCustomers() {
 		return selectedCustomers;
 	}
@@ -291,6 +389,14 @@ public class CustomerBean implements Serializable {
 
 	public void setGenerateCode(GenerateCode generateCode) {
 		this.generateCode = generateCode;
+	}
+
+	public List<Customer> getFilteredCustomers() {
+		return filteredCustomers;
+	}
+
+	public void setFilteredCustomers(List<Customer> filteredCustomers) {
+		this.filteredCustomers = filteredCustomers;
 	}
 
 }
