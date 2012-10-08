@@ -6,10 +6,16 @@ import com.application.model.Customer;
 
 public interface CustomerDao extends BasisDao<Customer, Long> {
 
-	List<Customer> searchCustomer(List<Object> columnList, List<Object> valueList);
-
-	Customer searchCustomerById(long id);
+	public List<Customer> searchCustomer(List<Object> columnList, List<Object> valueList);
 	
-	List<Customer> generateCode(String code);
+	public List<Customer> searchCustomer(List<Object> columnList, List<Object> valueList, int startingAt, int maxPerPage);
+	
+	public List<Customer> searchCustomer(int startingAt, int maxPerPage);
+
+	public Customer searchCustomerById(long id);
+	
+	public List<Customer> generateCode(String code);
+	
+	public int getCountAllCustomer();
 
 }

@@ -15,8 +15,14 @@ public interface CustomerService {
 	public List<Customer> findAllCustomer();
 
 	public List<Customer> searchCustomer(List<Object> columnList, List<Object> valueList);
+	
+	public List<Customer> searchCustomer(List<Object> columnList, List<Object> valueList, int startingAt, int maxPerPage);
+	
+	public List<Customer> searchCustomer(int startingAt, int maxPerPage);
 
 	public Customer searchCustomerById(long id);
 		
 	public List<Customer> generateCode(String code);
+	
+	public int getCountAllCustomer();
 }

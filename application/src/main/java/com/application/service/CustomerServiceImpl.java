@@ -46,4 +46,16 @@ public class CustomerServiceImpl implements CustomerService {
 	public List<Customer> generateCode(String code) {
 		return customerDao.generateCode(code);
 	}
+	
+	public List<Customer> searchCustomer(int startingAt, int maxPerPage){
+		return customerDao.searchCustomer(startingAt, maxPerPage);
+	}
+	
+	public int getCountAllCustomer(){
+		return customerDao.getCountAllCustomer();
+	}
+	
+	public List<Customer> searchCustomer(List<Object> columnList, List<Object> valueList, int startingAt, int maxPerPage){
+		return customerDao.searchCustomer(columnList, valueList, startingAt, maxPerPage);
+	}
 }

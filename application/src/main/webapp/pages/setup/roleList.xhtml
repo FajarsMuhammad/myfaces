@@ -10,65 +10,51 @@
 </h:head>
 <h:body>
 	<ui:composition template="../templates/template.xhtml">
-		<ui:define name="heading">
-           <ui:define name="menubarTop"></ui:define>
-        </ui:define>
-
 		<ui:define name="body">
 			<h:form>
-				<p:panel header="Menu" toggleable="true">
+				<p:panel header="Role" toggleable="true">
 					<br />
 
 					<h:outputText value="Search" />
-					<h:selectOneMenu id="searchColumn" value="#{menuBean.searchColumn}">
+					<h:selectOneMenu id="searchColumn" value="#{roleBean.searchColumn}">
 						<f:selectItem itemLabel="Please Choose" itemValue="" />
-						<f:selectItems value="#{menuBean.getColumnList()}" var="menu"
-							itemLabel="#{menu.label}" itemValue="#{menu.value}" />
+						<f:selectItems value="#{roleBean.getColumnList()}" var="c"
+							itemLabel="#{c.label}" itemValue="#{c.value}" />
 					</h:selectOneMenu>
 					<h:outputText value=" " />
-					<p:inputText id="searchValue" value="#{menuBean.searchValue}"
+					<p:inputText id="searchValue" value="#{roleBean.searchValue}"
 						size="30" />
-					<p:commandButton id="searchButton" value="Search" action="#{menuBean.goListPage}"
-						actionListener="#{menuBean.search}"  ajax="false">
+					<p:commandButton id="searchButton" value="Search"
+						action="/pages/master/roleList"
+						actionListener="#{roleBean.search}" ajax="false">
 					</p:commandButton>
 					<br />
 					<br />
 
-					<p:dataTable var="menu" value="#{menuBean.getModel()}"
+					<p:dataTable var="c" value="#{roleBean.getLazyModel()}"
 						paginator="true" rows="10"
 						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 						rowsPerPageTemplate="10,20,50"
-						selection="#{menuBean.selectedMenus}">
+						selection="#{roleBean.selectedRoles}" id="roleTable" lazy="true">
 
 						<p:column selectionMode="multiple" />
 						<p:column>
 							<f:facet name="header">
-								<h:outputText value="#{msg['label.parent']}" />
+								<h:outputText value="#{msg['label.roleShortDescription']}" />
 							</f:facet>
-							<h:outputText value="#{menu.parentCode}" />
+							<h:outputText value="#{c.roleShortDescription}" />
 						</p:column>
 						<p:column>
 							<f:facet name="header">
-								<h:outputText value="#{msg['label.code']}" />
+								<h:outputText value="#{msg['label.roleLongDescription']}" />
 							</f:facet>
-							<h:outputText value="#{menu.menuCode}" />
+							<h:outputText value="#{c.roleLongDescription}" />
 						</p:column>
+
 						<p:column>
 							<f:facet name="header">
-								<h:outputText value="#{msg['label.name']}" />
+								<h:outputText value="#{msg['label.createdDate']}" />
 							</f:facet>
-							<h:outputText value="#{menu.menuName}" />
-						</p:column>
-						<p:column>
-							<f:facet name="header">
-								<h:outputText value="#{msg['label.url']}" />
-							</f:facet>
-							<h:outputText value="#{menu.menuUrl}" />
-						</p:column>
-						<p:column>
-							<f:facet name="header">
-    				Created Date
-				</f:facet>
 							<h:outputText value="">
 								<f:convertDateTime pattern="d-M-yyyy" />
 							</h:outputText>
@@ -77,26 +63,25 @@
 							<f:facet name="header">
 								<h:outputText value="#{msg['label.action']}" />
 							</f:facet>
-							<p:commandLink action="#{menuBean.goInputPage}"
-								actionListener="#{menuBean.prepareUpdate}"
-								ajax="false">
-								<f:param name="menuIdParam" value="#{menu.id}" />
+							<p:commandLink action="#{roleBean.goInputPage}"
+								actionListener="#{roleBean.prepareUpdate}" ajax="false">
+								<f:param name="roleIdParam" value="#{c.id}" />
 								<h:outputText value="#{msg['label.edit']}" />
 							</p:commandLink>
 							|					  
-							<p:commandLink action="#{menuBean.goListPage}"
-								actionListener="#{menuBean.deleteMenu}"
+							<p:commandLink action="#{roleBean.goListPage}"
+								actionListener="#{roleBean.delete}"
 								onclick="if(!confirm('Are you sure you want to delete this record?')) return false;"
 								ajax="false">
-								<f:param name="menuIdParam" value="#{menu.id}" />
+								<f:param name="roleIdParam" value="#{c.id}" />
 								<h:outputText value="#{msg['label.delete']}" />
 							</p:commandLink>
 						</p:column>
 					</p:dataTable>
 
 					<p:commandButton id="addButton" value="#{msg['label.add']}"
-						action="#{menuBean.goInputPage}"
-						actionListener="#{menuBean.prepareAdd}" process="@this"
+						action="#{roleBean.goInputPage}"
+						actionListener="#{roleBean.prepareAdd}" process="@this"
 						ajax="false" immediate="true">
 					</p:commandButton>
 				</p:panel>

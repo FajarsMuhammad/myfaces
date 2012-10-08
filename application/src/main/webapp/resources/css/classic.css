@@ -81,7 +81,7 @@ a:hover {
 	overflow: visible !important;
 	/*margin: 10px;*/
 	top: 55px;
-	background: #dddddd;
+	/*background: #dddddd;*/
 }
 
 .ui-layout-north {
@@ -90,7 +90,7 @@ a:hover {
 	overflow: visible !important;;
 	-moz-box-shadow: 5px 5px 5px #888888; /* Firefox 3.6 and earlier */
 	box-shadow: 5px 5px 5px #888888;
-	background: #dddddd;
+	/*background: #dddddd;*/
 }
 
 .ui-layout-center {

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui">
+<h:head>
+
+</h:head>
+<h:body>
+	<ui:composition template="../templates/template.xhtml">
+		<ui:define name="body">
+			<h:form>
+				<p:panel header="Role">
+					<br />
+					<h:panelGrid columns="3">				
+						<input type="hidden" name="id" value="#{roleBean.current.id}" />
+						
+
+						<h:outputText value="#{msg['label.roleShortDescription']} " />
+						<p:inputText id="roleShortDescription" value="#{treeTableRoleBean.current.roleShortDescription}" size="20"
+							required="false" label="roleShortDescription">
+						</p:inputText>
+						<p:message for="roleShortDescription" style="color:red" />						
+
+						<h:outputText value="#{msg['label.roleLongDescription']} " />
+						<p:inputText id="roleLongDescription" value="#{treeTableRoleBean.current.roleLongDescription}" size="30"
+							required="false" label="roleLongDescription">
+						</p:inputText>
+						<p:message for="roleLongDescription" style="color:red" />
+
+					</h:panelGrid>
+
+					<p:commandButton id="saveButton" value="#{msg['label.save']} "
+						actionListener="#{roleBean.saveOrUpdate}"
+						action="#{roleBean.goListPage}" ajax="false">
+					</p:commandButton>
+					<h:outputText value=" " />
+					<p:commandButton id="cancelButton" value="#{msg['label.cancel']}"
+						action="#{roleBean.goListPage}" ajax="false">
+					</p:commandButton>
+				</p:panel>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>
