@@ -2,25 +2,52 @@ package com.application.model;
 
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="customer")
 public class Customer{
 	
-	private long customerId;
+	@Id
+	@Column(name="customer_id")
+	@SequenceGenerator(name="my_seq", sequenceName="customer_id_seq")
+	@GeneratedValue(generator = "my_seq", strategy = GenerationType.SEQUENCE)	
+	private Long id;
+	
+	@Column(name="customer_code")
 	private String code;
+	
+	@Column(name="customer_name")
 	private String name;
+	
+	@Column(name="address")
 	private String address;
+	
+	@Column(name="gender")
 	private String gender;
+	
+	@Column(name="created_date")
 	private Date createdDate;
+	
+	@Column(name="customer_grade")
 	private String grade;
-	private Integer termOfPayment;
+	
+	@Column(name="term_of_payment")
+	private boolean termOfPayment;
 	
 	
-	public long getCustomerId() {
-		return customerId;
+	public Long getId() {
+		return id;
 	}
-	public void setCustomerId(long customerId) {
-		this.customerId = customerId;
+	public void setId(Long id) {
+		this.id = id;
 	}
-	
 	public String getCode() {
 		return code;
 	}
@@ -57,12 +84,13 @@ public class Customer{
 	public void setGrade(String grade) {
 		this.grade = grade;
 	}
-	public Integer getTermOfPayment() {
+	public boolean isTermOfPayment() {
 		return termOfPayment;
 	}
-	public void setTermOfPayment(Integer termOfPayment) {
+	public void setTermOfPayment(boolean termOfPayment) {
 		this.termOfPayment = termOfPayment;
 	}
+
 	
 	
 	

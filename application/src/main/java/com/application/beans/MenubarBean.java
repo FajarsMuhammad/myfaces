@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
@@ -19,7 +20,7 @@ import com.application.model.Menu;
 import com.application.service.MenuService;
 
 @ManagedBean(name = "menubarBean")
-@SessionScoped
+@RequestScoped
 public class MenubarBean implements Serializable {
 
 	private static final long serialVersionUID = 3568928318014489011L;
@@ -86,7 +87,8 @@ public class MenubarBean implements Serializable {
 		for (Menu menu : menuList) {
 			for (Menu m : menus) {
 				if (menu.getId() == m.getId()) {
-					if (m.getMenuUrl().equals("#") && m.getMenuLevel() == 2) {
+					if ((m.getMenuUrl().equals("#") || m.getMenuUrl()
+							.equals("")) && m.getMenuLevel() == 2) {
 						Submenu subsub = new Submenu();
 						subsub.setLabel(m.getMenuName());
 						subsub.setIcon("ui-icon ui-icon-document");

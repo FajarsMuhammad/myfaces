@@ -5,6 +5,9 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 <ui:composition template="pages/templates/template.xhtml">
+	<ui:define name="heading">
+		<ui:include src="pages/templates/menubar.xhtml" />
+	</ui:define>
 	<ui:define name="body">
 		<h1>
 			Welcome

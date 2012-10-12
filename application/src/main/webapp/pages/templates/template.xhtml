@@ -15,9 +15,10 @@
 	<p:layout fullPage="true">
 		<p:layoutUnit position="north" size="100" resizable="false"
 			closable="false" spacing="0" rendered="true">
-			<!-- <div id="heading"> -->
-				<ui:include src="menubar.xhtml" />
-			<!-- </div> -->
+
+			<div id="heading">
+				<ui:insert name="heading" />
+			</div>
 		</p:layoutUnit>
 		<p:layoutUnit position="center">
 			<div id="content">

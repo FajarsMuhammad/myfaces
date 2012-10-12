@@ -7,20 +7,20 @@ import java.util.Map;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
 import org.apache.log4j.Logger;
-import org.primefaces.model.LazyDataModel;
 
 import com.application.datamodel.RoleDataModel;
 import com.application.model.Role;
 import com.application.service.RoleService;
+import com.application.utility.JsfUtil;
 import com.application.utility.LabelValueBean;
 import com.application.utility.ResourceHelper;
 
 @ManagedBean(name = "roleBean")
-@SessionScoped
+@RequestScoped
 public class RoleBean implements Serializable {
 
 	private static final long serialVersionUID = -9070049982893688763L;
@@ -31,13 +31,18 @@ public class RoleBean implements Serializable {
 	private RoleService roleService;
 
 	private Role current = new Role();
+	private Role detailedRole = new Role();
 	private String searchColumn;
 	private String searchValue;
 	
-	private LazyDataModel<Role> lazyModel; 
-	private Role selectedRoles;
+	private Role[] selectedRoles;
+	private RoleDataModel roleDataModel;
 	
 	
+	public RoleDataModel getRoleDataModel() {
+		roleDataModel = new RoleDataModel(getRoleList());
+		return roleDataModel;
+	}
 
 	public String goInputPage() {
 		return "/pages/setup/roleInput";
@@ -80,7 +85,7 @@ public class RoleBean implements Serializable {
 	}
 	
 	public void search() {
-		getLazyModel();
+		getRoleDataModel();
 	}
 	
 
@@ -89,22 +94,18 @@ public class RoleBean implements Serializable {
 	 */
 	public void saveOrUpdate() {
 		try {
+			log.info("IDS===="+current.getId());
 			if (current.getId() == 0) {
-				log.info("Save start >>>");
-				
-				roleService.save(current);
-				
-				log.info("Save end >>>");
+				log.info("Save start >>>");				
+				roleService.save(current);				
 			} else {
-				log.info("Update start >>>");
-				
-				roleService.update(current);
-				
-				log.info("Update End >>>");
+				log.info("Update start >>>");				
+				roleService.update(current);				
 			}
 			current = new Role();
 		} catch (Exception e) {
 			current = new Role();
+			JsfUtil.addErrorMessage(ResourceHelper.getResources("error.save"));
 			log.error(e.toString(), e);
 		}
 	}
@@ -119,8 +120,9 @@ public class RoleBean implements Serializable {
 		Map<String, String> params = FacesContext.getCurrentInstance()
 				.getExternalContext().getRequestParameterMap();
 		String id = params.get("roleIdParam");
+		log.info("ID == "+id);
 		Role role = roleService.getById(new Long(id));
-
+		log.info("role == "+role.getId());
 		current.setId(role.getId());
 		current.setRoleShortDescription(role.getRoleShortDescription());
 		current.setRoleLongDescription(role.getRoleLongDescription());
@@ -132,21 +134,18 @@ public class RoleBean implements Serializable {
 	/**
 	 * Delete
 	 */
-	public String delete() {
+	public void delete() {
 		Map<String, String> params = FacesContext.getCurrentInstance()
 				.getExternalContext().getRequestParameterMap();
 		String id = params.get("roleIdParam");
+		log.info("id === "+id);
+		log.info("ID === "+detailedRole.getId());
 		Role role = roleService.getById(new Long(id));
 		roleService.delete(role);
-		return null;
 	}
 	
 	//generate getter setter
 	
-	public LazyDataModel<Role> getLazyModel() {
-		lazyModel = new RoleDataModel(getRoleList());
-		return lazyModel;
-	}
 
 	public RoleService getRoleService() {
 		return roleService;
@@ -180,13 +179,22 @@ public class RoleBean implements Serializable {
 		this.current = current;
 	}
 
+	public Role getDetailedRole() {
+		return detailedRole;
+	}
 
-	public Role getSelectedRoles() {
+	public void setDetailedRole(Role detailedRole) {
+		this.detailedRole = detailedRole;
+	}
+
+	public Role[] getSelectedRoles() {
 		return selectedRoles;
 	}
 
-	public void setSelectedRoles(Role selectedRoles) {
+	public void setSelectedRoles(Role[] selectedRoles) {
 		this.selectedRoles = selectedRoles;
 	}
+
+
 
 }

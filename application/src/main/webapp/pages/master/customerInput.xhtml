@@ -15,21 +15,25 @@
 				<p:panel header="Customer">
 					<br />
 					<h:panelGrid columns="3">
+						
+						<h:inputHidden id="id" value="#{customerBean.current.id}"/>
+						<h:outputText value="" />
+						<h:outputText value="" />
 
 						<h:outputText value="#{msg['label.code']} " />
-						<p:inputText id="code" value="#{customerBean.code}" size="20"
-							required="false" label="Code" readonly="true">
+						<p:inputText id="code" value="#{customerBean.current.code}" size="20"
+							required="true" label="Code" readonly="true">
 						</p:inputText>
 						<p:message for="code" style="color:red" />
 
 						<h:outputText value="#{msg['label.name']} " />
-						<p:inputText id="name" value="#{customerBean.name}" size="30"
-							required="false" label="Name">
+						<p:inputText id="name" value="#{customerBean.current.name}" size="30"
+							required="true" label="Name">
 						</p:inputText>
 						<p:message for="name" style="color:red" />
 
 						<h:outputText value="Grade" />
-						<h:selectOneMenu value="#{customerBean.grade}">
+						<h:selectOneMenu value="#{customerBean.current.grade}">
 							<f:selectItem itemLabel="#{msg['label.chooseOne']} " itemValue="" />
 							<f:selectItems value="#{customerBean.getGradeList()}" var="g"
 								itemLabel="#{g.label}" itemValue="#{g.value}" />
@@ -37,24 +41,24 @@
 						<h:outputText value=" " />
 
 						<h:outputText value="#{msg['label.address']} " />
-						<p:inputTextarea id="address" value="#{customerBean.address}"
+						<p:inputTextarea id="address" value="#{customerBean.current.address}"
 							cols="50" rows="5" required="false" label="Address">
 						</p:inputTextarea>
 						<h:outputText value=" " />
 
 						<h:outputText value="Term Of Payment" />
 						<h:selectBooleanCheckbox id="termOfPayment"
-							value="#{customerBean.termOfPayment}" />
+							value="#{customerBean.current.termOfPayment}" />
 						<h:outputText value=" " />
 					</h:panelGrid>
 
 					<p:commandButton id="saveButton" value="#{msg['label.save']} "
-						actionListener="#{customerBean.saveCustomer}"
+						actionListener="#{customerBean.saveOrUpdate}"
 						action="/pages/master/customerList" ajax="false">
 					</p:commandButton>
 					<h:outputText value=" " />
 					<p:commandButton id="cancelButton" value="#{msg['label.cancel']}"
-						action="/pages/master/customerList" ajax="false">
+						action="/pages/master/customerList" ajax="false" process="@this" immediate="true">
 					</p:commandButton>
 				</p:panel>
 			</h:form>
