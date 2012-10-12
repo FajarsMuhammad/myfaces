@@ -10,25 +10,33 @@
 </h:head>
 <h:body>
 	<ui:composition template="../templates/template.xhtml">
+		<ui:define name="heading">
+			<ui:include src="../templates/menubar.xhtml" />
+		</ui:define>
 		<ui:define name="body">
-			<h:form>
+			<h:form id="formInput">
+				<p:messages id="messages" autoUpdate="true" />
+				
 				<p:panel header="Role">
 					<br />
-					<h:panelGrid columns="3">				
-						<input type="hidden" name="id" value="#{roleBean.current.id}" />
-						
+					<h:panelGrid columns="3">
+						<h:inputHidden id="id" value="#{roleBean.current.id}"/>
+						<h:outputText value="" />
+						<h:outputText value="" />
 
 						<h:outputText value="#{msg['label.roleShortDescription']} " />
-						<p:inputText id="roleShortDescription" value="#{treeTableRoleBean.current.roleShortDescription}" size="20"
-							required="false" label="roleShortDescription">
+						<p:inputText id="roleShortDescription"
+							value="#{roleBean.current.roleShortDescription}" size="20"
+							required="true" label="#{msg['label.roleShortDescription']} ">
 						</p:inputText>
-						<p:message for="roleShortDescription" style="color:red" />						
+						<p:message for="roleShortDescription" style="color:red" />
 
 						<h:outputText value="#{msg['label.roleLongDescription']} " />
-						<p:inputText id="roleLongDescription" value="#{treeTableRoleBean.current.roleLongDescription}" size="30"
+						<p:inputText id="roleLongDescription"
+							value="#{roleBean.current.roleLongDescription}" size="30"
 							required="false" label="roleLongDescription">
 						</p:inputText>
-						<p:message for="roleLongDescription" style="color:red" />
+						<h:outputText value="" />
 
 					</h:panelGrid>
 
@@ -38,7 +46,8 @@
 					</p:commandButton>
 					<h:outputText value=" " />
 					<p:commandButton id="cancelButton" value="#{msg['label.cancel']}"
-						action="#{roleBean.goListPage}" ajax="false">
+						action="#{roleBean.goListPage}" ajax="false" process="@this"
+						immediate="true">
 					</p:commandButton>
 				</p:panel>
 			</h:form>

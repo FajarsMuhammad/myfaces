@@ -25,22 +25,14 @@
 							<f:facet name="header">
 								<h:outputText value="#{msg['label.name']}" />
 							</f:facet>
-							<!-- <h:outputText value="#{menu.menuName}" /> -->
-							<p:inplace editor="true">
-							<p:ajax event="save" listener="#{treeTableMenuBean.editTest}" />                                
-								<p:inputText value="#{menu.menuName}" required="true" />
-							</p:inplace>
+							<h:outputText value="#{menu.menuName}" />
 						</p:column>
 
 						<p:column>
 							<f:facet name="header">
 								<h:outputText value="#{msg['label.url']}" />
 							</f:facet>
-							<!-- <h:outputText value="#{menu.menuUrl}" /> -->
-							<p:inplace id="ajaxInplace" editor="true">
-								<p:inputText value="#{menu.menuUrl}" required="true"
-									label="text" />
-							</p:inplace>
+							<h:outputText value="#{menu.menuUrl}" />							
 						</p:column>
 
 						<p:column style="text-align:center">

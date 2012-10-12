@@ -19,10 +19,10 @@
    		<property name="customerService" ref="customerService"></property>
    	</bean>
    	
-   	<bean id="lazyDataModel" 
+   	<!-- <bean id="lazyDataModel" 
          class="com.application.datamodel.CustomerLazyDataModel" >
    		<property name="customerService" ref="customerService"></property>
    	</bean>
-   	
+   	 -->
  
 </beans>

@@ -1,18 +1,38 @@
 package com.application.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "role_menu")
 public class RoleMenu {
 	
-	private long id;
+	@Id
+	@Column(name = "role_menu_id")
+	@SequenceGenerator(name = "my_seq", sequenceName = "role_menu_id_seq")
+	@GeneratedValue(generator = "my_seq", strategy = GenerationType.SEQUENCE)
+	private Long id;
 	
+	@ManyToOne
+	@JoinColumn(name = "role_id")
 	private Role role;
 	
+	@ManyToOne
+	@JoinColumn(name = "menu_id")
 	private Menu menu;
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

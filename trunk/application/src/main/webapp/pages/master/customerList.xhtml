@@ -10,8 +10,11 @@
 </h:head>
 <h:body>
 	<ui:composition template="../templates/template.xhtml">
+		<ui:define name="heading">
+			<ui:include src="../templates/menubar.xhtml" />
+		</ui:define>
 		<ui:define name="body">
-			<h:form>
+			<h:form id="formList">
 				<p:panel header="Customer" toggleable="true">
 					<br />
 
@@ -32,21 +35,18 @@
 					<br />
 					<br />
 
-					<p:dataTable id="customerDataTable" var="c"
-						value="#{customerBean.lazyDataModel}" paginator="true" rows="10"
-						rowKey="#{c.customerId}"
-						filteredValue="#{customerBean.filteredCustomers}"
+					<p:dataTable id="customerTable" var="c"
+						value="#{customerBean.getModel()}" widgetVar="customersTable"
+						paginator="true" rows="10" rowKey="#{c.id}"
 						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-						rowsPerPageTemplate="10,20,50" lazy="true"
+						rowsPerPageTemplate="10,20,50,100" lazy="true"
 						selection="#{customerBean.selectedCustomers}">
 
 						<p:column selectionMode="multiple" />
-						<p:column id="code" headerText="#{msg['label.customerCode']}"
-							filterBy="#{c.code}" filterMatchMode="contains">
+						<p:column id="code" headerText="#{msg['label.customerCode']}">
 							<h:outputText value="#{c.code}" />
 						</p:column>
-						<p:column id="name" headerText="#{msg['label.name']}"
-							filterBy="#{c.name}">
+						<p:column id="name" headerText="#{msg['label.name']}">
 							<h:outputText value="#{c.name}" />
 						</p:column>
 						<p:column id="grade" headerText="#{msg['label.grade']}">
@@ -62,18 +62,26 @@
 						</p:column>
 						<p:column headerText="#{msg['label.action']}"
 							style="text-align:center">
-							<p:commandLink action="/pages/master/customerEdit"
+							<p:commandLink action="#{customerBean.goInputPage}"
 								actionListener="#{customerBean.prepareUpdate}" ajax="false">
-								<f:param name="customerIdParam" value="#{c.customerId}" />
+								<f:param name="customerIdParam" value="#{c.id}" />
 								<h:outputText value="#{msg['label.edit']}" />
 							</p:commandLink>
 							|					  
-							<p:commandLink action="/pages/master/customerList"
+							<!-- <p:commandLink action="/pages/master/customerList"
 								actionListener="#{customerBean.deleteCustomer}"
 								onclick="if(!confirm('Are you sure you want to delete this record?')) return false;"
 								ajax="false">
-								<f:param name="customerIdParam" value="#{c.customerId}" />
+								<f:param name="customerIdParam" value="#{c.id}" />
 								<h:outputText value="#{msg['label.delete']}" />
+							</p:commandLink> -->
+
+							<p:commandLink id="showDialogButton"
+								update=":dialogForm:confirmDialog" title="Delete"
+								oncomplete="confirmation.show()" process="@this">
+								<h:outputText value="Delete" />
+								<f:setPropertyActionListener value="#{c}"
+									target="#{customerBean.detailCustomer}" />
 							</p:commandLink>
 						</p:column>
 					</p:dataTable>
@@ -84,6 +92,26 @@
 						ajax="false" immediate="true">
 					</p:commandButton>
 				</p:panel>
+			</h:form>
+			<h:form id="dialogForm">
+				<p:confirmDialog id="confirmDialog" header="Confirm Delete"
+					severity="alert" widgetVar="confirmation" appendToBody="true">
+					<f:facet name="message">
+						<h:outputText
+							value="Are you sure want to delete #{customerBean.detailCustomer.code} ?" />
+					</f:facet>
+
+					<p:commandButton id="confirm" value="Yes"
+						oncomplete="confirmation.hide()" action="#{customerBean.delete}"
+						update=":formList:customerTable">
+						<f:param name="customerIdParam"
+							value="#{customerBean.detailCustomer.id}" />
+
+					</p:commandButton>
+					<p:commandButton id="decline" value="No"
+						onclick="confirmation.hide()" type="button" />
+
+				</p:confirmDialog>
 			</h:form>
 		</ui:define>
 	</ui:composition>

@@ -79,8 +79,10 @@ public class TreeTableMenuBean implements Serializable {
 		List<LabelValueBean> parentList = new ArrayList<LabelValueBean>();
 		List<Menu> menus = menuService.searchMenu();
 		for (Menu menu : menus) {
-			parentList.add(new LabelValueBean(menu.getMenuCode() + " - "
-					+ menu.getMenuName(), menu.getMenuCode()));
+			if(menu.getMenuType() == 1){
+				parentList.add(new LabelValueBean(menu.getMenuCode() + " - "
+						+ menu.getMenuName(), menu.getMenuCode()));
+			}
 		}
 		return parentList;
 	}

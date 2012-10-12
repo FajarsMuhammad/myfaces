@@ -15,7 +15,9 @@
 				<p:panel header="Menu">
 					<br />
 					<h:panelGrid columns="3">				
-						<input type="hidden" name="id" value="#{treeTableMenuBean.current.id}" />
+						<h:inputHidden id="id" value="#{treeTableMenuBean.current.id}"/>
+						<h:outputText value="" />
+						<h:outputText value="" />
 							
 						<h:outputText value="#{msg['label.parent']} " />
 						<h:selectOneMenu id="parentCode" value="#{treeTableMenuBean.current.parentCode}">
