@@ -9,6 +9,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 
 import org.apache.log4j.Logger;
 
@@ -95,7 +96,7 @@ public class RoleBean implements Serializable {
 	public void saveOrUpdate() {
 		try {
 			log.info("IDS===="+current.getId());
-			if (current.getId() == 0) {
+			if (current.getId() ==null || current.getId() == 0) {
 				log.info("Save start >>>");				
 				roleService.save(current);				
 			} else {
@@ -134,7 +135,7 @@ public class RoleBean implements Serializable {
 	/**
 	 * Delete
 	 */
-	public void delete() {
+	public void delete(ActionEvent actionEvent) {
 		Map<String, String> params = FacesContext.getCurrentInstance()
 				.getExternalContext().getRequestParameterMap();
 		String id = params.get("roleIdParam");

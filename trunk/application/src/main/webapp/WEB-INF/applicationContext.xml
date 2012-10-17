@@ -35,4 +35,5 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 	<import resource="classpath:com/application/spring/UserBean.xml" />
 	<import resource="classpath:com/application/spring/MenuBean.xml" />
 	<import resource="classpath:com/application/spring/RoleBean.xml" />
+	<import resource="classpath:com/application/spring/RoleMenuBean.xml" />
 </beans>

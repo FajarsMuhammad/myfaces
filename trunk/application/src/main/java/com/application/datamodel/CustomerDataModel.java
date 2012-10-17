@@ -35,7 +35,7 @@ public class CustomerDataModel extends ListDataModel<Customer> implements Select
 	@Override
 	public Object getRowKey(Customer customer) {
 		// TODO Auto-generated method stub
-		return customer.getCode();
+		return customer.getId();
 	}
 
 }

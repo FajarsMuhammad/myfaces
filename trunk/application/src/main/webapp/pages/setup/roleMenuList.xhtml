@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+
+</h:head>
+<h:body>
+	<ui:composition template="../templates/template.xhtml">
+		<ui:define name="body">
+			<h:form id="formList">
+				<p:dashboard id="board" model="#{roleMenuBean.dashboardModel}">
+					<p:panel header="Role" toggleable="true" id="rolePanel">
+						<p:dataTable var="c" value="#{roleMenuBean.getRoleList()}"
+							id="roleTable" selection="#{roleMenuBean.selectedRoles}"
+							selectionMode="single" rowKey="#{c.id}">
+
+							<p:column width="200" headerText="#{msg['label.role']}">
+								<h:outputText value="#{c.roleShortDescription}" />
+							</p:column>
+						</p:dataTable>
+					</p:panel>
+
+					<p:panel header="Menu" toggleable="true" id="menuPanel">
+						<p:dataTable var="menu" value="#{roleMenuBean.getMenuList()}"
+							id="menuTable" selection="#{roleMenuBean.selectedMenus}"
+							rowKey="#{menu.id}">
+							<p:column selectionMode="multiple" />
+							<p:column headerText="#{msg['label.menu']}" width="300">
+								<h:outputText value="#{menu.menuName}" />
+							</p:column>
+							<p:column headerText="#{msg['label.type']}" width="100">
+								<h:outputText rendered="#{menu.menuType == 1}" value="Parent" />
+								<h:outputText rendered="#{menu.menuType == 2}" value="Child" />
+							</p:column>
+						</p:dataTable>
+					</p:panel>
+					
+				</p:dashboard>
+				<p:commandButton id="addButton" value="#{msg['label.add']}"
+						 process="@this"
+						ajax="false" actionListener="#{roleMenuBean.addRoleMenu}">
+					</p:commandButton>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

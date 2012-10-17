@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+ 
+   	<bean id="roleMenuService" 
+         class="com.application.service.RoleMenuServiceImpl" >
+   		<property name="roleMenuDao" ref="roleMenuDao" />
+   	</bean>
+   	 
+   	<bean id="roleMenuDao" 
+         class="com.application.dao.RoleMenuDaoImpl" >
+   		<property name="sessionFactory" ref="sessionFactory"></property>
+   	</bean>
+   	
+   	<bean id="roleService" 
+         class="com.application.service.RoleServiceImpl" >
+   		<property name="roleDao" ref="roleDao" />
+   	</bean>
+   	 
+   	<bean id="roleDao" 
+         class="com.application.dao.RoleDaoImpl" >
+   		<property name="sessionFactory" ref="sessionFactory"></property>
+   	</bean>
+ 
+</beans>

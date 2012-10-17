@@ -47,7 +47,6 @@ public class MenuDaoImpl  extends BasisDaoImpl<Menu, Long> implements MenuDao {
 	public List<Menu> getMenuByParent(String parent){
 		DetachedCriteria criteria = DetachedCriteria.forClass(Menu.class);
 		criteria.add(Restrictions.eq("parentCode", parent));
-		criteria.addOrder(Order.asc("sequence"));
 		return getHibernateTemplate().findByCriteria(criteria);
 	}
 	
@@ -63,7 +62,7 @@ public class MenuDaoImpl  extends BasisDaoImpl<Menu, Long> implements MenuDao {
 		Query query = getSession().createQuery(
 				"from Menu m where m.id in (select distinct m.id " +
 				"from UserRole ur, RoleMenu rm, Menu m " +
-				"where ur.user.userName = :userName and ur.role.id = rm.role.id and rm.menu.id = m.id) order by m.sequence");
+				"where ur.user.userName = :userName and ur.role.id = rm.role.id and rm.menu.id = m.id)");
 		query.setString("userName", user);
 		//query.setString("parent", parentCode);
 		
