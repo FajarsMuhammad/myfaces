@@ -38,6 +38,14 @@ public class RoleDaoImpl extends BasisDaoImpl<Role, Long> implements RoleDao {
 		
 		return getHibernateTemplate().findByCriteria(criteria);
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Role> searchRole(){
+		DetachedCriteria criteria = DetachedCriteria.forClass(Role.class);
+		criteria.addOrder(Order.desc("roleShortDescription"));
+		
+		return getHibernateTemplate().findByCriteria(criteria);
+	}
 
 	public Role getById(long id) {
 		return getHibernateTemplate().get(Role.class, id);

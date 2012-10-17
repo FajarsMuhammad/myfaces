@@ -20,7 +20,7 @@ import com.application.model.Menu;
 import com.application.service.MenuService;
 
 @ManagedBean(name = "menubarBean")
-@RequestScoped
+@SessionScoped
 public class MenubarBean implements Serializable {
 
 	private static final long serialVersionUID = 3568928318014489011L;
@@ -76,17 +76,17 @@ public class MenubarBean implements Serializable {
 				parent.setLabel(m.getMenuName());
 				parent.setIcon("ui-icon ui-icon-document");
 				simpleMenuModel.addSubmenu(parent);
-				buildChildMenu(parent, m.getMenuCode(), user);
+				buildMenuRecursive(parent, m.getMenuCode(), user);
 			}
 		}
 	}
 
-	private void buildChildMenu(Submenu submenu, String menuCode, String user) {
+	private void buildMenuRecursive(Submenu submenu, String menuCode, String user) {
 		List<Menu> menuList = menuService.getMenuByUser(user);
 		List<Menu> menus = menuService.getMenuByParent(menuCode);
 		for (Menu menu : menuList) {
 			for (Menu m : menus) {
-				if (menu.getId() == m.getId()) {
+				if (menu.getId().equals(m.getId()) ) {
 					if ((m.getMenuUrl().equals("#") || m.getMenuUrl()
 							.equals("")) && m.getMenuLevel() == 2) {
 						Submenu subsub = new Submenu();

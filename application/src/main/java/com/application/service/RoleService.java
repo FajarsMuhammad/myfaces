@@ -8,6 +8,8 @@ public interface RoleService {
 
 	public List<Role> searchRole(List<Object> columnList, List<Object> valueList);
 	
+	public List<Role> searchRole();
+	
 	public Role getById(long id);
 
 	public void save(Role role);

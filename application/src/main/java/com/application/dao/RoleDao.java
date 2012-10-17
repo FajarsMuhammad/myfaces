@@ -7,6 +7,8 @@ import com.application.model.Role;
 public interface RoleDao extends BasisDao<Role, Long> {
 
 	public List<Role> searchRole(List<Object> columnList, List<Object> valueList);
+	
+	public List<Role> searchRole();
 
 	public Role getById(long id);
 

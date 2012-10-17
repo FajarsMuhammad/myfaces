@@ -4,49 +4,32 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.prime.com.tr/ui">
+	xmlns:p="http://primefaces.org/ui">
 <h:head>
 
 </h:head>
 <h:body>
 	<ui:composition template="../templates/template.xhtml">
 		<ui:define name="body">
-			<h:form>
+			<h:form id="formInput">
 				<p:panel header="Menu" toggleable="true">
 					<br />
 
-					<p:treeTable value="#{treeTableMenuBean.parent}" var="menu">
-						<f:event type="preRenderView" listener="#{treeTableMenuBean.init}" />
-						<f:facet name="header">  
-				            Menu Viewer  
-				        </f:facet>
-
-						<p:column>
-							<f:facet name="header">
-								<h:outputText value="#{msg['label.name']}" />
-							</f:facet>
+					<p:treeTable id="treeMenuTable" value="#{treeTableMenuBean.parent}" var="menu">
+						<p:column headerText="#{msg['label.name']}">
 							<h:outputText value="#{menu.menuName}" />
 						</p:column>
 
-						<p:column>
-							<f:facet name="header">
-								<h:outputText value="#{msg['label.url']}" />
-							</f:facet>
-							<h:outputText value="#{menu.menuUrl}" />							
+						<p:column headerText="#{msg['label.url']}">
+							<h:outputText value="#{menu.menuUrl}" />
 						</p:column>
 
-						<p:column style="text-align:center">
-							<f:facet name="header">
-								<h:outputText value="#{msg['label.action']}" />
-							</f:facet>
-
+						<p:column headerText="#{msg['label.action']}" style="text-align:center" >
 							<p:commandLink action="/pages/setup/menuInput"
-								actionListener="#{treeTableMenuBean.prepareUpdate}"
-								ajax="false" >
+								actionListener="#{treeTableMenuBean.prepareUpdate}" ajax="false">
 								<f:param name="menuIdParam" value="#{menu.id}" />
 								<h:outputText value="#{msg['label.edit']}" />
-							</p:commandLink>
-							
+							</p:commandLink>							
 							|					  
 							<p:commandLink action="#{treeTableMenuBean.goListPage}"
 								actionListener="#{treeTableMenuBean.delete}"
@@ -57,12 +40,13 @@
 							</p:commandLink>
 						</p:column>
 					</p:treeTable>
-					<br/>
+					<br />
 					<p:commandButton id="addButton" value="#{msg['label.add']}"
 						action="#{treeTableMenuBean.goInputPage}"
 						actionListener="#{treeTableMenuBean.prepareAdd}" process="@this"
 						ajax="false" immediate="true">
-					</p:commandButton>
+					</p:commandButton>				
+					
 				</p:panel>
 			</h:form>
 		</ui:define>

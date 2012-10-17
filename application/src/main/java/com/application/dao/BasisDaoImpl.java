@@ -2,6 +2,7 @@ package com.application.dao;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
+import java.util.Collection;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -38,6 +39,10 @@ public abstract class BasisDaoImpl<T, ID extends Serializable> extends Hibernate
 	@Override
 	public void delete(T entity) {
 		getHibernateTemplate().delete(entity);
+	}
+	
+	public void deleteAll(Collection<T> entities) throws DataAccessException {
+		getHibernateTemplate().deleteAll(entities);
 	}
 
 	@Override

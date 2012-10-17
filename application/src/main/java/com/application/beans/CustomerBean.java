@@ -10,8 +10,10 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 
 import org.apache.log4j.Logger;
+import org.primefaces.component.datatable.DataTable;
 import org.primefaces.model.LazyDataModel;
 
 import com.application.datamodel.CustomerDataModel;
@@ -29,13 +31,13 @@ public class CustomerBean implements Serializable {
 
 	private static final long serialVersionUID = 3051005476848367530L;
 	private static final Logger log = Logger.getLogger(CustomerBean.class);
-	
+
 	private Customer current = new Customer();
 	private Customer detailCustomer = new Customer();
-	
+
 	private String searchColumn;
-	private String searchValue;	
-	
+	private String searchValue;
+
 	private int first;
 	private int pageSize;
 
@@ -48,11 +50,10 @@ public class CustomerBean implements Serializable {
 	private CustomerDataModel customerDataModel;
 	private Customer[] selectedCustomers;
 
-	//@ManagedProperty(value = "#{lazyDataModel}")
+	// @ManagedProperty(value = "#{lazyDataModel}")
 	private LazyDataModel<Customer> lazyDataModel;
 
 	private List<Customer> filteredCustomers;
-
 
 	public LazyDataModel<Customer> getLazyDataModel() {
 		if (lazyDataModel == null) {
@@ -60,7 +61,6 @@ public class CustomerBean implements Serializable {
 		}
 		return lazyDataModel;
 	}
-
 
 	/**
 	 * get all customer data from database
@@ -76,7 +76,8 @@ public class CustomerBean implements Serializable {
 			columnList.add(searchColumn);
 			valueList.add(searchValue);
 		}
-		customers = customerService.searchCustomer(columnList, valueList, first, pageSize);
+		customers = customerService.searchCustomer(columnList, valueList,
+				first, pageSize);
 		if (customers.isEmpty())
 			customers = new ArrayList<Customer>();
 
@@ -88,9 +89,8 @@ public class CustomerBean implements Serializable {
 	 */
 	public void search() {
 		getModel();
-		//getLazyDataModel();
+		// getLazyDataModel();
 	}
-
 
 	public List<LabelValueBean> getColumnList() {
 		List<LabelValueBean> columnList = new ArrayList<LabelValueBean>();
@@ -100,7 +100,6 @@ public class CustomerBean implements Serializable {
 				.getResources("label.customerName"), "name"));
 		return columnList;
 	}
-
 
 	public List<LabelValueBean> getGradeList() {
 		List<LabelValueBean> gradeList = new ArrayList<LabelValueBean>();
@@ -129,7 +128,7 @@ public class CustomerBean implements Serializable {
 	public String goListPage() {
 		return "/pages/master/customerList";
 	}
-	
+
 	/**
 	 * Method pada saat update screen
 	 */
@@ -149,22 +148,22 @@ public class CustomerBean implements Serializable {
 		log.info("prepare for update customer end...");
 	}
 
-	
 	public void saveOrUpdate() {
 		try {
-			log.info("IDS===="+current.getId());
-			log.info("IDS===="+this.current.getCode());
+			log.info("IDS====" + current.getId());
+			log.info("IDS====" + this.current.getCode());
 			if (current.getId() == null || current.getId() == 0) {
 				log.info("Save start >>>");
 				current.setCode(generateCode.generateCustomerCode());
 				current.setCreatedDate(new Date());
-				customerService.save(current);				
+				customerService.save(current);
 			} else {
 				log.info("Update start >>>");
-				Customer customer = customerService.searchCustomerById(current.getId());
+				Customer customer = customerService.searchCustomerById(current
+						.getId());
 				current.setCode(customer.getCode());
 				current.setCreatedDate(new Date());
-				customerService.update(current);				
+				customerService.update(current);
 			}
 			current = new Customer();
 		} catch (Exception e) {
@@ -174,18 +173,40 @@ public class CustomerBean implements Serializable {
 		}
 	}
 
-
 	/**
 	 * Delete
 	 */
 	public void delete() {
-		Map<String, String> params = FacesContext.getCurrentInstance()
-				.getExternalContext().getRequestParameterMap();
-		String id = params.get("customerIdParam");
-		Customer customer = customerService.searchCustomerById(new Long(id));
-		customerService.delete(customer);
+		try {
+			Map<String, String> params = FacesContext.getCurrentInstance()
+					.getExternalContext().getRequestParameterMap();
+			String id = params.get("customerIdParam");
+			Customer customer = customerService
+					.searchCustomerById(new Long(id));
+			customerService.delete(customer);
+			current = new Customer();
+		} catch (Exception e) {
+			current = new Customer();
+			e.printStackTrace();
+		}
 	}
 
+	public void deleteSelected() {
+		try {
+			List<Customer> customers = new ArrayList<Customer>();
+			if(selectedCustomers!=null){
+				for(int i =0; i<selectedCustomers.length; i++){
+					Customer customer = (Customer)selectedCustomers[i];
+					customers.add(customer);
+				}
+			}
+			customerService.deleteAll(customers);
+			current = new Customer();
+		} catch (Exception e) {
+			current = new Customer();
+			e.printStackTrace();
+		}
+	}
 
 	public Customer[] getSelectedCustomers() {
 		return selectedCustomers;
@@ -199,8 +220,6 @@ public class CustomerBean implements Serializable {
 		customerDataModel = new CustomerDataModel(getCustomerList());
 		return customerDataModel;
 	}
-
-	
 
 	public String getSearchColumn() {
 		return searchColumn;
@@ -217,7 +236,6 @@ public class CustomerBean implements Serializable {
 	public void setSearchValue(String searchValue) {
 		this.searchValue = searchValue;
 	}
-
 
 	public void setCustomerService(CustomerService customerService) {
 		this.customerService = customerService;
@@ -251,21 +269,17 @@ public class CustomerBean implements Serializable {
 		this.pageSize = pageSize;
 	}
 
-
 	public Customer getCurrent() {
 		return current;
 	}
-
 
 	public void setCurrent(Customer current) {
 		this.current = current;
 	}
 
-
 	public Customer getDetailCustomer() {
 		return detailCustomer;
 	}
-
 
 	public void setDetailCustomer(Customer detailCustomer) {
 		this.detailCustomer = detailCustomer;

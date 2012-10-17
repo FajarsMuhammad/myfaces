@@ -4,15 +4,15 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.prime.com.tr/ui">
+	xmlns:p="http://primefaces.org/ui">
 <h:head>
 
 </h:head>
 <h:body>
 	<ui:composition template="../templates/template.xhtml">
-		<ui:define name="heading">
+		<!-- <ui:define name="heading">
 			<ui:include src="../templates/menubar.xhtml" />
-		</ui:define>
+		</ui:define> -->
 		<ui:define name="body">
 			<h:form id="formList">
 				<p:panel header="Customer" toggleable="true">
@@ -68,21 +68,21 @@
 								<h:outputText value="#{msg['label.edit']}" />
 							</p:commandLink>
 							|					  
-							<!-- <p:commandLink action="/pages/master/customerList"
-								actionListener="#{customerBean.deleteCustomer}"
+							<p:commandLink action="/pages/master/customerList"
+								actionListener="#{customerBean.delete}"
 								onclick="if(!confirm('Are you sure you want to delete this record?')) return false;"
 								ajax="false">
 								<f:param name="customerIdParam" value="#{c.id}" />
 								<h:outputText value="#{msg['label.delete']}" />
-							</p:commandLink> -->
+							</p:commandLink>
 
-							<p:commandLink id="showDialogButton"
+							<!-- <p:commandLink id="showDialogButton"
 								update=":dialogForm:confirmDialog" title="Delete"
 								oncomplete="confirmation.show()" process="@this">
 								<h:outputText value="Delete" />
 								<f:setPropertyActionListener value="#{c}"
 									target="#{customerBean.detailCustomer}" />
-							</p:commandLink>
+							</p:commandLink> -->
 						</p:column>
 					</p:dataTable>
 
@@ -90,6 +90,12 @@
 						action="#{customerBean.goInputPage}"
 						actionListener="#{customerBean.prepareAdd}" process="@this"
 						ajax="false" immediate="true">
+					</p:commandButton>
+					
+					<p:commandButton id="deleteButton" value="#{msg['label.deleteSelected']}"
+						action="#{customerBean.goListPage}"
+						actionListener="#{customerBean.deleteSelected}" process="@this"
+						ajax="false">                   
 					</p:commandButton>
 				</p:panel>
 			</h:form>

@@ -25,6 +25,10 @@ public class RoleServiceImpl implements RoleService, Serializable {
 		return roleDao.searchRole(columnList, valueList);
 	}
 	
+	public List<Role> searchRole(){
+		return roleDao.searchRole();
+	}
+	
 	public Role getById(long id){
 		return roleDao.getById(id);
 	}

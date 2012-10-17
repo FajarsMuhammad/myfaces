@@ -72,9 +72,10 @@ public class TreeBean implements Serializable {
         for (Menu m : menus) {
             TreeNode node = new DefaultTreeNode(m, null);
             if (child == null) {
-            	parent.addChild(node);
+            	parent.setParent(node);
             } else {
-            	child.addChild(node);
+            	
+            	child.setParent(node);
             }
             buildMenu(parent, node, m.getMenuCode());
         }

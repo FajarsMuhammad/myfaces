@@ -35,6 +35,11 @@ public class CustomerServiceImpl implements CustomerService {
 	public void delete(Customer customer) {
 		customerDao.delete(customer);
 	}
+	
+	@Override
+	public void deleteAll(List<Customer> customers) {
+		customerDao.deleteAll(customers);
+	}
 
 	@Override
 	public List<Customer> searchCustomer(List<Object> columnList,
