@@ -47,5 +47,13 @@ public class RoleMenuServiceImpl implements RoleMenuService, Serializable {
 	public List<RoleMenu> findAll() {
 		return roleMenuDao.findAll();
 	}
+	
+	public List<RoleMenu> searchRoleMenuByRole(Long id){
+		return roleMenuDao.searchRoleMenuByRole(id);
+	}
+	
+	public RoleMenu searchRoleMenuByRoleAndMenu(Long roleId, Long menuId){
+		return roleMenuDao.searchRoleMenuByRoleAndMenu(roleId, menuId);
+	}
 
 }

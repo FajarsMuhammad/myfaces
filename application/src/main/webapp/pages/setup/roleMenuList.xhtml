@@ -13,10 +13,12 @@
 		<ui:define name="body">
 			<h:form id="formList">
 				<p:dashboard id="board" model="#{roleMenuBean.dashboardModel}">
-					<p:panel header="Role" toggleable="true" id="rolePanel">
+					<p:panel id="rolePanel">
 						<p:dataTable var="c" value="#{roleMenuBean.getRoleList()}"
 							id="roleTable" selection="#{roleMenuBean.selectedRoles}"
 							selectionMode="single" rowKey="#{c.id}">
+							<p:ajax event="rowSelect" listener="#{roleMenuBean.onSelect}"
+								update=":formList:menuTable" />
 
 							<p:column width="200" headerText="#{msg['label.role']}">
 								<h:outputText value="#{c.roleShortDescription}" />
@@ -24,26 +26,29 @@
 						</p:dataTable>
 					</p:panel>
 
-					<p:panel header="Menu" toggleable="true" id="menuPanel">
+					<p:panel id="menuPanel">
 						<p:dataTable var="menu" value="#{roleMenuBean.getMenuList()}"
 							id="menuTable" selection="#{roleMenuBean.selectedMenus}"
-							rowKey="#{menu.id}">
-							<p:column selectionMode="multiple" />
+							rowKey="#{menu.id}" rowStyleClass="#{menu.menuType == 1 ? 'old' : null}">
+
+							<p:column>
+								<h:selectBooleanCheckbox id="cek"
+									value="#{roleMenuBean.checked[menu.id]}" />
+							</p:column>
 							<p:column headerText="#{msg['label.menu']}" width="300">
-								<h:outputText value="#{menu.menuName}" />
+								<h:outputText rendered="#{menu.menuType == 1}" value="#{menu.menuName}" style="font-weight:bold !important;font-size:12" />
+								<h:outputText rendered="#{menu.menuType == 2}" value="#{menu.menuName}" />
 							</p:column>
 							<p:column headerText="#{msg['label.type']}" width="100">
-								<h:outputText rendered="#{menu.menuType == 1}" value="Parent" />
+								<h:outputText rendered="#{menu.menuType == 1}" value="Parent" style="font-weight:bold !important;font-size:12" />
 								<h:outputText rendered="#{menu.menuType == 2}" value="Child" />
 							</p:column>
 						</p:dataTable>
 					</p:panel>
-					
 				</p:dashboard>
-				<p:commandButton id="addButton" value="#{msg['label.add']}"
-						 process="@this"
-						ajax="false" actionListener="#{roleMenuBean.addRoleMenu}">
-					</p:commandButton>
+				<p:commandButton id="addButton" value="#{msg['label.save']}"
+					actionListener="#{roleMenuBean.addRoleMenu}">
+				</p:commandButton>
 			</h:form>
 		</ui:define>
 	</ui:composition>

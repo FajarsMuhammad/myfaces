@@ -18,6 +18,8 @@ public interface RoleMenuService {
 
 	public void delete(RoleMenu roleMenu);
 	
+	public List<RoleMenu> searchRoleMenuByRole(Long id);
 	
+	public RoleMenu searchRoleMenuByRoleAndMenu(Long roleId, Long menuId);
 
 }
