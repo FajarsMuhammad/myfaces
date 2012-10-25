@@ -16,11 +16,12 @@
 					<br />
 
 					<p:treeTable id="treeMenuTable" value="#{treeTableMenuBean.parent}" var="menu">
-						<p:column headerText="#{msg['label.name']}">
+						<p:column headerText="#{msg['label.name']}" style="width:48%">
 							<h:outputText value="#{menu.menuName}" />
 						</p:column>
 
 						<p:column headerText="#{msg['label.url']}">
+							<!-- <h:outputText rendered="#{menu.menuUrl == #}" value="" /> -->
 							<h:outputText value="#{menu.menuUrl}" />
 						</p:column>
 

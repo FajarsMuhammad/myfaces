@@ -17,7 +17,7 @@ public class MenuDaoImpl  extends BasisDaoImpl<Menu, Long> implements MenuDao {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Menu> searchMenu() {
-		return getHibernateTemplate().find("from Menu");
+		return getHibernateTemplate().find("from Menu m order by m.sequence"); 
 	}
 	
 	@SuppressWarnings("unchecked")
