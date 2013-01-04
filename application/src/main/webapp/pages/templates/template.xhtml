@@ -9,12 +9,14 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title><ui:insert name="title">Application</ui:insert></title>
 	<h:outputStylesheet library="css" name="classic.css" />
+	<!-- <link rel="stylesheet" href="#{request.contextPath}/themes/#{themeBean.theme}/skin.css" /> -->
+	 <link type="text/css" rel="stylesheet" href="#{request.contextPath}/themes/#{guestPreferences.theme}/skin.css" />
 </h:head>
 
 <h:body>
 	<p:layout fullPage="true">
 		<p:layoutUnit position="north" size="100" resizable="false"
-			closable="false" spacing="0" rendered="true">
+			spacing="0" rendered="true" closable="true" collapsible="true">
 
 			<div id="heading">
 				<!-- <ui:insert name="heading" /> -->
