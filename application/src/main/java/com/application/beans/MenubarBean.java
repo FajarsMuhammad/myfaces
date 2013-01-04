@@ -69,6 +69,7 @@ public class MenubarBean implements Serializable {
 	}
 
 	private void buildMenu(String user) {
+		try{
 		List<Menu> menuList = menuService.getMenuByUser(user);
 		for (Menu m : menuList) {
 			if (m.getMenuLevel() == 1) {
@@ -79,51 +80,63 @@ public class MenubarBean implements Serializable {
 				buildMenuRecursive(parent, m.getMenuCode(), user);
 			}
 		}
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
 	}
 
-	private void buildMenuRecursive(Submenu submenu, String menuCode, String user) {
-		List<Menu> menuList = menuService.getMenuByUser(user);
-		List<Menu> menus = menuService.getMenuByParent(menuCode);
-		for (Menu menu : menuList) {
-			for (Menu m : menus) {
-				if (menu.getId().equals(m.getId()) ) {
-					if ((m.getMenuUrl().equals("#") || m.getMenuUrl()
-							.equals("")) && m.getMenuLevel() == 2) {
-						Submenu subsub = new Submenu();
-						subsub.setLabel(m.getMenuName());
-						subsub.setIcon("ui-icon ui-icon-document");
-						submenu.getChildren().add(subsub);
-						simpleMenuModel.addSubmenu(submenu);
-						buildChildChildMenu(submenu, subsub, m.getMenuCode(),
-								user);
-					} else {
-						MenuItem menuItem = new MenuItem();
-						menuItem.setValue(m.getMenuName());
-						menuItem.setUrl(m.getMenuUrl());
-						submenu.getChildren().add(menuItem);
-						simpleMenuModel.addSubmenu(submenu);
+	private void buildMenuRecursive(Submenu submenu, String menuCode,
+			String user) {
+		try {
+			List<Menu> menuList = menuService.getMenuByUser(user);
+			List<Menu> menus = menuService.getMenuByParent(menuCode);
+			for (Menu menu : menuList) {
+				for (Menu m : menus) {
+					if (menu.getId().equals(m.getId())) {
+						if ((m.getMenuUrl().equals("#") || m.getMenuUrl()
+								.equals("")) && m.getMenuLevel() == 2) {
+							Submenu subsub = new Submenu();
+							subsub.setLabel(m.getMenuName());
+							subsub.setIcon("ui-icon ui-icon-document");
+							submenu.getChildren().add(subsub);
+							simpleMenuModel.addSubmenu(submenu);
+							buildChildChildMenu(submenu, subsub,
+									m.getMenuCode(), user);
+						} else {
+							MenuItem menuItem = new MenuItem();
+							menuItem.setValue(m.getMenuName());
+							menuItem.setUrl(m.getMenuUrl());
+							submenu.getChildren().add(menuItem);
+							simpleMenuModel.addSubmenu(submenu);
+						}
 					}
 				}
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
 	private void buildChildChildMenu(Submenu submenu, Submenu sub,
 			String menuCode, String user) {
-		List<Menu> menuList = menuService.getMenuByUser(user);
-		List<Menu> menus = menuService.getMenuByParent(menuCode);
-		for (Menu menu : menuList) {
-			for (Menu m : menus) {
-				if (menu.getId() == m.getId()) {
-					MenuItem menuItem = new MenuItem();
-					menuItem.setValue(m.getMenuName());
-					menuItem.setUrl(m.getMenuUrl());
-					sub.getChildren().add(menuItem);
-					submenu.getChildren().add(sub);
-					simpleMenuModel.addSubmenu(submenu);
+		try {
+			List<Menu> menuList = menuService.getMenuByUser(user);
+			List<Menu> menus = menuService.getMenuByParent(menuCode);
+			for (Menu menu : menuList) {
+				for (Menu m : menus) {
+					if (menu.getId() == m.getId()) {
+						MenuItem menuItem = new MenuItem();
+						menuItem.setValue(m.getMenuName());
+						menuItem.setUrl(m.getMenuUrl());
+						sub.getChildren().add(menuItem);
+						submenu.getChildren().add(sub);
+						simpleMenuModel.addSubmenu(submenu);
+					}
 				}
 			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
-
 }

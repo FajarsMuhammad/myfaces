@@ -122,7 +122,6 @@ public class RoleMenuBean implements Serializable {
 			for (Menu menu : menus) {
 				for (RoleMenu roleMenu : roleMenus) {
 					if (menu.getId().equals(roleMenu.getMenu().getId())) {
-						log.info("Row === " + menu.getMenuName());
 						checked.put(roleMenu.getMenu().getId(), true);
 					}
 				}
