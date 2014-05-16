@@ -50,6 +50,10 @@ public class RoleMenuBean implements Serializable {
 	private Map<Long, Boolean> checked = new HashMap<Long, Boolean>();
 
 	private RoleMenu current = new RoleMenu();
+	
+	private TreeNode parent;
+
+	private TreeNode selectedNode;
 
 	@ManagedProperty(value = "#{roleMenuService}")
 	private RoleMenuService roleMenuService;
@@ -75,7 +79,13 @@ public class RoleMenuBean implements Serializable {
 
 		dashboardModel.addColumn(column1);
 		dashboardModel.addColumn(column2);
+		
+		buildTree("");
 
+	}
+
+	public TreeNode getParent() {
+		return parent;
 	}
 
 	public List<Role> getRoleList() {
@@ -112,13 +122,15 @@ public class RoleMenuBean implements Serializable {
 
 	public void onSelect(SelectEvent event) {
 		if (selectedRoles != null) {
+			System.out.println("selectedRoles == "+selectedRoles);
 			Role role = (Role) selectedRoles;
 			DataTable dataTable = (DataTable) FacesContext.getCurrentInstance()
 					.getViewRoot().findComponent(":formList:menuTable");
 			List<Menu> menus = (List<Menu>) dataTable.getValue();
 			List<RoleMenu> roleMenus = roleMenuService
 					.searchRoleMenuByRole(role.getId());
-
+			System.out.println("role == "+ role.getId());
+			
 			for (Menu menu : menus) {
 				for (RoleMenu roleMenu : roleMenus) {
 					if (menu.getId().equals(roleMenu.getMenu().getId())) {
@@ -182,6 +194,36 @@ public class RoleMenuBean implements Serializable {
 			current = new RoleMenu();
 			e.printStackTrace();
 		}
+	}
+	
+	private TreeNode buildTree(String rightName) {
+		parent = new DefaultTreeNode("parent", null);
+		List<Menu> menus = menuService.getMenuByParent(rightName);
+		for (Menu m : menus) {
+			TreeNode tnChild = new DefaultTreeNode(m, parent);
+			tnChild.setParent(parent);
+			buildTreeRecursively(tnChild, m.getMenuCode());
+		}
+		return parent;
+	}
+
+	private void buildTreeRecursively(TreeNode currentNode, String rightName) {
+		List<Menu> menus = menuService.getMenuByParent(rightName);
+		for (Menu m : menus) {
+			TreeNode tnChild = new DefaultTreeNode(m, currentNode);
+			tnChild.setParent(currentNode);
+			buildTreeRecursively(tnChild, m.getMenuCode());
+		}
+	}
+	
+	
+
+	public TreeNode getSelectedNode() {
+		return selectedNode;
+	}
+
+	public void setSelectedNode(TreeNode selectedNode) {
+		this.selectedNode = selectedNode;
 	}
 
 	public RoleMenuService getRoleMenuService() {

@@ -2,7 +2,7 @@ package com.application.utility;
 
 public enum GenderEnum {
 	
-	MEN("Men","Men"), WOMEN("Women","Men");
+	MEN("Men","Men"), WOMEN("Women","Women");
 	
 	private String label;
 	private String value;
