@@ -34,7 +34,7 @@
 					<br />
 					<br />
 
-					<p:dataTable var="menu" value="#{menuBean.getModel()}"
+					<p:dataTable id="menuTable" var="menu" value="#{menuBean.getModel()}"
 						paginator="true" rows="10"
 						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 						rowsPerPageTemplate="10,20,50"

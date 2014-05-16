@@ -15,52 +15,52 @@
 				<p:panel header="Menu">
 					<br />
 					<h:panelGrid columns="3">				
-						<h:inputHidden id="id" value="#{treeTableMenuBean.current.id}"/>
+						<h:inputHidden id="id" value="#{menuBean.current.id}"/>
 						<h:outputText value="" />
 						<h:outputText value="" />
 							
 						<h:outputText value="#{msg['label.parent']} " />
-						<h:selectOneMenu id="parentCode" value="#{treeTableMenuBean.current.parentCode}">
+						<h:selectOneMenu id="parentCode" value="#{menuBean.current.parentCode}">
 							<f:selectItem itemLabel="#{msg['label.chooseOne']} " itemValue="" />
-							<f:selectItems value="#{treeTableMenuBean.getParentList()}" var="g"
+							<f:selectItems value="#{menuBean.getParentList()}" var="g"
 								itemLabel="#{g.label}" itemValue="#{g.value}" />
 						</h:selectOneMenu>
 						<p:message for="parentCode" style="color:red" />
 
 						<h:outputText value="#{msg['label.code']} " />
-						<p:inputText id="menuCode" value="#{treeTableMenuBean.current.menuCode}" size="20"
+						<p:inputText id="menuCode" value="#{menuBean.current.menuCode}" size="20"
 							required="false" label="Code">
 						</p:inputText>
 						<p:message for="menuCode" style="color:red" />						
 
 						<h:outputText value="#{msg['label.name']} " />
-						<p:inputText id="menuName" value="#{treeTableMenuBean.current.menuName}" size="30"
+						<p:inputText id="menuName" value="#{menuBean.current.menuName}" size="30"
 							required="false" label="Name">
 						</p:inputText>
 						<p:message for="menuName" style="color:red" />
 
 						<h:outputText value="Type" />
-						<h:selectOneMenu value="#{treeTableMenuBean.current.menuType}">
+						<h:selectOneMenu value="#{menuBean.current.menuType}">
 							<f:selectItem itemLabel="#{msg['label.chooseOne']} " itemValue="" />
-							<f:selectItems value="#{treeTableMenuBean.getMenuTypeList()}" var="g"
+							<f:selectItems value="#{menuBean.getMenuTypeList()}" var="g"
 								itemLabel="#{g.label}" itemValue="#{g.value}" />
 						</h:selectOneMenu>
 						<h:outputText value=" " />
 						
 						<h:outputText value="#{msg['label.url']} " />
-						<p:inputText id="menuUrl" value="#{treeTableMenuBean.current.menuUrl}" size="30"
+						<p:inputText id="menuUrl" value="#{menuBean.current.menuUrl}" size="30"
 							required="false" label="#{msg['label.url']}">
 						</p:inputText>
 						<h:outputText value=" " />
 					</h:panelGrid>
 
 					<p:commandButton id="saveButton" value="#{msg['label.save']} "
-						actionListener="#{treeTableMenuBean.saveOrUpdate}"
-						action="#{treeTableMenuBean.goListPage}" ajax="false">
+						actionListener="#{menuBean.saveOrUpdate}"
+						action="#{menuBean.goListPage}" ajax="false">
 					</p:commandButton>
 					<h:outputText value=" " />
 					<p:commandButton id="cancelButton" value="#{msg['label.cancel']}"
-						action="#{treeTableMenuBean.goListPage}" ajax="false">
+						action="#{menuBean.goListPage}" ajax="false">
 					</p:commandButton>
 				</p:panel>
 			</h:form>
