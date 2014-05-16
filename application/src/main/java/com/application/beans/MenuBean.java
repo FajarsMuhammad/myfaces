@@ -2,7 +2,6 @@ package com.application.beans;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -13,9 +12,7 @@ import javax.faces.context.FacesContext;
 
 import org.apache.log4j.Logger;
 import org.primefaces.model.LazyDataModel;
-import org.primefaces.model.SortOrder;
 
-import com.application.datamodel.MenuDataModel;
 import com.application.datamodel.MenuDataModel;
 import com.application.model.Menu;
 import com.application.service.MenuService;
@@ -47,6 +44,8 @@ public class MenuBean implements Serializable {
 	private LazyDataModel<Menu> lazyModel;
 	private MenuDataModel menuDataModel;
 	private Menu[] selectedMenus;
+	
+	private Menu current = new Menu();
 
 	/**
 	 * get all menu data from database
@@ -116,28 +115,75 @@ public class MenuBean implements Serializable {
 	/**
 	 * Method save
 	 */
-	public void save() {
+	public void saveOrUpdate() {
 		try {
-			// clearForm();
+			if (current.getId() == null || current.getId() == 0) {
+				log.info("Save");
+				Menu parentMenu = menuService
+						.getByCode(current.getParentCode());
+				if(parentMenu != null)
+					current.setMenuLevel(parentMenu.getMenuLevel() + 1);
+				else
+					current.setMenuLevel(1);
+				menuService.save(current);
+			} else {
+				Menu parentMenu = menuService
+						.getByCode(current.getParentCode());
+				if(parentMenu!=null)
+					current.setMenuLevel(parentMenu.getMenuLevel() + 1);
+				else
+					current.setMenuLevel(1);
+				menuService.update(current);
+				log.info("Update");
+			}
+			current = new Menu();
 		} catch (Exception e) {
-			log.warn(e.toString(), e);
+			current = new Menu();
+			log.error(e.toString(), e);
 		}
 	}
 
 	/**
 	 * Method pada saat update screen
 	 */
-	public String prepareUpdate() {
+	public void prepareUpdate() {
 		log.info("prepare for update menu...");
-		Map<String, String> params = FacesContext.getCurrentInstance()
-				.getExternalContext().getRequestParameterMap();
-		String id = params.get("menuIdParam");
-		log.info("ID==" + id);
+		try {
+			Map<String, String> params = FacesContext.getCurrentInstance()
+					.getExternalContext().getRequestParameterMap();
+			String id = params.get("menuIdParam");
+			log.info("ID==" + id);
+			Menu menu = menuService.getById(new Long(id));
 
+			current.setId(menu.getId());
+			current.setParentCode(menu.getParentCode() != null ? menu
+					.getParentCode() : "");
+			current.setMenuCode(menu.getMenuCode());
+			current.setMenuName(menu.getMenuName());
+			current.setMenuUrl(menu.getMenuUrl());
+			current.setMenuType(menu.getMenuType());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		log.info("prepare for update menu end...");
-		return null;
 	}
 
+	/**
+	 * Delete
+	 */
+	public String delete() {
+		try {
+			Map<String, String> params = FacesContext.getCurrentInstance()
+					.getExternalContext().getRequestParameterMap();
+			String id = params.get("menuIdParam");
+			Menu menu = menuService.getById(new Long(id));
+			menuService.delete(menu);
+			current = new Menu();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 	/**
 	 * Edit menu data ke database untuk commandButton di halaman jsf
 	 */
@@ -267,5 +313,15 @@ public class MenuBean implements Serializable {
 	public void setSelectedMenus(Menu[] selectedMenus) {
 		this.selectedMenus = selectedMenus;
 	}
+
+	public Menu getCurrent() {
+		return current;
+	}
+
+	public void setCurrent(Menu current) {
+		this.current = current;
+	}
+	
+	
 
 }
