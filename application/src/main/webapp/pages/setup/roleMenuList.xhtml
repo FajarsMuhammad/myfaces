@@ -25,16 +25,16 @@
 							id="roleTable" selection="#{roleMenuBean.selectedRoles}"
 							selectionMode="single" rowKey="#{c.id}">
 							<p:ajax event="rowSelect" listener="#{roleMenuBean.onSelect}"
-								update=":formList:menuTable" process="@form" />
+								 process="@form" />
 
 							<p:column width="200" headerText="#{msg['label.role']}">
 								<h:outputText value="#{c.roleShortDescription}" />
 							</p:column>
 						</p:dataTable>
 					</p:panel>
-
+					<!-- update=":formList:menuTable"  di dlm p:ajax event="rowSelect"-->
 					<p:panel id="menuPanel">
-						<p:dataTable var="menu" value="#{roleMenuBean.getMenuList()}"
+						<!-- <p:dataTable var="menu" value="#{roleMenuBean.getMenuList()}"
 								id="menuTable" selection="#{roleMenuBean.selectedMenus}"
 								rowKey="#{menu.id}" 
 								rowStyleClass="#{menu.menuType == 1 ? 'old' : null}">
@@ -55,7 +55,25 @@
 										style="font-weight:bold !important;font-size:12" />
 									<h:outputText rendered="#{menu.menuType == 2}" value="Child" />
 								</p:column>
-							</p:dataTable>
+							</p:dataTable> -->
+							<p:treeTable value="#{roleMenuBean.parent}" var="document" id="multiSelect"
+			                 	selection="#{roleMenuBean.selectedNodes}" selectionMode="checkbox">
+			                 	
+			                 	<p:column style="width:150px">
+					            <f:facet name="header">
+					                Menu
+					            </f:facet>
+					            <h:outputText value="#{document.name}" />
+						        </p:column>
+						
+						        <p:column style="width:100px">
+						            <f:facet name="header">
+						                Type
+						            </f:facet>
+						            <h:outputText value="#{document.type}" />
+						        </p:column>
+			                 
+			                 </p:treeTable>
 					</p:panel>
 					
 				</p:dashboard>
