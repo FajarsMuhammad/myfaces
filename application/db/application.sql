@@ -1,7 +1,7 @@
 /**
  * Postgres database
  */
-create database samz;
+create database application;
 
 
 -- User
@@ -23,6 +23,9 @@ WITH (
   OIDS=FALSE
 );
 ALTER TABLE users OWNER TO postgres;
+
+INSERT INTO users (user_id, user_name, password, user_about_you, user_country, user_gender, created_date, access, right_name) VALUES (1, 'admin', 'admin', NULL, NULL, NULL, NULL, 1, NULL);
+
 
 -- Menu
 CREATE TABLE menu
@@ -109,6 +112,11 @@ WITH (
   OIDS=FALSE
 );
 
+INSERT INTO menu2 (menu_id, menu_code, parent_code, menu_name, menu_url, menu_type, system_menu, menu_level, sequence) VALUES (1, '000ADMIN', NULL, 'MENU ADMIN', NULL, 1, 1, 1, 0);
+INSERT INTO menu2 (menu_id, menu_code, parent_code, menu_name, menu_url, menu_type, system_menu, menu_level, sequence) VALUES (2, '001CUSTOMER', '000ADMIN', 'CUSTOMER', '/pages/master/customerList.xhtml', 2, 2, 2, 1);
+INSERT INTO menu2 (menu_id, menu_code, parent_code, menu_name, menu_url, menu_type, system_menu, menu_level, sequence) VALUES (3, '002MENU', '000ADMIN', 'MENU', '/pages/setup/menuList.xhtml', 2, 2, 3, 3);
+
+
 
 CREATE TABLE "role"
 (
@@ -122,6 +130,8 @@ WITH (
   OIDS=FALSE
 );
 
+INSERT INTO role (role_id, role_shortdescription, role_longdescription, version) VALUES (1, 'ROLE_ADMIN', 'Role administrator', 0);
+INSERT INTO role (role_id, role_shortdescription, role_longdescription, version) VALUES (2, 'ROLE_USER', 'Role User', 0);
 
 
 CREATE TABLE role_menu
@@ -136,6 +146,10 @@ CREATE TABLE role_menu
 WITH (
   OIDS=TRUE
 );
+
+INSERT INTO role_menu (role_menu_id, role_id, menu_id, created_date, created_by) VALUES (1, 1, 1, NULL, 'admin');
+INSERT INTO role_menu (role_menu_id, role_id, menu_id, created_date, created_by) VALUES (2, 1, 2, NULL, 'admin');
+INSERT INTO role_menu (role_menu_id, role_id, menu_id, created_date, created_by) VALUES (3, 1, 3, NULL, 'admin');
 
 
 CREATE TABLE user_role
@@ -155,4 +169,6 @@ CREATE TABLE user_role
 WITH (
   OIDS=FALSE
 );
+
+INSERT INTO user_role (user_role_id, user_id, role_id, version) VALUES (1, 1, 1, 0);
 
